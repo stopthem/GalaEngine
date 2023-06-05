@@ -1,0 +1,44 @@
+#pragma once
+#include <string>
+#include <vector>
+
+/*
+* LogType
+*
+* Enum for log types.
+*/
+enum LogType
+{
+	Log_Info,
+	Log_Warning,
+	Log_Error
+};
+
+/*
+* LogEntry
+*
+* Struct that holds information about the log itself.
+*/
+struct LogEntry {
+	LogType logType;
+	std::string message;
+};
+
+/*
+* Logger
+*
+* A logging class using std::cout for now.
+* It needs to be converted to in engine or in sdl logger or it is useless.
+*/
+class Logger
+{
+public:
+	static std::string CurrentTimeToString();
+
+	static void Log(const std::string& message);
+	static void Err(const std::string& message);
+
+public:
+	static std::vector<LogEntry> logEntries;
+};
+

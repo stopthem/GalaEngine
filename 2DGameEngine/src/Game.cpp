@@ -1,11 +1,13 @@
 #include "Game.h"
 #include <SDL.h>
+#include <SDL_image.h>
 #include <iostream>
+#include "Logger.h"
 
 Game::Game()
 	:isRunning(false)
 {
-
+	Logger::Err("lel");
 }
 
 Game::~Game()
@@ -16,7 +18,7 @@ void Game::Initialize()
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
-		std::cerr << "Error initializing SDL." << std::endl;
+		Logger::Err("Error initializing SDL.");
 		return;
 	}
 
@@ -30,7 +32,7 @@ void Game::Initialize()
 
 	if (!window)
 	{
-		std::cerr << "Error creating SDL window." << std::endl;
+		Logger::Err("Error creating SDL window.");
 		return;
 	}
 
@@ -38,7 +40,7 @@ void Game::Initialize()
 
 	if (!renderer)
 	{
-		std::cerr << "Error creating SDL renderer." << std::endl;
+		Logger::Err("Error creating SDL renderer.");
 		return;
 	}
 
@@ -87,7 +89,17 @@ void Game::ProcessInput()
 
 void Game::Update()
 {
-	// TODO: Update all gameobjects...
+	int currentFrameTicks = SDL_GetTicks();
+
+	int timeToWait = MILLISECS_PER_FRAME - (currentFrameTicks - milisecsPrevFrame);
+	if (timeToWait > 0 && timeToWait <= MILLISECS_PER_FRAME)
+	{
+		SDL_Delay(timeToWait);
+	}
+
+	deltaTime = (currentFrameTicks - milisecsPrevFrame) / 1000.0;
+
+	milisecsPrevFrame = currentFrameTicks;
 }
 
 void Game::Render()
@@ -95,10 +107,17 @@ void Game::Render()
 	SDL_SetRenderDrawColor(renderer, 21, 21, 21, 255);
 	SDL_RenderClear(renderer);
 
-	// TODO: Render all gameobjects...
-	SDL_Rect player = { 10,10, 20,20 };
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-	SDL_RenderFillRect(renderer, &player);
+	// Draw a PNG texture
+	SDL_Surface* surface = IMG_Load("./assets/images/tank-tiger-right.png");
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+	SDL_FreeSurface(surface);
+
+	SDL_Rect destinationRect = { 10,10,32,32 };
+
+	// What is the destination rectange that we want to place our texture
+	SDL_RenderCopy(renderer, texture, NULL, &destinationRect);
+
+	SDL_DestroyTexture(texture);
 
 	SDL_RenderPresent(renderer);
 }

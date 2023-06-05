@@ -2,6 +2,9 @@
 
 struct SDL_Window;
 struct SDL_Renderer;
+
+constexpr int FPS = 60;
+constexpr int MILLISECS_PER_FRAME = 1000 / FPS;
 /*
 * Game
 *
@@ -30,8 +33,13 @@ private:
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 
-public:
+private:
 	int windowWidth;
 	int windowHeight;
+
+private:
+	int milisecsPrevFrame;
+
+	double deltaTime;
 };
 
