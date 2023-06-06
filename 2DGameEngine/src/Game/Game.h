@@ -3,11 +3,10 @@
 struct SDL_Window;
 struct SDL_Renderer;
 
-constexpr int FPS = 60;
-constexpr int MILLISECS_PER_FRAME = 1000 / FPS;
+const int FPS = 60;
+const int MILLISECS_PER_FRAME = 1000 / FPS;
 /*
 * Game
-*
 */
 class Game
 {

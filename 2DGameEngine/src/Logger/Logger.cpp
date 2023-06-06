@@ -1,17 +1,25 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "Logger.h"
 #include <iostream>
 #include <chrono>
+
 
 std::vector<LogEntry> Logger::logEntries;
 
 std::string Logger::CurrentTimeToString()
 {
-	char str[26];
+	time_t rawtime;
+	struct tm* timeinfo;
+	char buffer[80];
 
-	auto currentTimePoint = std::chrono::system_clock::now();
-	std::time_t currentTime = std::chrono::system_clock::to_time_t(currentTimePoint);
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
 
-	return std::strerror(ctime_s(str, sizeof str, &currentTime));
+	strftime(buffer, sizeof(buffer), "%d-%m-%Y %H:%M:%S", timeinfo);
+	std::string str(buffer);
+
+	return str;
 }
 
 void Logger::Log(const std::string& message)

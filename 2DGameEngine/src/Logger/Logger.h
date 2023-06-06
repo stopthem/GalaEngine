@@ -20,7 +20,7 @@ enum LogType
 * Struct that holds information about the log itself.
 */
 struct LogEntry {
-	LogType logType;
+	LogType logType = Log_Info;
 	std::string message;
 };
 
