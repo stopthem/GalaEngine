@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 
 class Registry;
 struct SDL_Window;
@@ -29,7 +30,7 @@ public:
 private:
 	bool IsRunning = false;
 
-	Registry* Registry;
+	std::unique_ptr<Registry> Registry;
 
 private:
 	SDL_Window* Window = nullptr;

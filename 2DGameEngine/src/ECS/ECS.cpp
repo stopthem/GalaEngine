@@ -58,20 +58,20 @@ void Registry::AddEntityToSystems(const Entity entity)
 {
 	for (auto& [typeIndex, system] : Systems)
 	{
-		const Signature systemSignature = system.GetSignature();
+		const Signature systemSignature = system->GetSignature();
 
 		const Signature entityComponentSignature = EntityComponentSignatures[entity.GetId()];
 
 		if ((entityComponentSignature & systemSignature) == systemSignature)
 		{
-			system.AddEntityToSystem(entity);
+			system->AddEntityToSystem(entity);
 		}
 	}
 }
 
 void Registry::Update()
 {
-	for (const Entity entity : EntitiesToBeAdded)  
+	for (const Entity entity : EntitiesToBeAdded)
 	{
 		AddEntityToSystems(entity);
 	}
@@ -80,4 +80,3 @@ void Registry::Update()
 
 	//TODO: kill entities in EntitiesToBeKilled.
 }
- 

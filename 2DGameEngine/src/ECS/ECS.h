@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <bitset>
+#include <memory>
 #include <unordered_map>
 #include <typeindex>
 #include <set>
@@ -159,14 +160,14 @@ private:
 	// Vector of component pools, each pool contains all the data for a certain component t.
 	// Vector index = component id.
 	// Pool index = entity id.
-	std::vector<IPool*> ComponentPools;
+	std::vector<std::shared_ptr<IPool>> ComponentPools;
 
 	// Vector of component signatures per entity, saying which component is turned "on" for the entity.
 	// Vector index = entity id.
 	std::vector<Signature> EntityComponentSignatures;
 
 public:
-	template<typename TComponent, typename ...TComponentArgs>   
+	template<typename TComponent, typename ...TComponentArgs>
 	void AddComponent(Entity entity, TComponentArgs ...componentArgs);
 
 	template<typename TComponent>
@@ -180,7 +181,7 @@ public:
 
 private:
 	// Map index = system id.
-	std::unordered_map<std::type_index, System> Systems;
+	std::unordered_map<std::type_index, std::shared_ptr<System>> Systems;
 
 public:
 	template<typename TSystem, typename ...TSystemArgs>
@@ -220,12 +221,12 @@ inline void Registry::AddComponent(const Entity entity, TComponentArgs ...compon
 	// If we still don't have a pool for that component type create one.
 	if (!ComponentPools[componentId])
 	{
-		Pool<TComponent>* newComponentPool = new Pool<TComponent>();
+		std::shared_ptr<Pool<TComponent>> newComponentPool = std::make_shared<Pool<TComponent>>();
 		ComponentPools[componentId] = newComponentPool;
 	}
 
 	// Fetch the corresponding type of pool from component pools.
-	Pool<TComponent>* componentPool = Pool<TComponent>(ComponentPools[componentId]);
+	std::shared_ptr<Pool<TComponent>> componentPool = std::static_pointer_cast<Pool<TComponent>>(ComponentPools[componentId]);
 
 	// If entity id is greater than current componentPool size, resize it.
 	if (entityId >= componentPool->GetSize())
@@ -267,7 +268,7 @@ inline bool Registry::HasComponent(const Entity entity) const
 template <typename TSystem, typename ...TSystemArgs>
 void Registry::AddSystem(TSystemArgs&&... systemArgs)
 {
-	const TSystem* newSystem(new TSystem(std::forward<TSystemArgs>(systemArgs)));
+	const std::shared_ptr<TSystem> newSystem = std::make_shared<TSystem>(std::forward<TSystemArgs>(systemArgs));
 
 	Systems.insert(std::make_pair(std::type_index(typeid(TSystem)), newSystem));
 }

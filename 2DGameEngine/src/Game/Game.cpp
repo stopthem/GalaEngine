@@ -5,7 +5,7 @@
 #include "../ECS/ECS.h"
 
 Game::Game()
-	: Registry(new class Registry())
+	: Registry(std::make_unique<class Registry>())
 {
 }
 
