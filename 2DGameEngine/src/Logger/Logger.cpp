@@ -5,7 +5,7 @@
 #include <chrono>
 
 
-std::vector<LogEntry> Logger::logEntries;
+std::vector<LogEntry> Logger::LogEntries;
 
 std::string Logger::CurrentTimeToString()
 {
@@ -25,21 +25,21 @@ std::string Logger::CurrentTimeToString()
 void Logger::Log(const std::string& message)
 {
 	LogEntry logEntry;
-	logEntry.logType = Log_Info;
-	logEntry.message = "LOG | [" + CurrentTimeToString() + "] : " + message;
+	logEntry.LogType = Log_Info;
+	logEntry.Message = "LOG | [" + CurrentTimeToString() + "] : " + message;
 
-	std::cout << "\x1B[32m" << logEntry.message << "\033[0m" << std::endl;
+	std::cout << "\x1B[32m" << logEntry.Message << "\033[0m" << std::endl;
 
-	logEntries.push_back(logEntry);
+	LogEntries.push_back(logEntry);
 }
 
 void Logger::Err(const std::string& message)
 {
 	LogEntry logEntry;
-	logEntry.logType = Log_Error;
-	logEntry.message = "ERROR | [" + CurrentTimeToString() + "] : " + message;
+	logEntry.LogType = Log_Error;
+	logEntry.Message = "ERROR | [" + CurrentTimeToString() + "] : " + message;
 
-	std::cout << "\x1B[91m" << logEntry.message << "\033[0m" << std::endl;
+	std::cout << "\x1B[91m" << logEntry.Message << "\033[0m" << std::endl;
 
-	logEntries.push_back(logEntry);
+	LogEntries.push_back(logEntry);
 }

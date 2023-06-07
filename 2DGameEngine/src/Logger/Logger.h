@@ -1,4 +1,5 @@
 #pragma once
+
 #include <string>
 #include <vector>
 
@@ -20,8 +21,8 @@ enum LogType
 * Struct that holds information about the log itself.
 */
 struct LogEntry {
-	LogType logType = Log_Info;
-	std::string message;
+	LogType LogType = Log_Info;
+	std::string Message;
 };
 
 /*
@@ -39,6 +40,6 @@ public:
 	static void Err(const std::string& message);
 
 public:
-	static std::vector<LogEntry> logEntries;
+	static std::vector<LogEntry> LogEntries;
 };
 

@@ -1,18 +1,16 @@
 #include "Game.h"
 #include <SDL.h>
-#include <SDL_image.h>
-#include "../ECS/ECS.h"
 #include <iostream>
 #include "../Logger/Logger.h"
+#include "../ECS/ECS.h"
 
 Game::Game()
-	:isRunning(false)
+	: Registry(new class Registry())
 {
 }
 
 Game::~Game()
-{
-}
+= default;
 
 void Game::Initialize()
 {
@@ -25,39 +23,41 @@ void Game::Initialize()
 	SDL_DisplayMode displayMode;
 	SDL_GetCurrentDisplayMode(0, &displayMode);
 
-	windowWidth = displayMode.w;
-	windowHeight = displayMode.h;
+	WindowWidth = displayMode.w;
+	WindowHeight = displayMode.h;
 
-	window = SDL_CreateWindow(NULL, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_BORDERLESS);
+	Window = SDL_CreateWindow(nullptr, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WindowWidth, WindowHeight, SDL_WINDOW_BORDERLESS);
 
-	if (!window)
+	if (!Window)
 	{
 		Logger::Err("Error creating SDL window.");
 		return;
 	}
 
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
+	Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_PRESENTVSYNC);
 
-	if (!renderer)
+	if (!Renderer)
 	{
 		Logger::Err("Error creating SDL renderer.");
 		return;
 	}
 
-	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+	SDL_SetWindowFullscreen(Window, SDL_WINDOW_FULLSCREEN);
 
-	isRunning = true;
+	IsRunning = true;
 }
 
 void Game::Setup()
 {
+	Entity tank = Registry->CreateEntity();
+
 }
 
 void Game::Run()
 {
 	Setup();
 
-	while (isRunning)
+	while (IsRunning)
 	{
 		ProcessInput();
 		Update();
@@ -74,13 +74,13 @@ void Game::ProcessInput()
 		switch (sdlEvent.type)
 		{
 		case SDL_QUIT:
-			isRunning = false;
+			IsRunning = false;
 			break;
 
 		case SDL_KEYDOWN:
 			if (sdlEvent.key.keysym.sym == SDLK_ESCAPE)
 			{
-				isRunning = false;
+				IsRunning = false;
 			}
 			break;
 		}
@@ -89,30 +89,30 @@ void Game::ProcessInput()
 
 void Game::Update()
 {
-	int currentFrameTicks = SDL_GetTicks();
+	const int currentFrameTicks = SDL_GetTicks();
 
-	int timeToWait = MILLISECS_PER_FRAME - (currentFrameTicks - milisecsPrevFrame);
-	if (timeToWait > 0 && timeToWait <= MILLISECS_PER_FRAME)
+	const int timeToWait = MILISECS_PER_FRAME - (currentFrameTicks - MilisecsPrevFrame);
+	if (timeToWait > 0 && timeToWait <= MILISECS_PER_FRAME)
 	{
 		SDL_Delay(timeToWait);
 	}
 
-	deltaTime = (currentFrameTicks - milisecsPrevFrame) / 1000.0;
+	DeltaTime = (currentFrameTicks - MilisecsPrevFrame) / 1000.0;
 
-	milisecsPrevFrame = currentFrameTicks;
+	MilisecsPrevFrame = currentFrameTicks;
 }
 
-void Game::Render()
+void Game::Render() const
 {
-	SDL_SetRenderDrawColor(renderer, 21, 21, 21, 255);
-	SDL_RenderClear(renderer);
+	SDL_SetRenderDrawColor(Renderer, 21, 21, 21, 255);
+	SDL_RenderClear(Renderer);
 
-	SDL_RenderPresent(renderer);
+	SDL_RenderPresent(Renderer);
 }
 
-void Game::Destroy()
+void Game::Destroy() const
 {
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
+	SDL_DestroyRenderer(Renderer);
+	SDL_DestroyWindow(Window);
 	SDL_Quit();
 }

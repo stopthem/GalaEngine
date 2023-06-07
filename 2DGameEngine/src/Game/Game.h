@@ -1,10 +1,11 @@
 #pragma once
 
+class Registry;
 struct SDL_Window;
 struct SDL_Renderer;
 
-const int FPS = 60;
-const int MILLISECS_PER_FRAME = 1000 / FPS;
+constexpr int FPS = 60;
+constexpr int MILISECS_PER_FRAME = 1000 / FPS;
 /*
 * Game
 */
@@ -21,24 +22,26 @@ public:
 	void Run();
 	void ProcessInput();
 	void Update();
-	void Render();
+	void Render() const;
 
-	void Destroy();
-
-private:
-	bool isRunning = false;
+	void Destroy() const;
 
 private:
-	SDL_Window* window = nullptr;
-	SDL_Renderer* renderer = nullptr;
+	bool IsRunning = false;
+
+	Registry* Registry;
 
 private:
-	int windowWidth;
-	int windowHeight;
+	SDL_Window* Window = nullptr;
+	SDL_Renderer* Renderer = nullptr;
 
 private:
-	int milisecsPrevFrame;
+	int WindowWidth = 0;
+	int WindowHeight = 0;
 
-	double deltaTime;
+private:
+	int MilisecsPrevFrame = 0;
+
+	double DeltaTime = 0;
 };
 
