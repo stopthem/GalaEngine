@@ -4,6 +4,7 @@
 class Registry;
 struct SDL_Window;
 struct SDL_Renderer;
+class AssetStore;
 
 constexpr int FPS = 60;
 constexpr int MILISECS_PER_FRAME = 1000 / FPS;
@@ -18,6 +19,8 @@ public:
 
 public:
 	void Initialize();
+	void AddSystems() const;
+	void AddAssets() const;
 	void Setup();
 
 	void Run();
@@ -31,6 +34,7 @@ private:
 	bool IsRunning = false;
 
 	std::unique_ptr<Registry> Registry;
+	std::unique_ptr<AssetStore> AssetStore;
 
 private:
 	SDL_Window* Window = nullptr;

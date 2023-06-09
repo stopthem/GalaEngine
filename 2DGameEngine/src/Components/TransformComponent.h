@@ -12,6 +12,6 @@ public:
 
 	glm::vec2 Scale = glm::vec2(0);
 
-	double Rotation = 0.0;
+	double Angle = 0.0;
 };
 
