@@ -90,8 +90,6 @@ public:
 	System() = default;
 	virtual ~System() = default;
 public:
-	virtual void Update(double deltaTime) = 0;
-public:
 	// Define the component type TComponent that entities must have to be 
 	// considered by the system.
 	template<typename TComponent>

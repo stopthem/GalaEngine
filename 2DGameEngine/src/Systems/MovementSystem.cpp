@@ -8,11 +8,9 @@ MovementSystem::MovementSystem()
 	RequireComponent<RigidbodyComponent>();
 }
 
-MovementSystem::~MovementSystem()
-{
-}
+MovementSystem::~MovementSystem() = default;
 
-void MovementSystem::Update(const double deltaTime)
+void MovementSystem::Update(const double deltaTime) const
 {
 	for (Entity entity : GetSystemEntities())
 	{

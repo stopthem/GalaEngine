@@ -5,6 +5,8 @@
 #include "../Logger/Logger.h"
 #include "../ECS/ECS.h"
 #include "../Systems/MovementSystem.h"
+#include "../Systems/RenderSystem.h"
+#include "../Components/SpriteComponent.h"
 
 Game::Game()
 	: Registry(std::make_unique<class Registry>())
@@ -52,10 +54,12 @@ void Game::Initialize()
 void Game::Setup()
 {
 	Registry->AddSystem<MovementSystem>();
+	Registry->AddSystem<RenderSystem>();
 
 	Entity tank = Registry->CreateEntity();
-	tank.AddComponent<RigidbodyComponent>(glm::vec2(1));
+	tank.AddComponent<RigidbodyComponent>(glm::vec2(10));
 	tank.AddComponent<TransformComponent>(glm::vec2(1), glm::vec2(1), 0.0);
+	tank.AddComponent<SpriteComponent>(20, 20);
 }
 
 void Game::Run()
@@ -118,6 +122,9 @@ void Game::Render() const
 {
 	SDL_SetRenderDrawColor(Renderer, 21, 21, 21, 255);
 	SDL_RenderClear(Renderer);
+
+	// Invoke all render systems that needs a update.
+	Registry->GetSystem<RenderSystem>().Update(Renderer);
 
 	SDL_RenderPresent(Renderer);
 }

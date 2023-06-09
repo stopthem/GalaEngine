@@ -9,7 +9,7 @@ public:
 	~MovementSystem() override;
 
 public:
-	void Update(double deltaTime) override;
+	void Update(double deltaTime) const;
 
 };
 
