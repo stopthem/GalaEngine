@@ -19,9 +19,12 @@ public:
 
 public:
 	void Initialize();
-	void AddSystems() const;
-	void AddAssets() const;
 	void Setup();
+
+	void LoadLevel(int level) const;
+	void AddAssets() const;
+	void AddSystems() const;
+	void CreateTileMap() const;
 
 	void Run();
 	void ProcessInput();
@@ -33,8 +36,8 @@ public:
 private:
 	bool IsRunning = false;
 
-	std::unique_ptr<Registry> Registry;
-	std::unique_ptr<AssetStore> AssetStore;
+	std::unique_ptr<Registry> Registry = nullptr;
+	std::unique_ptr<AssetStore> AssetStore = nullptr;
 
 private:
 	SDL_Window* Window = nullptr;

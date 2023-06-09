@@ -404,6 +404,7 @@
     <ClInclude Include="libs\sol\sol.hpp" />
     <ClInclude Include="src\Components\TransformComponent.h" />
     <ClInclude Include="src\Systems\MovementSystem.h" />
+    <ClInclude Include="src\Utility\StringUtilities.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="libs\glm\detail\func_common.inl" />
@@ -556,6 +557,7 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Components\TransformComponent.cpp" />
     <ClCompile Include="src\Systems\MovementSystem.cpp" />
+    <ClCompile Include="src\Utility\StringUtilities.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

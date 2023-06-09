@@ -20,7 +20,7 @@ void RenderSystem::Update(SDL_Renderer* renderer, const std::unique_ptr<AssetSto
 		auto spriteComponent = entity.GetComponent<SpriteComponent>();
 		const auto transformComponent = entity.GetComponent<TransformComponent>();
 
-		SDL_Rect srcRect = spriteComponent.GetSrcRect();
+		SDL_Rect srcRect = spriteComponent.SrcRect;
 		SDL_Rect dstRect{
 			static_cast<int>(transformComponent.Position.x),
 			static_cast<int>(transformComponent.Position.y),

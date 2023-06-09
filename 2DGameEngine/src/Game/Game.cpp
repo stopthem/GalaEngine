@@ -1,5 +1,9 @@
 #include "Game.h"
+
+#include <fstream>
 #include <SDL.h>
+#include <sstream>
+#include "../Utility/StringUtilities.h"
 #include "../Components/TransformComponent.h"
 #include "../Components/RigidbodyComponent.h"
 #include "../Logger/Logger.h"
@@ -52,28 +56,80 @@ void Game::Initialize()
 	IsRunning = true;
 }
 
+
+void Game::Setup()
+{
+	LoadLevel(0);
+}
+
+void Game::LoadLevel(const int level) const
+{
+	AddSystems();
+
+	AddAssets();
+
+	CreateTileMap();
+
+	Entity tank = Registry->CreateEntity();
+	tank.AddComponent<RigidbodyComponent>(glm::vec2(10));
+	tank.AddComponent<TransformComponent>(glm::vec2(1), glm::vec2(1), 45.0);
+	tank.AddComponent<SpriteComponent>("tank-image", 32, 32);
+}
+
 void Game::AddSystems() const
 {
 	Registry->AddSystem<MovementSystem>();
 	Registry->AddSystem<RenderSystem>();
 }
 
+void Game::CreateTileMap() const
+{
+	// First, lets read the .map file and get tile numbers for the pngs.
+	std::vector<int> tileNumbers;
+
+	std::ifstream readFile("./assets/tilemaps/jungle.map");
+
+	std::string lineString;
+	while (std::getline(readFile, lineString))
+	{
+		std::vector<std::string> splitLineNumberStrings = StringUtilities::Split(lineString, ",");
+		for (const std::string& lineNumberString : splitLineNumberStrings)
+		{
+			tileNumbers.push_back(std::stoi(lineNumberString));
+		}
+	}
+
+	constexpr double tileScale = 3.25;
+	constexpr int tileSize = 32;
+	// Then iterate through .map file columns and rows
+	for (int y = 0; y < 20; ++y)
+	{
+		for (int x = 0; x < 25; ++x)
+		{
+			// Find 1d pos of a 2d value in the vector.
+			const int tileNumber = tileNumbers[(y * 25) + x];
+
+			// Find x tiling of the image which is 10x3.
+			const int textureTilingX = (tileNumber % 10) * tileSize;
+			// Find y tiling of the image which is 10x3.
+			const int textureTilingY = (tileNumber / 10) * tileSize;
+
+			Entity entity = Registry->CreateEntity();
+
+			const glm::vec2 entityLocation(x * (tileSize * tileScale), y * (tileSize * tileScale));
+
+			entity.AddComponent<TransformComponent>(entityLocation, glm::vec2(tileScale), 0.0);
+
+			entity.AddComponent<SpriteComponent>("jungle-tilemap", tileSize, tileSize, glm::vec2(textureTilingX, textureTilingY));
+		}
+	}
+}
+
 void Game::AddAssets() const
 {
 	AssetStore->AddTexture(Renderer, "tank-image", "./assets/images/tank-panther-right.png");
 	AssetStore->AddTexture(Renderer, "truck-image", "./assets/images/truck-ford-right.png");
-}
-
-void Game::Setup()
-{
-	AddSystems();
-
-	AddAssets();
-
-	Entity tank = Registry->CreateEntity();
-	tank.AddComponent<RigidbodyComponent>(glm::vec2(10));
-	tank.AddComponent<TransformComponent>(glm::vec2(1), glm::vec2(3), 45.0);
-	tank.AddComponent<SpriteComponent>("tank-image", 32, 32);
+	AssetStore->AddTexture(Renderer, "jungle-tilemap", "./assets/tilemaps/jungle.png");
 }
 
 void Game::Run()

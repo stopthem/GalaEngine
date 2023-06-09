@@ -50,7 +50,7 @@ public:
 #pragma region Component
 public:
 	template<typename TComponent, typename ...TComponentArgs>
-	void AddComponent(TComponentArgs&& ...componentArgs);
+	TComponent& AddComponent(TComponentArgs&& ...componentArgs);
 
 	template<typename TComponent>
 	void RemoveComponent() const;
@@ -190,7 +190,7 @@ private:
 
 public:
 	template<typename TComponent, typename ...TComponentArgs>
-	void AddComponent(Entity entity, TComponentArgs ...componentArgs);
+	TComponent& AddComponent(Entity entity, TComponentArgs ...componentArgs);
 
 	template<typename TComponent>
 	void RemoveComponent(Entity entity);
@@ -232,7 +232,7 @@ public:
 #pragma region Registry Component Template Functions
 
 template<typename TComponent, typename ...TComponentArgs>
-void Registry::AddComponent(const Entity entity, TComponentArgs ...componentArgs)
+TComponent& Registry::AddComponent(const Entity entity, TComponentArgs ...componentArgs)
 {
 	const int componentId = Component<TComponent>::GetId();
 	const int entityId = entity.GetId();
@@ -268,7 +268,7 @@ void Registry::AddComponent(const Entity entity, TComponentArgs ...componentArgs
 	// Change the signature of the entity to say that, entity has that component.
 	EntityComponentSignatures[entityId].set(componentId);
 
-	Logger::Log("Component with id : " + std::to_string(componentId) + " added to entity with id :" + std::to_string(entityId));
+	return newComponent;
 }
 
 template<typename TComponent>
@@ -332,9 +332,9 @@ TSystem& Registry::GetSystem() const
 
 #pragma region Entity component functions
 template <typename TComponent, typename ... TComponentArgs>
-void Entity::AddComponent(TComponentArgs&&... componentArgs)
+TComponent& Entity::AddComponent(TComponentArgs&&... componentArgs)
 {
-	Registry->AddComponent<TComponent>(*this, componentArgs...);
+	return Registry->AddComponent<TComponent>(*this, componentArgs...);
 }
 
 template <typename TComponent>

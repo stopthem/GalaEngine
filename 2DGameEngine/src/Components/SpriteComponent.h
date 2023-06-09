@@ -7,15 +7,12 @@
 struct SpriteComponent
 {
 public:
-	explicit  SpriteComponent(std::string imageAssetId = "", int width = 20, int height = 20, glm::vec2 srcPos = glm::vec2(0));
+	explicit  SpriteComponent(std::string imageAssetId = "", int width = 32, int height = 32, glm::vec2 srcPos = glm::vec2(0));
 	~SpriteComponent();
 
 public:
 	std::string ImageAssetId;
 	int Height;
 	int Width;
-
-	SDL_Rect& GetSrcRect() { return SrcRect; }
-private:
 	SDL_Rect SrcRect;
 };
