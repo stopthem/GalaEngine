@@ -5,6 +5,8 @@
 #include <unordered_map>
 #include <typeindex>
 #include <set>
+#include <string>
+#include "../Logger/Logger.h"
 
 constexpr unsigned int MAX_COMPONENTS = 32;
 
@@ -21,6 +23,7 @@ protected:
 template<typename T>
 class Component : public IComponent
 {
+public:
 	// Returns the unique id of Component<TComponent>.
 	static int GetId() {
 		static int id = NextId++;
@@ -28,18 +31,38 @@ class Component : public IComponent
 	}
 };
 
+class Registry;
 class Entity {
 
 public:
-	explicit Entity(int id);
+	explicit Entity(int id, Registry* registry);
 
 	Entity(const Entity& otherEntity) = default;
 
 public:
 	[[nodiscard]] int GetId() const { return Id; }
 private:
-	int Id;
+	int Id = 0;
 
+public:
+	Registry* Registry = nullptr;
+
+#pragma region Component
+public:
+	template<typename TComponent, typename ...TComponentArgs>
+	void AddComponent(TComponentArgs&& ...componentArgs);
+
+	template<typename TComponent>
+	void RemoveComponent() const;
+
+	template<typename TComponent>
+	[[nodiscard]] bool HasComponent() const;
+
+	template<typename TComponent>
+	[[nodiscard]] TComponent& GetComponent();
+#pragma endregion
+
+#pragma region Operator Overloads
 public:
 	Entity& operator=(const Entity& other) = default;
 
@@ -53,6 +76,7 @@ public:
 	{
 		return GetId() < other.GetId();
 	}
+#pragma endregion
 };
 
 /*
@@ -64,8 +88,9 @@ class System {
 
 public:
 	System() = default;
-	~System() = default;
-
+	virtual ~System() = default;
+public:
+	virtual void Update(double deltaTime) = 0;
 public:
 	// Define the component type TComponent that entities must have to be 
 	// considered by the system.
@@ -85,7 +110,6 @@ public:
 	[[nodiscard]] Signature GetSignature() const { return ComponentSignature; }
 private:
 	Signature ComponentSignature;
-
 };
 
 template<typename TComponent>
@@ -173,8 +197,11 @@ public:
 	template<typename TComponent>
 	void RemoveComponent(Entity entity);
 
-	template<typename T>
+	template<typename TComponent>
 	[[nodiscard]] bool HasComponent(Entity entity) const;
+
+	template<typename TComponent>
+	[[nodiscard]] TComponent& GetComponent(Entity entity);
 #pragma endregion
 
 #pragma region System
@@ -207,13 +234,13 @@ public:
 #pragma region Registry Component Template Functions
 
 template<typename TComponent, typename ...TComponentArgs>
-inline void Registry::AddComponent(const Entity entity, TComponentArgs ...componentArgs)
+void Registry::AddComponent(const Entity entity, TComponentArgs ...componentArgs)
 {
 	const int componentId = Component<TComponent>::GetId();
 	const int entityId = entity.GetId();
 
 	// If component id is greater than componentPools.size, resize it and null the new object.
-	if (componentId >= ComponentPools.size())
+	if (static_cast<unsigned>(componentId) >= ComponentPools.size())
 	{
 		ComponentPools.resize(componentId + 1, nullptr);
 	}
@@ -242,10 +269,12 @@ inline void Registry::AddComponent(const Entity entity, TComponentArgs ...compon
 
 	// Change the signature of the entity to say that, entity has that component.
 	EntityComponentSignatures[entityId].set(componentId);
+
+	Logger::Log("Component with id : " + std::to_string(componentId) + " added to entity with id :" + std::to_string(entityId));
 }
 
 template<typename TComponent>
-inline void Registry::RemoveComponent(const Entity entity)
+void Registry::RemoveComponent(const Entity entity)
 {
 	const int componentId = Component<TComponent>::GetId();
 	const int entityId = entity.GetId();
@@ -254,12 +283,22 @@ inline void Registry::RemoveComponent(const Entity entity)
 }
 
 template<typename TComponent>
-inline bool Registry::HasComponent(const Entity entity) const
+bool Registry::HasComponent(const Entity entity) const
 {
 	const int componentId = Component<TComponent>::GetId();
 	const int entityId = entity.GetId();
 
 	return EntityComponentSignatures[entity.GetId()].test(componentId);
+}
+
+template <typename TComponent>
+TComponent& Registry::GetComponent(const Entity entity)
+{
+	const int componentId = Component<TComponent>::GetId();
+	const int entityId = entity.GetId();
+
+	std::shared_ptr<Pool<TComponent>> componentPool = std::static_pointer_cast<Pool<TComponent>>(ComponentPools[componentId]);
+	return componentPool->Get(entityId);
 }
 #pragma endregion
 
@@ -268,7 +307,7 @@ inline bool Registry::HasComponent(const Entity entity) const
 template <typename TSystem, typename ...TSystemArgs>
 void Registry::AddSystem(TSystemArgs&&... systemArgs)
 {
-	const std::shared_ptr<TSystem> newSystem = std::make_shared<TSystem>(std::forward<TSystemArgs>(systemArgs));
+	const std::shared_ptr<TSystem> newSystem = std::make_shared<TSystem>(std::forward<TSystemArgs>(systemArgs)...);
 
 	Systems.insert(std::make_pair(std::type_index(typeid(TSystem)), newSystem));
 }
@@ -288,8 +327,33 @@ bool Registry::HasSystem() const
 template <typename TSystem>
 TSystem& Registry::GetSystem() const
 {
-	auto foundSystem = Systems.find(std::type_index(typeid(TSystem))) != Systems.end();
+	const auto systemPairKey = Systems.find(std::type_index(typeid(TSystem)));
+	return *(std::static_pointer_cast<TSystem>(systemPairKey->second));
+}
+#pragma endregion
 
-	return Systems.at(std::type_index(typeid(TSystem)));
+#pragma region Entity component functions
+template <typename TComponent, typename ... TComponentArgs>
+void Entity::AddComponent(TComponentArgs&&... componentArgs)
+{
+	Registry->AddComponent<TComponent>(*this, componentArgs...);
+}
+
+template <typename TComponent>
+void Entity::RemoveComponent() const
+{
+	Registry->RemoveComponent<TComponent>(*this);
+}
+
+template <typename TComponent>
+bool Entity::HasComponent() const
+{
+	return Registry->HasComponent<TComponent>(*this);
+}
+
+template <typename TComponent>
+TComponent& Entity::GetComponent()
+{
+	return Registry->GetComponent<TComponent>(*this);
 }
 #pragma endregion

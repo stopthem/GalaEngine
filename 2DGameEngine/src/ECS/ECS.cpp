@@ -3,15 +3,15 @@
 
 int IComponent::NextId = 0;
 
-Entity::Entity(const int id)
-	:Id(id)
+Entity::Entity(const int id, class Registry* registry)
+	:Id(id), Registry(registry)
 {
 }
 
 void System::AddEntityToSystem(const Entity entity)
 {
 	// Does entities contain given entity ?
-	if (std::find(Entities.begin(), Entities.end(), entity) == Entities.end())
+	if (std::find(Entities.begin(), Entities.end(), entity) != Entities.end())
 	{
 		return;
 	}
@@ -39,7 +39,7 @@ Entity Registry::CreateEntity()
 		EntityComponentSignatures.resize(NumEntities);
 	}
 
-	const Entity entity(entityId);
+	const Entity entity(entityId, this);
 
 	EntitiesToBeAdded.insert(entity);
 

@@ -1,8 +1,10 @@
 #include "Game.h"
 #include <SDL.h>
-#include <iostream>
+#include "../Components/TransformComponent.h"
+#include "../Components/RigidbodyComponent.h"
 #include "../Logger/Logger.h"
 #include "../ECS/ECS.h"
+#include "../Systems/MovementSystem.h"
 
 Game::Game()
 	: Registry(std::make_unique<class Registry>())
@@ -49,8 +51,11 @@ void Game::Initialize()
 
 void Game::Setup()
 {
-	Entity tank = Registry->CreateEntity();
+	Registry->AddSystem<MovementSystem>();
 
+	Entity tank = Registry->CreateEntity();
+	tank.AddComponent<RigidbodyComponent>(glm::vec2(1));
+	tank.AddComponent<TransformComponent>(glm::vec2(1), glm::vec2(1), 0.0);
 }
 
 void Game::Run()
@@ -89,7 +94,7 @@ void Game::ProcessInput()
 
 void Game::Update()
 {
-	const int currentFrameTicks = SDL_GetTicks();
+	const int currentFrameTicks = static_cast<int>(SDL_GetTicks());
 
 	const int timeToWait = MILISECS_PER_FRAME - (currentFrameTicks - MilisecsPrevFrame);
 	if (timeToWait > 0 && timeToWait <= MILISECS_PER_FRAME)
@@ -99,7 +104,14 @@ void Game::Update()
 
 	DeltaTime = (currentFrameTicks - MilisecsPrevFrame) / 1000.0;
 
+	// Store current frame as a previous frame for next frame.
 	MilisecsPrevFrame = currentFrameTicks;
+
+	// Ask all the systems to update.
+	Registry->GetSystem<MovementSystem>().Update(DeltaTime);
+
+	// Update the registry to process the entities that are waiting to be created/deleted.
+	Registry->Update();
 }
 
 void Game::Render() const
