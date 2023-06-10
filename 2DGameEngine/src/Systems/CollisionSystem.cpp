@@ -1,6 +1,9 @@
 #include "CollisionSystem.h"
+
+#include <string>
 #include "../Components/BoxColliderComponent.h"
 #include "../Components/TransformComponent.h"
+#include "../Logger/Logger.h"
 
 CollisionSystem::CollisionSystem()
 {
@@ -28,7 +31,7 @@ void CollisionSystem::CheckAABBCollision(Entity sourceEntity, Entity targetEntit
 	const auto sourceTransformComponent = sourceEntity.GetComponent<TransformComponent>();
 	const auto sourceBoxColliderComponent = sourceEntity.GetComponent<BoxColliderComponent>();
 
-	const glm::vec2 sourceOffsetLocation = { sourceTransformComponent.Position + sourceBoxColliderComponent.Offset };
+	const glm::vec2 sourceOffsetLocation = { sourceTransformComponent.Location + sourceBoxColliderComponent.Offset };
 	const glm::vec2 sourceBoxColliderSize = {
 		static_cast<float>(sourceBoxColliderComponent.Width) * sourceTransformComponent.Scale.x,
 		static_cast<float>(sourceBoxColliderComponent.Height) * sourceTransformComponent.Scale.y };
@@ -36,7 +39,7 @@ void CollisionSystem::CheckAABBCollision(Entity sourceEntity, Entity targetEntit
 	const auto targetTransformComponent = targetEntity.GetComponent<TransformComponent>();
 	const auto targetBoxColliderComponent = targetEntity.GetComponent<BoxColliderComponent>();
 
-	const glm::vec2 targetOffsetLocation = { targetTransformComponent.Position + targetBoxColliderComponent.Offset };
+	const glm::vec2 targetOffsetLocation = { targetTransformComponent.Location + targetBoxColliderComponent.Offset };
 	const glm::vec2 targetBoxColliderSize = {
 		static_cast<float>(targetBoxColliderComponent.Width) * targetTransformComponent.Scale.x,
 		static_cast<float>(targetBoxColliderComponent.Height) * targetTransformComponent.Scale.y };

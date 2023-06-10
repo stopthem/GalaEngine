@@ -17,6 +17,6 @@ void MovementSystem::Update(const double deltaTime) const
 		auto& transformComponent = entity.GetComponent<TransformComponent>();
 		const auto rigidbodyComponent = entity.GetComponent<RigidbodyComponent>();
 
-		transformComponent.Position += rigidbodyComponent.Velocity * static_cast<float>(deltaTime);
+		transformComponent.Location += rigidbodyComponent.Velocity * static_cast<float>(deltaTime);
 	}
 }

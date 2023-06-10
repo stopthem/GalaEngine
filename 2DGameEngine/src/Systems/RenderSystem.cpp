@@ -33,8 +33,8 @@ void RenderSystem::Update(SDL_Renderer* renderer, const std::unique_ptr<AssetSto
 
 		SDL_Rect srcRect = spriteComponent.SrcRect;
 		SDL_Rect dstRect{
-			static_cast<int>(transformComponent.Position.x),
-			static_cast<int>(transformComponent.Position.y),
+			static_cast<int>(transformComponent.Location.x),
+			static_cast<int>(transformComponent.Location.y),
 			static_cast<int>(static_cast<float>(spriteComponent.Width) * transformComponent.Scale.x),
 			static_cast<int>(static_cast<float>(spriteComponent.Height) * transformComponent.Scale.y),
 		};

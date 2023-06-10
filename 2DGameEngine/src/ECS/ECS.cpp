@@ -8,6 +8,11 @@ Entity::Entity(const int id, class Registry* registry)
 {
 }
 
+void Entity::Kill() const
+{
+	Registry->KillEntity(*this);
+}
+
 void System::AddEntityToSystem(const Entity entity)
 {
 	// Does entities contain given entity ?
@@ -22,6 +27,7 @@ void System::AddEntityToSystem(const Entity entity)
 
 void System::RemoveEntityFromSystem(Entity entity)
 {
+	// Remove all entities that matches the predicate. Entities will be unique so no problem.
 	Entities.erase(std::remove_if(Entities.begin(), Entities.end()
 		, [&entity](const Entity otherEntity)
 		{
@@ -32,26 +38,36 @@ void System::RemoveEntityFromSystem(Entity entity)
 
 Entity Registry::CreateEntity()
 {
-	const int entityId = NumEntities++;
-
-	if (EntityComponentSignatures.size() <= static_cast<unsigned>(NumEntities))
+	int entityId = 0;
+	if (FreeIds.empty())
 	{
-		EntityComponentSignatures.resize(NumEntities);
+		entityId = NumEntities++;
+
+		// Make sure the entityComponentSignatures vector can accomodate the new entity.
+		if (EntityComponentSignatures.size() <= static_cast<unsigned>(NumEntities))
+		{
+			EntityComponentSignatures.resize(NumEntities);
+		}
 	}
+	else
+	{
+		entityId = FreeIds.front();
+		FreeIds.pop_front();
+	}
+
 
 	const Entity entity(entityId, this);
 
 	EntitiesToBeAdded.insert(entity);
 
-	// Make sure the entityComponentSignatures vector can accomodate the new entity.
-	if (static_cast<unsigned>(entityId) >= EntityComponentSignatures.size())
-	{
-		EntityComponentSignatures.reserve(entityId + 1);
-	}
-
 	Logger::Log("Entity created with id " + std::to_string(entityId));
 
 	return entity;
+}
+
+void Registry::KillEntity(const Entity entity)
+{
+	EntitiesToBeKilled.insert(entity);
 }
 
 void Registry::AddEntityToSystems(const Entity entity)
@@ -69,8 +85,17 @@ void Registry::AddEntityToSystems(const Entity entity)
 	}
 }
 
+void Registry::RemoveEntityFromSystems(const Entity entity)
+{
+	for (auto& [typeIndex, system] : Systems)
+	{
+		system->RemoveEntityFromSystem(entity);
+	}
+}
+
 void Registry::Update()
 {
+	// Process entities to be added.
 	for (const Entity entity : EntitiesToBeAdded)
 	{
 		AddEntityToSystems(entity);
@@ -78,5 +103,15 @@ void Registry::Update()
 
 	EntitiesToBeAdded.clear();
 
-	//TODO: kill entities in EntitiesToBeKilled.
+	// Process entities to be killed.
+	for (Entity entityToBeKilled : EntitiesToBeKilled)
+	{
+		RemoveEntityFromSystems(entityToBeKilled);
+
+		FreeIds.push_back(entityToBeKilled.GetId());
+
+		EntityComponentSignatures[entityToBeKilled.GetId()].reset();
+	}
+
+	EntitiesToBeKilled.clear();
 }

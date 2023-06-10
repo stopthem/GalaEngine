@@ -112,14 +112,20 @@ void Game::CreateTileMap() const
 	// First, lets read the .map file and get tile numbers for the tilemaps.
 	std::vector<int> tileNumbers;
 
+	// This automatically opens the file for us to read.
 	std::ifstream readFile("./assets/tilemaps/jungle.map");
 
 	std::string lineString;
 	while (std::getline(readFile, lineString))
 	{
+		// Split line elements by ",".
+		// This function is very useful and it gives us raw numbers without spaces.
 		std::vector<std::string> splitLineNumberStrings = StringUtilities::Split(lineString, ",");
+
+		// When we split a string, it gives us a vector of strings with numbers. Iterate through them to add to list.
 		for (const std::string& lineNumberString : splitLineNumberStrings)
 		{
+			// Convert string to int and add to vector.
 			tileNumbers.push_back(std::stoi(lineNumberString));
 		}
 	}
@@ -141,6 +147,7 @@ void Game::CreateTileMap() const
 
 			Entity entity = Registry->CreateEntity();
 
+			// We have to leave space between for tileSize(32) * tileScale because image is 32x32.
 			const glm::vec2 entityLocation(x * (tileSize * tileScale), y * (tileSize * tileScale));
 
 			entity.AddComponent<TransformComponent>(entityLocation, glm::vec2(tileScale), 0.0);
@@ -226,18 +233,23 @@ void Game::Update()
 
 void Game::DebugRenderCollisionBoxes() const
 {
+	// Set render color to red.
 	SDL_SetRenderDrawColor(Renderer, 255, 0, 0, 255);
 
+	// Iterate through collision system entities.
 	for (Entity systemEntity : Registry->GetSystem<CollisionSystem>().GetSystemEntities())
 	{
 		const auto entityTransformComponent = systemEntity.GetComponent<TransformComponent>();
 		const auto entityBoxColliderComponent = systemEntity.GetComponent<BoxColliderComponent>();
 
+		// Create a sdl rect with our entity's transform and box collider components.
+		// Include offset of the box collision and scale of the transform too.
 		SDL_Rect boxCollisionRect;
-		boxCollisionRect.x = static_cast<int>(entityTransformComponent.Position.x);
-		boxCollisionRect.y = static_cast<int>(entityTransformComponent.Position.y);
+		boxCollisionRect.x = static_cast<int>(entityTransformComponent.Location.x + entityBoxColliderComponent.Offset.x);
+		boxCollisionRect.y = static_cast<int>(entityTransformComponent.Location.y + entityBoxColliderComponent.Offset.y);
 		boxCollisionRect.w = entityBoxColliderComponent.Width * static_cast<int>(entityTransformComponent.Scale.x);
 		boxCollisionRect.h = entityBoxColliderComponent.Height * static_cast<int>(entityTransformComponent.Scale.y);
+
 		SDL_RenderDrawRect(Renderer, &boxCollisionRect);
 	}
 }

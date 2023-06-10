@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <bitset>
+#include <deque>
 #include <memory>
 #include <unordered_map>
 #include <typeindex>
@@ -35,11 +36,7 @@ class Entity {
 public:
 	explicit Entity(int id, Registry* registry);
 
-	Entity(const Entity& otherEntity)
-	{
-		Id = otherEntity.GetId();
-		Registry = otherEntity.Registry;
-	}
+	Entity(const Entity& otherEntity) = default;
 
 	Entity() = default;
 
@@ -50,6 +47,9 @@ private:
 
 public:
 	Registry* Registry = nullptr;
+
+public:
+	void Kill() const;
 
 #pragma region Component
 public:
@@ -174,11 +174,17 @@ public:
 	Registry() = default;
 
 private:
+	// Set of entities that are flagged to be added in the next registry update.
 	std::set<Entity> EntitiesToBeAdded;
+	// Set of entities that are flagged to be removed in the next registry update.
 	std::set<Entity> EntitiesToBeKilled;
+
+	// List of free entity ids that were previously deleted.
+	std::deque<int> FreeIds;
 
 public:
 	Entity CreateEntity();
+	void KillEntity(Entity entity);
 
 #pragma region Component
 
@@ -228,6 +234,10 @@ public:
 	// Checks the component signature of an entity and add the entity to the systems
 	// that are interested in it.
 	void AddEntityToSystems(Entity entity);
+
+	// Checks the component signature of an entity and remove the entity to the systems
+	// that are interested in it.
+	void RemoveEntityFromSystems(Entity entity);
 #pragma endregion
 public:
 	void Update();
