@@ -10,8 +10,10 @@
 #include "../ECS/ECS.h"
 #include "../Systems/MovementSystem.h"
 #include "../Systems/RenderSystem.h"
+#include "../Systems/AnimationSystem.h"
 #include "../Components/SpriteComponent.h"
 #include "../AssetStore/AssetStore.h"
+#include "../Components/AnimationComponent.h"
 
 Game::Game()
 	: Registry(std::make_unique<class Registry>()), AssetStore(std::make_unique<class AssetStore>())
@@ -70,7 +72,7 @@ void Game::LoadLevel(const int level) const
 
 	CreateTileMap();
 
-	Entity tank = Registry->CreateEntity();
+	/*Entity tank = Registry->CreateEntity();
 	tank.AddComponent<RigidbodyComponent>(glm::vec2(15));
 	tank.AddComponent<TransformComponent>(glm::vec2(1), glm::vec2(2), 45.0);
 	tank.AddComponent<SpriteComponent>("tank-image", 32, 32, 1);
@@ -78,18 +80,31 @@ void Game::LoadLevel(const int level) const
 	Entity truck = Registry->CreateEntity();
 	truck.AddComponent<RigidbodyComponent>(glm::vec2(10));
 	truck.AddComponent<TransformComponent>(glm::vec2(1), glm::vec2(2), 45.0);
-	truck.AddComponent<SpriteComponent>("truck-image", 32, 32, 2);
+	truck.AddComponent<SpriteComponent>("truck-image", 32, 32, 2);*/
+
+	Entity chopper = Registry->CreateEntity();
+	chopper.AddComponent<RigidbodyComponent>(glm::vec2(0));
+	chopper.AddComponent<TransformComponent>(glm::vec2(10), glm::vec2(2), 45.0);
+	chopper.AddComponent<SpriteComponent>("chopper-image", 32, 32, 2);
+	chopper.AddComponent<AnimationComponent>(2, 10);
+
+	Entity radar = Registry->CreateEntity();
+	radar.AddComponent<RigidbodyComponent>(glm::vec2(0));
+	radar.AddComponent<TransformComponent>(glm::vec2(WindowWidth - 164, 32), glm::vec2(2), 0.0);
+	radar.AddComponent<SpriteComponent>("radar-image", 64, 64, 2);
+	radar.AddComponent<AnimationComponent>(8, 7);
 }
 
 void Game::AddSystems() const
 {
 	Registry->AddSystem<MovementSystem>();
 	Registry->AddSystem<RenderSystem>();
+	Registry->AddSystem<AnimationSystem>();
 }
 
 void Game::CreateTileMap() const
 {
-	// First, lets read the .map file and get tile numbers for the pngs.
+	// First, lets read the .map file and get tile numbers for the tilemaps.
 	std::vector<int> tileNumbers;
 
 	std::ifstream readFile("./assets/tilemaps/jungle.map");
@@ -134,6 +149,10 @@ void Game::AddAssets() const
 {
 	AssetStore->AddTexture(Renderer, "tank-image", "./assets/images/tank-panther-right.png");
 	AssetStore->AddTexture(Renderer, "truck-image", "./assets/images/truck-ford-right.png");
+	AssetStore->AddTexture(Renderer, "chopper-image", "./assets/images/chopper.png");
+
+	AssetStore->AddTexture(Renderer, "radar-image", "./assets/images/radar.png");
+
 	AssetStore->AddTexture(Renderer, "jungle-tilemap", "./assets/tilemaps/jungle.png");
 }
 
@@ -188,6 +207,7 @@ void Game::Update()
 
 	// Ask all the systems to update.
 	Registry->GetSystem<MovementSystem>().Update(DeltaTime);
+	Registry->GetSystem<AnimationSystem>().Update();
 
 	// Update the registry to process the entities that are waiting to be created/deleted.
 	Registry->Update();
