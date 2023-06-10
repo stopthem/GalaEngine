@@ -71,9 +71,14 @@ void Game::LoadLevel(const int level) const
 	CreateTileMap();
 
 	Entity tank = Registry->CreateEntity();
-	tank.AddComponent<RigidbodyComponent>(glm::vec2(10));
-	tank.AddComponent<TransformComponent>(glm::vec2(1), glm::vec2(1), 45.0);
-	tank.AddComponent<SpriteComponent>("tank-image", 32, 32);
+	tank.AddComponent<RigidbodyComponent>(glm::vec2(15));
+	tank.AddComponent<TransformComponent>(glm::vec2(1), glm::vec2(2), 45.0);
+	tank.AddComponent<SpriteComponent>("tank-image", 32, 32, 1);
+
+	Entity truck = Registry->CreateEntity();
+	truck.AddComponent<RigidbodyComponent>(glm::vec2(10));
+	truck.AddComponent<TransformComponent>(glm::vec2(1), glm::vec2(2), 45.0);
+	truck.AddComponent<SpriteComponent>("truck-image", 32, 32, 2);
 }
 
 void Game::AddSystems() const
@@ -120,7 +125,7 @@ void Game::CreateTileMap() const
 
 			entity.AddComponent<TransformComponent>(entityLocation, glm::vec2(tileScale), 0.0);
 
-			entity.AddComponent<SpriteComponent>("jungle-tilemap", tileSize, tileSize, glm::vec2(textureTilingX, textureTilingY));
+			entity.AddComponent<SpriteComponent>("jungle-tilemap", tileSize, tileSize, 0, glm::vec2(textureTilingX, textureTilingY));
 		}
 	}
 }

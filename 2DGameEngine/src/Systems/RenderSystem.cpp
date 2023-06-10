@@ -1,5 +1,6 @@
 #include "RenderSystem.h"
 
+#include <algorithm>
 #include <SDL_render.h>
 #include "../Components/SpriteComponent.h"
 #include "../Components/TransformComponent.h"
@@ -15,7 +16,17 @@ RenderSystem::~RenderSystem() = default;
 
 void RenderSystem::Update(SDL_Renderer* renderer, const std::unique_ptr<AssetStore>& assetStore)
 {
-	for (Entity entity : GetSystemEntities())
+	// Copy our system entities to new vector for sorting.
+	std::vector sortedEntities(GetSystemEntities());
+	// Sort by their spriteComponent.ZIndex ascending.
+	std::sort(sortedEntities.begin(), sortedEntities.end(), [](Entity& lhs, Entity& rhs)
+		{
+			const auto spriteComponentLhs = lhs.GetComponent<SpriteComponent>();
+			const auto spriteComponentRhs = rhs.GetComponent<SpriteComponent>();
+			return spriteComponentLhs.ZIndex < spriteComponentRhs.ZIndex;
+		});
+
+	for (Entity entity : sortedEntities)
 	{
 		auto spriteComponent = entity.GetComponent<SpriteComponent>();
 		const auto transformComponent = entity.GetComponent<TransformComponent>();
