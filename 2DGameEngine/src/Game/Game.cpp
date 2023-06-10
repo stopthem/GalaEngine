@@ -6,14 +6,16 @@
 #include "../Utility/StringUtilities.h"
 #include "../Components/TransformComponent.h"
 #include "../Components/RigidbodyComponent.h"
+#include "../Components/SpriteComponent.h"
+#include "../Components/AnimationComponent.h"
+#include "../Components/BoxColliderComponent.h"
 #include "../Logger/Logger.h"
 #include "../ECS/ECS.h"
 #include "../Systems/MovementSystem.h"
 #include "../Systems/RenderSystem.h"
 #include "../Systems/AnimationSystem.h"
-#include "../Components/SpriteComponent.h"
+#include "../Systems/CollisionSystem.h"
 #include "../AssetStore/AssetStore.h"
-#include "../Components/AnimationComponent.h"
 
 Game::Game()
 	: Registry(std::make_unique<class Registry>()), AssetStore(std::make_unique<class AssetStore>())
@@ -53,7 +55,7 @@ void Game::Initialize()
 		return;
 	}
 
-	SDL_SetWindowFullscreen(Window, SDL_WINDOW_FULLSCREEN);
+	//SDL_SetWindowFullscreen(Window, SDL_WINDOW_FULLSCREEN);
 
 	IsRunning = true;
 }
@@ -72,19 +74,21 @@ void Game::LoadLevel(const int level) const
 
 	CreateTileMap();
 
-	/*Entity tank = Registry->CreateEntity();
-	tank.AddComponent<RigidbodyComponent>(glm::vec2(15));
-	tank.AddComponent<TransformComponent>(glm::vec2(1), glm::vec2(2), 45.0);
+	Entity tank = Registry->CreateEntity();
+	tank.AddComponent<RigidbodyComponent>(glm::vec2(-30, 0));
+	tank.AddComponent<TransformComponent>(glm::vec2(300, 0), glm::vec2(2), 0);
 	tank.AddComponent<SpriteComponent>("tank-image", 32, 32, 1);
+	tank.AddComponent<BoxColliderComponent>(32, 32);
 
 	Entity truck = Registry->CreateEntity();
-	truck.AddComponent<RigidbodyComponent>(glm::vec2(10));
-	truck.AddComponent<TransformComponent>(glm::vec2(1), glm::vec2(2), 45.0);
-	truck.AddComponent<SpriteComponent>("truck-image", 32, 32, 2);*/
+	truck.AddComponent<RigidbodyComponent>(glm::vec2(10, 0));
+	truck.AddComponent<TransformComponent>(glm::vec2(1), glm::vec2(2), 0);
+	truck.AddComponent<SpriteComponent>("truck-image", 32, 32, 1);
+	truck.AddComponent<BoxColliderComponent>(32, 32);
 
 	Entity chopper = Registry->CreateEntity();
 	chopper.AddComponent<RigidbodyComponent>(glm::vec2(0));
-	chopper.AddComponent<TransformComponent>(glm::vec2(10), glm::vec2(2), 45.0);
+	chopper.AddComponent<TransformComponent>(glm::vec2(WindowWidth / 2, 200), glm::vec2(2), 0);
 	chopper.AddComponent<SpriteComponent>("chopper-image", 32, 32, 2);
 	chopper.AddComponent<AnimationComponent>(2, 10);
 
@@ -100,6 +104,7 @@ void Game::AddSystems() const
 	Registry->AddSystem<MovementSystem>();
 	Registry->AddSystem<RenderSystem>();
 	Registry->AddSystem<AnimationSystem>();
+	Registry->AddSystem<CollisionSystem>();
 }
 
 void Game::CreateTileMap() const
@@ -185,6 +190,11 @@ void Game::ProcessInput()
 			{
 				IsRunning = false;
 			}
+
+			if (sdlEvent.key.keysym.sym == SDLK_d)
+			{
+				IsDebug = !IsDebug;
+			}
 			break;
 		}
 	}
@@ -207,10 +217,29 @@ void Game::Update()
 
 	// Ask all the systems to update.
 	Registry->GetSystem<MovementSystem>().Update(DeltaTime);
+	Registry->GetSystem<CollisionSystem>().Update();
 	Registry->GetSystem<AnimationSystem>().Update();
 
 	// Update the registry to process the entities that are waiting to be created/deleted.
 	Registry->Update();
+}
+
+void Game::DebugRenderCollisionBoxes() const
+{
+	SDL_SetRenderDrawColor(Renderer, 255, 0, 0, 255);
+
+	for (Entity systemEntity : Registry->GetSystem<CollisionSystem>().GetSystemEntities())
+	{
+		const auto entityTransformComponent = systemEntity.GetComponent<TransformComponent>();
+		const auto entityBoxColliderComponent = systemEntity.GetComponent<BoxColliderComponent>();
+
+		SDL_Rect boxCollisionRect;
+		boxCollisionRect.x = static_cast<int>(entityTransformComponent.Position.x);
+		boxCollisionRect.y = static_cast<int>(entityTransformComponent.Position.y);
+		boxCollisionRect.w = entityBoxColliderComponent.Width * static_cast<int>(entityTransformComponent.Scale.x);
+		boxCollisionRect.h = entityBoxColliderComponent.Height * static_cast<int>(entityTransformComponent.Scale.y);
+		SDL_RenderDrawRect(Renderer, &boxCollisionRect);
+	}
 }
 
 void Game::Render() const
@@ -220,6 +249,11 @@ void Game::Render() const
 
 	// Ask all render systems that needs a update.
 	Registry->GetSystem<RenderSystem>().Update(Renderer, AssetStore);
+
+	if (IsDebug)
+	{
+		DebugRenderCollisionBoxes();
+	}
 
 	SDL_RenderPresent(Renderer);
 }

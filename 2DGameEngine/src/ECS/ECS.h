@@ -5,8 +5,6 @@
 #include <unordered_map>
 #include <typeindex>
 #include <set>
-#include <string>
-#include "../Logger/Logger.h"
 
 constexpr unsigned int MAX_COMPONENTS = 32;
 
@@ -37,7 +35,13 @@ class Entity {
 public:
 	explicit Entity(int id, Registry* registry);
 
-	Entity(const Entity& otherEntity) = default;
+	Entity(const Entity& otherEntity)
+	{
+		Id = otherEntity.GetId();
+		Registry = otherEntity.Registry;
+	}
+
+	Entity() = default;
 
 public:
 	[[nodiscard]] int GetId() const { return Id; }

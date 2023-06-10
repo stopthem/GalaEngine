@@ -29,7 +29,6 @@ struct LogEntry {
 * Logger
 *
 * A logging class using std::cout for now.
-* It needs to be converted to in engine or in sdl logger or it is useless.
 */
 class Logger
 {

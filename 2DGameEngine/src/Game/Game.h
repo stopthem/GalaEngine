@@ -29,6 +29,8 @@ public:
 	void Run();
 	void ProcessInput();
 	void Update();
+	void DebugRenderCollisionBoxes() const;
+
 	void Render() const;
 
 	void Destroy() const;
@@ -51,5 +53,8 @@ private:
 	int MilisecsPrevFrame = 0;
 
 	double DeltaTime = 0;
+
+private:
+	bool IsDebug = false;
 };
 

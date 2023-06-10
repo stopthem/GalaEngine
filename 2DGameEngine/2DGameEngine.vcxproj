@@ -141,6 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Systems\CollisionSystem.h" />
+    <ClInclude Include="src\Components\BoxColliderComponent.h" />
     <ClInclude Include="src\Systems\AnimationSystem.h" />
     <ClInclude Include="src\Components\AnimationComponent.h" />
     <ClInclude Include="src\AssetStore\AssetStore.h" />
@@ -543,6 +545,8 @@
     <None Include="libs\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Systems\CollisionSystem.cpp" />
+    <ClCompile Include="src\Components\BoxColliderComponent.cpp" />
     <ClCompile Include="src\Systems\AnimationSystem.cpp" />
     <ClCompile Include="src\Components\AnimationComponent.cpp" />
     <ClCompile Include="src\AssetStore\AssetStore.cpp" />
