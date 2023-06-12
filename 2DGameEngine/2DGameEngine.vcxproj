@@ -141,8 +141,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\CameraFollowComponent.h" />
     <ClInclude Include="src\Components\KeyboardControlledComponent.h" />
     <ClInclude Include="src\Events\KeyPressedEvent.h" />
+    <ClInclude Include="src\Systems\CameraMovementSystem.h" />
     <ClInclude Include="src\Systems\KeyboardControlSystem.h" />
     <ClInclude Include="src\Systems\DamageSystem.h" />
     <ClInclude Include="src\EventBus\Event.h" />
@@ -552,8 +554,10 @@
     <None Include="libs\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\CameraFollowComponent.cpp" />
     <ClCompile Include="src\Components\KeyboardControlledComponent.cpp" />
     <ClCompile Include="src\Events\KeyPressedEvent.cpp" />
+    <ClCompile Include="src\Systems\CameraMovementSystem.cpp" />
     <ClCompile Include="src\Systems\DamageSystem.cpp" />
     <ClCompile Include="src\EventBus\Event.cpp" />
     <ClCompile Include="src\EventBus\EventBus.cpp" />

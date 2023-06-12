@@ -2,6 +2,12 @@
 
 #include "glm/vec2.hpp"
 
+/*
+ * RigidbodyComponent
+ *
+ * Component needed to move a object with its velocity.
+ * Has no physics.
+ */
 struct RigidbodyComponent
 {
 public:

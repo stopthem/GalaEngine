@@ -1,4 +1,10 @@
 #pragma once
+
+/*
+ * AnimationComponent
+ *
+ * Component used to animate sprites.
+ */
 struct AnimationComponent
 {
 public:

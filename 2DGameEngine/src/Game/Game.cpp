@@ -10,6 +10,7 @@
 #include "../Components/AnimationComponent.h"
 #include "../Components/BoxColliderComponent.h"
 #include "../Components/KeyboardControlledComponent.h"
+#include "../Components/CameraFollowComponent.h"
 #include "../Logger/Logger.h"
 #include "../ECS/ECS.h"
 #include "../Systems/MovementSystem.h"
@@ -18,9 +19,16 @@
 #include "../Systems/CollisionSystem.h"
 #include "../Systems/DamageSystem.h"
 #include "../Systems/KeyboardControlSystem.h"
+#include "../Systems/CameraMovementSystem.h"
 #include "../AssetStore/AssetStore.h"
 #include "../EventBus/EventBus.h"
 #include "../Events/KeyPressedEvent.h"
+
+int Game::WindowWidth;
+int Game::WindowHeight;
+
+int Game::MapWidth;
+int Game::MapHeight;
 
 Game::Game()
 	: Registry(std::make_unique<class Registry>()), AssetStore(std::make_unique<class AssetStore>()), EventBus(std::make_unique<class EventBus>())
@@ -96,12 +104,13 @@ void Game::LoadLevel(const int level) const
 	chopper.AddComponent<TransformComponent>(glm::vec2(WindowWidth / 2, 200), glm::vec2(2), 0);
 	chopper.AddComponent<SpriteComponent>("chopper-image", 32, 32, 2);
 	chopper.AddComponent<AnimationComponent>(2, 10);
-	chopper.AddComponent<KeyboardControlledComponent>(75.0f);
+	chopper.AddComponent<KeyboardControlledComponent>(150.0f);
+	chopper.AddComponent<CameraFollowComponent>();
 
 	Entity radar = Registry->CreateEntity();
 	radar.AddComponent<RigidbodyComponent>(glm::vec2(0));
 	radar.AddComponent<TransformComponent>(glm::vec2(WindowWidth - 164, 32), glm::vec2(2), 0.0);
-	radar.AddComponent<SpriteComponent>("radar-image", 64, 64, 2);
+	radar.AddComponent<SpriteComponent>("radar-image", 64, 64, 2, true);
 	radar.AddComponent<AnimationComponent>(8, 7);
 }
 
@@ -113,6 +122,7 @@ void Game::AddSystems() const
 	Registry->AddSystem<CollisionSystem>();
 	Registry->AddSystem<DamageSystem>(EventBus.get());
 	Registry->AddSystem<KeyboardControlSystem>(EventBus.get());
+	Registry->AddSystem<CameraMovementSystem>();
 }
 
 void Game::AddAssets() const
@@ -171,9 +181,12 @@ void Game::CreateTileMap() const
 
 			entity.AddComponent<TransformComponent>(entityLocation, glm::vec2(tileScale), 0.0);
 
-			entity.AddComponent<SpriteComponent>("jungle-tilemap", tileSize, tileSize, 0, glm::vec2(textureTilingX, textureTilingY));
+			entity.AddComponent<SpriteComponent>("jungle-tilemap", tileSize, tileSize, 0, false, glm::vec2(textureTilingX, textureTilingY));
 		}
 	}
+
+	MapWidth = (25 * tileSize) * tileScale;
+	MapHeight = (20 * tileSize) * tileScale;
 }
 
 
@@ -239,6 +252,7 @@ void Game::Update()
 	Registry->GetSystem<MovementSystem>().Update(DeltaTime);
 	Registry->GetSystem<CollisionSystem>().Update(EventBus);
 	Registry->GetSystem<AnimationSystem>().Update();
+	Registry->GetSystem<CameraMovementSystem>().Update(CameraRect);
 
 	// Update the registry to process the entities that are waiting to be created/deleted.
 	Registry->Update();
@@ -273,7 +287,7 @@ void Game::Render() const
 	SDL_RenderClear(Renderer);
 
 	// Ask all render systems that needs a update.
-	Registry->GetSystem<RenderSystem>().Update(Renderer, AssetStore);
+	Registry->GetSystem<RenderSystem>().Update(Renderer, CameraRect, AssetStore);
 
 	if (IsDebug)
 	{

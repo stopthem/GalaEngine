@@ -1,6 +1,11 @@
 #pragma once
 #include "glm/vec2.hpp"
 
+/*
+ * BoxColliderComponent
+ *
+ * Component used to handle collision.
+ */
 struct BoxColliderComponent
 {
 public:

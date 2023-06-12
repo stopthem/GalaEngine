@@ -4,6 +4,11 @@
 
 struct SDL_Renderer;
 struct SDL_Texture;
+/*
+ * AssetStore
+ *
+ * Handles fonts, audios and textures loading and getting with their ids.
+ */
 class AssetStore
 {
 public:

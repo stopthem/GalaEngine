@@ -7,18 +7,29 @@
 #include <typeindex>
 #include <set>
 
+// We hold this value because we use a bit set for if entity has a component.
 constexpr unsigned int MAX_COMPONENTS = 32;
 
 // We use a bitset (1-0)s to keep track of which components an entity has,
 // and also helps keep track of which entities a system is interested in.
 typedef std::bitset<MAX_COMPONENTS> Signature;
 
+/*
+ * IComponent
+ *
+ * Wrapper class for IComponent.
+ */
 struct IComponent
 {
 protected:
 	static int NextId;
 };
 
+/*
+ * Component
+ *
+ * Only provides a unique id for component types.
+ */
 template<typename T>
 class Component : public IComponent
 {
@@ -31,6 +42,11 @@ public:
 };
 
 class Registry;
+/*
+ * Entity
+ *
+ * Has no functionality and holds only its id.
+ */
 class Entity {
 
 public:
@@ -125,6 +141,11 @@ void System::RequireComponent() {
 	ComponentSignature.set(componentId);
 }
 
+/*
+ * IPool
+ *
+ * Wrapper class for Pool<T>.
+ */
 class IPool {
 public:
 	virtual ~IPool() = default;

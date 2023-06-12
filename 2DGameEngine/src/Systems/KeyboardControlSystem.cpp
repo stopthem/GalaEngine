@@ -56,6 +56,7 @@ void KeyboardControlSystem::OnKeyboardKeyPressed(KeyPressedEvent& keyPressedEven
 			break;
 
 		default:
+			// If there was no arrow key input, just return.
 			return;
 		}
 

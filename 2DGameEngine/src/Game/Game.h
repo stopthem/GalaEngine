@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <SDL_rect.h>
 
 class EventBus;
 class Registry;
@@ -46,10 +47,14 @@ private:
 private:
 	SDL_Window* Window = nullptr;
 	SDL_Renderer* Renderer = nullptr;
+	SDL_Rect CameraRect;
 
-private:
-	int WindowWidth = 0;
-	int WindowHeight = 0;
+public:
+	static int WindowWidth;
+	static int WindowHeight;
+
+	static int MapWidth;
+	static int MapHeight;
 
 private:
 	int MilisecsPrevFrame = 0;
