@@ -112,6 +112,9 @@ public:
 	[[nodiscard]] Signature GetSignature() const { return ComponentSignature; }
 private:
 	Signature ComponentSignature;
+
+public:
+	virtual void OnSystemRemoved() {}
 };
 
 template<typename TComponent>
@@ -276,13 +279,13 @@ TComponent& Registry::AddComponent(const Entity entity, TComponentArgs ...compon
 	// Create the new component with the given multiple componentArgs.
 	TComponent newComponent(std::forward<TComponentArgs>(componentArgs)...);
 
-	// Add the new component ot the component pool list, using the entity id as index.
+	// Add the new component to the component pool list, using the entity id as index.
 	componentPool->Set(entityId, newComponent);
 
 	// Change the signature of the entity to say that, entity has that component.
 	EntityComponentSignatures[entityId].set(componentId);
 
-	return newComponent;
+	return componentPool->Get(entityId);
 }
 
 template<typename TComponent>
@@ -327,6 +330,7 @@ void Registry::AddSystem(TSystemArgs&&... systemArgs)
 template <typename TSystem>
 void Registry::RemoveSystem()
 {
+	Systems[typeid(TSystem)]->OnSystemRemoved();
 	Systems.erase(std::type_index(typeid(TSystem)));
 }
 

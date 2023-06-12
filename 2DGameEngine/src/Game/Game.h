@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 
+class EventBus;
 class Registry;
 struct SDL_Window;
 struct SDL_Renderer;
@@ -40,6 +41,7 @@ private:
 
 	std::unique_ptr<Registry> Registry = nullptr;
 	std::unique_ptr<AssetStore> AssetStore = nullptr;
+	std::unique_ptr<EventBus> EventBus = nullptr;
 
 private:
 	SDL_Window* Window = nullptr;

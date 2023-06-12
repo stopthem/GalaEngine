@@ -4,6 +4,8 @@
 #include "../Components/BoxColliderComponent.h"
 #include "../Components/TransformComponent.h"
 #include "../Logger/Logger.h"
+#include "../EventBus/EventBus.h"
+#include "../Events/CollisionEvent.h"
 
 CollisionSystem::CollisionSystem()
 {
@@ -11,22 +13,30 @@ CollisionSystem::CollisionSystem()
 	RequireComponent<TransformComponent>();
 }
 
-void CollisionSystem::Update()
+void CollisionSystem::Update(const std::unique_ptr<EventBus>& eventBus) const
 {
 	// First, lets save our system entities so we don't have to call it again.
 	std::vector<Entity> entities = GetSystemEntities();
+
 	// Iterate through entities vector with for which i is returning us a reference to the entity.
 	for (auto i = entities.begin(); i != entities.end(); ++i)
 	{
 		// Start with i + 1 because we don't want to check same entity against itself.
 		for (auto j = i + 1; j != entities.end(); ++j)
 		{
-			CheckAABBCollision(*i, *j);
+			const Entity sourceEntity = *i;
+			const Entity targetEntity = *j;
+			const bool collision = CheckAABBCollision(sourceEntity, targetEntity);
+
+			if (collision)
+			{
+				eventBus->BroadcastEvent<CollisionEvent>(sourceEntity, targetEntity);
+			}
 		}
 	}
 }
 
-void CollisionSystem::CheckAABBCollision(Entity sourceEntity, Entity targetEntity) const
+bool CollisionSystem::CheckAABBCollision(Entity sourceEntity, Entity targetEntity) const
 {
 	const auto sourceTransformComponent = sourceEntity.GetComponent<TransformComponent>();
 	const auto sourceBoxColliderComponent = sourceEntity.GetComponent<BoxColliderComponent>();
@@ -44,14 +54,10 @@ void CollisionSystem::CheckAABBCollision(Entity sourceEntity, Entity targetEntit
 		static_cast<float>(targetBoxColliderComponent.Width) * targetTransformComponent.Scale.x,
 		static_cast<float>(targetBoxColliderComponent.Height) * targetTransformComponent.Scale.y };
 
-	const bool collision =
+	return
 		sourceOffsetLocation.x < targetOffsetLocation.x + targetBoxColliderSize.x
 		&& sourceOffsetLocation.x + sourceBoxColliderSize.x > targetOffsetLocation.x
 		&& sourceOffsetLocation.y < targetOffsetLocation.y + targetBoxColliderSize.y
 		&& sourceOffsetLocation.y + sourceBoxColliderSize.y > targetOffsetLocation.y;
 
-	if (collision)
-	{
-		Logger::Log("Collision between entity : " + std::to_string(sourceEntity.GetId()) + " and entity with id :" + std::to_string(targetEntity.GetId()));
-	}
 }

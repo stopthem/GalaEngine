@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../ECS/ECS.h"
-#include "glm/vec2.hpp"
 
+class EventBus;
 struct BoxColliderComponent;
 class CollisionSystem : public System
 {
@@ -10,11 +10,11 @@ public:
 	CollisionSystem();
 
 public:
-	void Update();
+	void Update(const std::unique_ptr<EventBus>& eventBus) const;
 
 private:
 	// Checks box collision between 2 entities.
-	void CheckAABBCollision(Entity sourceEntity, Entity targetEntity) const;
+	[[nodiscard]] bool CheckAABBCollision(Entity sourceEntity, Entity targetEntity) const;
 
 };
 

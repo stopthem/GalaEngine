@@ -141,6 +141,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Systems\DamageSystem.h" />
+    <ClInclude Include="src\EventBus\Event.h" />
+    <ClInclude Include="src\EventBus\EventBus.h" />
+    <ClInclude Include="src\Events\CollisionEvent.h" />
     <ClInclude Include="src\Systems\CollisionSystem.h" />
     <ClInclude Include="src\Components\BoxColliderComponent.h" />
     <ClInclude Include="src\Systems\AnimationSystem.h" />
@@ -545,6 +549,10 @@
     <None Include="libs\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Systems\DamageSystem.cpp" />
+    <ClCompile Include="src\EventBus\Event.cpp" />
+    <ClCompile Include="src\EventBus\EventBus.cpp" />
+    <ClCompile Include="src\Events\CollisionEvent.cpp" />
     <ClCompile Include="src\Systems\CollisionSystem.cpp" />
     <ClCompile Include="src\Components\BoxColliderComponent.cpp" />
     <ClCompile Include="src\Systems\AnimationSystem.cpp" />

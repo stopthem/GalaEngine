@@ -15,10 +15,12 @@
 #include "../Systems/RenderSystem.h"
 #include "../Systems/AnimationSystem.h"
 #include "../Systems/CollisionSystem.h"
+#include "../Systems/DamageSystem.h"
 #include "../AssetStore/AssetStore.h"
+#include "../EventBus/EventBus.h"
 
 Game::Game()
-	: Registry(std::make_unique<class Registry>()), AssetStore(std::make_unique<class AssetStore>())
+	: Registry(std::make_unique<class Registry>()), AssetStore(std::make_unique<class AssetStore>()), EventBus(std::make_unique<class EventBus>())
 {
 }
 
@@ -64,6 +66,8 @@ void Game::Initialize()
 void Game::Setup()
 {
 	LoadLevel(0);
+
+	Registry->GetSystem<DamageSystem>().Setup(EventBus.get());
 }
 
 void Game::LoadLevel(const int level) const
@@ -105,6 +109,7 @@ void Game::AddSystems() const
 	Registry->AddSystem<RenderSystem>();
 	Registry->AddSystem<AnimationSystem>();
 	Registry->AddSystem<CollisionSystem>();
+	Registry->AddSystem<DamageSystem>();
 }
 
 void Game::CreateTileMap() const
@@ -224,7 +229,7 @@ void Game::Update()
 
 	// Ask all the systems to update.
 	Registry->GetSystem<MovementSystem>().Update(DeltaTime);
-	Registry->GetSystem<CollisionSystem>().Update();
+	Registry->GetSystem<CollisionSystem>().Update(EventBus);
 	Registry->GetSystem<AnimationSystem>().Update();
 
 	// Update the registry to process the entities that are waiting to be created/deleted.
