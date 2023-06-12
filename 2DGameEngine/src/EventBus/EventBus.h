@@ -7,6 +7,11 @@
 #include "../Logger/Logger.h"
 
 class Event;
+/*
+ * IEventCallback
+ *
+ * A wrapper around EventCallback class.
+ */
 class IEventCallback
 {
 public:
@@ -22,6 +27,11 @@ private:
 	virtual void Call(Event& e) = 0;
 };
 
+/*
+ * EventCallback
+ *
+ * The actual event that calls the given function pointer.
+ */
 template<typename TOwner, typename TEventCallback>
 class EventCallback : public IEventCallback
 {
@@ -47,6 +57,12 @@ public:
 
 typedef std::list<std::unique_ptr<IEventCallback>> HandlerList;
 
+/*
+ * EventBus
+ *
+ * "Event Manager" so to say.
+ * Handles all about subscribing to a event to broadcasting to unsubscribing.
+ */
 class EventBus
 {
 public:
@@ -69,6 +85,8 @@ public:
 private:
 	std::map<std::type_index, std::unique_ptr<HandlerList>> EventsAndSubscribers;
 
+	// A vector of subscribers to erase.
+	// We hold this because we want to erase inside iterators to prevent errors.
 	std::vector<std::type_index> SubscribersToBeErased;
 };
 
@@ -89,7 +107,7 @@ void EventBus::BroadcastEvent(TEventArgs... eventArgs)
 
 		// Create event object with given args.
 		TEvent event(std::forward<TEventArgs>(eventArgs)...);
-		
+
 		handler->Execute(event);
 
 		// Try to find if current iterator element is wanted to be erased(unsubscribe) from the list. 
@@ -115,13 +133,17 @@ void EventBus::BroadcastEvent(TEventArgs... eventArgs)
 template <typename TEvent, typename TOwner>
 void EventBus::SubscribeToEvent(TOwner* ownerInstance, void(TOwner::* callbackFunction)(TEvent&))
 {
-	if (!EventsAndSubscribers[typeid(TEvent)].get())
+	auto& callbacksList = EventsAndSubscribers[typeid(TEvent)];
+
+	if (!callbacksList.get())
 	{
-		EventsAndSubscribers[typeid(TEvent)] = std::make_unique<HandlerList>();
+		callbacksList = std::make_unique<HandlerList>();
 	}
 
+	// Create the subscriber.
 	auto subscriber = std::make_unique<EventCallback<TOwner, TEvent>>(ownerInstance, callbackFunction);
-	EventsAndSubscribers[typeid(TEvent)]->push_back(std::move(subscriber));
+	// "Move" subscriber ownership to the added list element.
+	callbacksList->push_back(std::move(subscriber));
 }
 
 template <typename TEvent, typename TOwner>

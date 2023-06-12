@@ -7,11 +7,9 @@ class EventBus;
 class DamageSystem : public System
 {
 public:
-	DamageSystem();
+	explicit DamageSystem(EventBus* eventBus);
 
 public:
-	void Setup(EventBus* eventBus);
-
 	void OnCollision(CollisionEvent& collisionEvent);
 
 private:

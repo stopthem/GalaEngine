@@ -16,8 +16,10 @@
 #include "../Systems/AnimationSystem.h"
 #include "../Systems/CollisionSystem.h"
 #include "../Systems/DamageSystem.h"
+#include "../Systems/KeyboardMovementSystem.h"
 #include "../AssetStore/AssetStore.h"
 #include "../EventBus/EventBus.h"
+#include "../Events/KeyPressedEvent.h"
 
 Game::Game()
 	: Registry(std::make_unique<class Registry>()), AssetStore(std::make_unique<class AssetStore>()), EventBus(std::make_unique<class EventBus>())
@@ -66,8 +68,6 @@ void Game::Initialize()
 void Game::Setup()
 {
 	LoadLevel(0);
-
-	Registry->GetSystem<DamageSystem>().Setup(EventBus.get());
 }
 
 void Game::LoadLevel(const int level) const
@@ -109,7 +109,8 @@ void Game::AddSystems() const
 	Registry->AddSystem<RenderSystem>();
 	Registry->AddSystem<AnimationSystem>();
 	Registry->AddSystem<CollisionSystem>();
-	Registry->AddSystem<DamageSystem>();
+	Registry->AddSystem<DamageSystem>(EventBus.get());
+	Registry->AddSystem<KeyboardMovementSystem>(EventBus.get());
 }
 
 void Game::CreateTileMap() const
@@ -198,15 +199,19 @@ void Game::ProcessInput()
 			break;
 
 		case SDL_KEYDOWN:
-			if (sdlEvent.key.keysym.sym == SDLK_ESCAPE)
+			const SDL_Keycode keycode = sdlEvent.key.keysym.sym;
+
+			if (keycode == SDLK_ESCAPE)
 			{
 				IsRunning = false;
 			}
 
-			if (sdlEvent.key.keysym.sym == SDLK_d)
+			if (keycode == SDLK_d)
 			{
 				IsDebug = !IsDebug;
 			}
+
+			EventBus->BroadcastEvent<KeyPressedEvent>(keycode);
 			break;
 		}
 	}
