@@ -9,6 +9,7 @@
 #include "../Components/SpriteComponent.h"
 #include "../Components/AnimationComponent.h"
 #include "../Components/BoxColliderComponent.h"
+#include "../Components/KeyboardControlledComponent.h"
 #include "../Logger/Logger.h"
 #include "../ECS/ECS.h"
 #include "../Systems/MovementSystem.h"
@@ -16,7 +17,7 @@
 #include "../Systems/AnimationSystem.h"
 #include "../Systems/CollisionSystem.h"
 #include "../Systems/DamageSystem.h"
-#include "../Systems/KeyboardMovementSystem.h"
+#include "../Systems/KeyboardControlSystem.h"
 #include "../AssetStore/AssetStore.h"
 #include "../EventBus/EventBus.h"
 #include "../Events/KeyPressedEvent.h"
@@ -95,6 +96,7 @@ void Game::LoadLevel(const int level) const
 	chopper.AddComponent<TransformComponent>(glm::vec2(WindowWidth / 2, 200), glm::vec2(2), 0);
 	chopper.AddComponent<SpriteComponent>("chopper-image", 32, 32, 2);
 	chopper.AddComponent<AnimationComponent>(2, 10);
+	chopper.AddComponent<KeyboardControlledComponent>(75.0f);
 
 	Entity radar = Registry->CreateEntity();
 	radar.AddComponent<RigidbodyComponent>(glm::vec2(0));
@@ -110,7 +112,18 @@ void Game::AddSystems() const
 	Registry->AddSystem<AnimationSystem>();
 	Registry->AddSystem<CollisionSystem>();
 	Registry->AddSystem<DamageSystem>(EventBus.get());
-	Registry->AddSystem<KeyboardMovementSystem>(EventBus.get());
+	Registry->AddSystem<KeyboardControlSystem>(EventBus.get());
+}
+
+void Game::AddAssets() const
+{
+	AssetStore->AddTexture(Renderer, "tank-image", "./assets/images/tank-panther-right.png");
+	AssetStore->AddTexture(Renderer, "truck-image", "./assets/images/truck-ford-right.png");
+	AssetStore->AddTexture(Renderer, "chopper-image", "./assets/images/chopper-spritesheet.png");
+
+	AssetStore->AddTexture(Renderer, "radar-image", "./assets/images/radar.png");
+
+	AssetStore->AddTexture(Renderer, "jungle-tilemap", "./assets/tilemaps/jungle.png");
 }
 
 void Game::CreateTileMap() const
@@ -163,16 +176,6 @@ void Game::CreateTileMap() const
 	}
 }
 
-void Game::AddAssets() const
-{
-	AssetStore->AddTexture(Renderer, "tank-image", "./assets/images/tank-panther-right.png");
-	AssetStore->AddTexture(Renderer, "truck-image", "./assets/images/truck-ford-right.png");
-	AssetStore->AddTexture(Renderer, "chopper-image", "./assets/images/chopper.png");
-
-	AssetStore->AddTexture(Renderer, "radar-image", "./assets/images/radar.png");
-
-	AssetStore->AddTexture(Renderer, "jungle-tilemap", "./assets/tilemaps/jungle.png");
-}
 
 void Game::Run()
 {

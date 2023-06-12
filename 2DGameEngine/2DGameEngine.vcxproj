@@ -141,8 +141,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\KeyboardControlledComponent.h" />
     <ClInclude Include="src\Events\KeyPressedEvent.h" />
-    <ClInclude Include="src\Systems\KeyboardMovementSystem.h" />
+    <ClInclude Include="src\Systems\KeyboardControlSystem.h" />
     <ClInclude Include="src\Systems\DamageSystem.h" />
     <ClInclude Include="src\EventBus\Event.h" />
     <ClInclude Include="src\EventBus\EventBus.h" />
@@ -551,6 +552,7 @@
     <None Include="libs\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\KeyboardControlledComponent.cpp" />
     <ClCompile Include="src\Events\KeyPressedEvent.cpp" />
     <ClCompile Include="src\Systems\DamageSystem.cpp" />
     <ClCompile Include="src\EventBus\Event.cpp" />
@@ -561,7 +563,7 @@
     <ClCompile Include="src\Systems\AnimationSystem.cpp" />
     <ClCompile Include="src\Components\AnimationComponent.cpp" />
     <ClCompile Include="src\AssetStore\AssetStore.cpp" />
-    <ClCompile Include="src\Systems\KeyboardMovementSystem.cpp" />
+    <ClCompile Include="src\Systems\KeyboardControlSystem.cpp" />
     <ClCompile Include="src\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\Components\SpriteComponent.cpp" />
     <ClCompile Include="src\Components\RigidbodyComponent.cpp" />

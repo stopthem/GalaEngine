@@ -1,19 +1,18 @@
 #pragma once
 
-#include <SDL_keycode.h>
 #include "../ECS/ECS.h"
 
 class EventBus;
 class KeyPressedEvent;
 /*
- * KeyboardMovementSystem
+ * KeyboardControlSystem
  *
  * Currently handles only key pressed events.
  */
-class KeyboardMovementSystem : public System
+class KeyboardControlSystem : public System
 {
 public:
-	explicit KeyboardMovementSystem(EventBus* eventBus);
+	explicit KeyboardControlSystem(EventBus* eventBus);
 
 private:
 	EventBus* EventBusPtr;
@@ -22,6 +21,7 @@ private:
 	void OnKeyboardKeyPressed(KeyPressedEvent& keyPressedEvent);
 
 public:
+	// Unsubscribe from key pressed event.
 	void OnSystemRemoved() override;
 
 };

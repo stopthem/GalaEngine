@@ -16,6 +16,7 @@ private:
 	EventBus* EventBusPtr = nullptr;
 
 public:
+	// Unsubscribe from on collision event.
 	void OnSystemRemoved() override;
 
 public:
