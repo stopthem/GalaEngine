@@ -2,12 +2,27 @@
 
 #include "../ECS/ECS.h"
 
+struct ProjectileParams;
+/*
+ * ProjectileEmitterSystem
+ *
+ * System that handles repetitive projectile emitting.
+ */
 class ProjectileEmitterSystem : public System
 {
 public:
-	ProjectileEmitterSystem();
+	explicit ProjectileEmitterSystem(Registry* registry);
 
 public:
-	void Update(const std::unique_ptr<Registry>& registry) const;
+	// Loop through all system entities and emit their projectiles if their timer is up.
+	void Update() const;
+
+	// This basically spawns a bullet towards entity's angle.
+	// Its too strict i know.
+	void EmitProjectile(Entity systemEntity, const ProjectileParams& projectileParams) const;
+
+private:
+	// Used to create a entity.
+	Registry* RegistryPtr;
 };
 

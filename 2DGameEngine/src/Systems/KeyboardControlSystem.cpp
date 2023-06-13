@@ -26,6 +26,7 @@ void KeyboardControlSystem::OnKeyboardKeyPressed(KeyPressedEvent& keyPressedEven
 		const auto keyboardControlComponent = systemEntity.GetComponent<KeyboardControlledComponent>();
 		auto& spriteComponent = systemEntity.GetComponent<SpriteComponent>();
 		auto& rigidbodyComponent = systemEntity.GetComponent<RigidbodyComponent>();
+		auto& transformComponent = systemEntity.GetComponent<TransformComponent>();
 
 		glm::vec2 movingDirection;
 
@@ -63,6 +64,9 @@ void KeyboardControlSystem::OnKeyboardKeyPressed(KeyPressedEvent& keyPressedEven
 		rigidbodyComponent.Velocity = { movingDirection.x * keyboardControlComponent.Speed, movingDirection.y * keyboardControlComponent.Speed };
 
 		spriteComponent.SrcRect.y = spriteComponent.Height * spriteSheetRow;
+
+		transformComponent.Angle = glm::degrees(static_cast<double>(std::atan2(movingDirection.x, -movingDirection.y)));
+		Logger::Log(std::to_string(transformComponent.Angle));
 	}
 }
 

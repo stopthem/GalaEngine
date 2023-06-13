@@ -4,6 +4,11 @@
 
 struct SDL_Renderer;
 struct SDL_Rect;
+/*
+ * RenderColliderSystem
+ *
+ * Renders all system entity's box collider bounds as a red rectangle when Game.IsDebug is true(toggled with "D" on keyboard).
+ */
 class RenderColliderSystem : public System
 {
 public:

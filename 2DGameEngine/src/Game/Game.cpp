@@ -12,6 +12,8 @@
 #include "../Components/KeyboardControlledComponent.h"
 #include "../Components/CameraFollowComponent.h"
 #include "../Components/ProjectileEmitterComponent.h"
+#include "../Components/HealthComponent.h"
+#include "../Components/ShootingComponent.h"
 #include "../Logger/Logger.h"
 #include "../ECS/ECS.h"
 #include "../Systems/MovementSystem.h"
@@ -24,6 +26,7 @@
 #include "../Systems/RenderColliderSystem.h"
 #include "../Systems/ProjectileEmitterSystem.h"
 #include "../Systems/LifetimeSystem.h"
+#include "../Systems/ShootingSystem.h"
 #include "../AssetStore/AssetStore.h"
 #include "../EventBus/EventBus.h"
 #include "../Events/KeyPressedEvent.h"
@@ -94,25 +97,29 @@ void Game::LoadLevel(const int level) const
 	Entity tank = Registry->CreateEntity();
 	tank.AddComponent<RigidbodyComponent>(glm::vec2(0, 0));
 	tank.AddComponent<TransformComponent>(glm::vec2(300, 0), glm::vec2(2), 0);
-	tank.AddComponent<SpriteComponent>("tank-image", 32, 32, 1);
+	tank.AddComponent<SpriteComponent>("tank-image", 32, 32, 1, false, true);
 	tank.AddComponent<BoxColliderComponent>(32, 32);
-	tank.AddComponent<ProjectileEmitterComponent>(glm::vec2(25, 0), 2000);
+	tank.AddComponent<ProjectileEmitterComponent>(ProjectileParams(glm::vec2(50, 0), false, 5), 3000);
+	tank.AddComponent<HealthComponent>(100);
 
 	Entity truck = Registry->CreateEntity();
 	truck.AddComponent<RigidbodyComponent>(glm::vec2(0, 0));
 	truck.AddComponent<TransformComponent>(glm::vec2(1), glm::vec2(2), 0);
-	truck.AddComponent<SpriteComponent>("truck-image", 32, 32, 1);
+	truck.AddComponent<SpriteComponent>("truck-image", 32, 32, 1, false, true);
 	truck.AddComponent<BoxColliderComponent>(32, 32);
-	truck.AddComponent<ProjectileEmitterComponent>(glm::vec2(0, 50), 3000, false, 5);
+	truck.AddComponent<ProjectileEmitterComponent>(ProjectileParams(glm::vec2(0, 50), false, 5), 3000);
+	truck.AddComponent<HealthComponent>(100);
 
 	// Player
 	Entity chopper = Registry->CreateEntity();
 	chopper.AddComponent<RigidbodyComponent>(glm::vec2(0));
 	chopper.AddComponent<TransformComponent>(glm::vec2(WindowWidth / 2, 200), glm::vec2(2), 0);
-	chopper.AddComponent<SpriteComponent>("chopper-image", 32, 32, 2);
+	chopper.AddComponent<SpriteComponent>("chopper-image", 32, 32, 2, false, true);
 	chopper.AddComponent<AnimationComponent>(2, 10);
-	chopper.AddComponent<KeyboardControlledComponent>(150.0f);
+	chopper.AddComponent<KeyboardControlledComponent>(50.0f);
 	chopper.AddComponent<CameraFollowComponent>();
+	chopper.AddComponent<HealthComponent>(500);
+	chopper.AddComponent<ShootingComponent>(ProjectileParams(), 250);
 
 	Entity radar = Registry->CreateEntity();
 	radar.AddComponent<RigidbodyComponent>(glm::vec2(0));
@@ -132,7 +139,8 @@ void Game::AddSystems() const
 	Registry->AddSystem<KeyboardControlSystem>(EventBus.get());
 	Registry->AddSystem<CameraMovementSystem>();
 	Registry->AddSystem<LifetimeSystem>(Registry.get());
-	Registry->AddSystem<ProjectileEmitterSystem>();
+	Registry->AddSystem<ProjectileEmitterSystem>(Registry.get());
+	Registry->AddSystem<ShootingSystem>(Registry.get(), EventBus.get());
 }
 
 void Game::AddAssets() const
@@ -192,7 +200,7 @@ void Game::CreateTileMap() const
 
 			entity.AddComponent<TransformComponent>(entityLocation, glm::vec2(tileScale), 0.0);
 
-			entity.AddComponent<SpriteComponent>("jungle-tilemap", tileSize, tileSize, 0, false, glm::vec2(textureTilingX, textureTilingY));
+			entity.AddComponent<SpriteComponent>("jungle-tilemap", tileSize, tileSize, 0, false, false, glm::vec2(textureTilingX, textureTilingY));
 		}
 	}
 
@@ -260,7 +268,7 @@ void Game::Update()
 	MilisecsPrevFrame = currentFrameTicks;
 
 	// Ask all the systems to update.
-	Registry->GetSystem<ProjectileEmitterSystem>().Update(Registry);
+	Registry->GetSystem<ProjectileEmitterSystem>().Update();
 	Registry->GetSystem<LifetimeSystem>().Update(DeltaTime);
 	Registry->GetSystem<MovementSystem>().Update(DeltaTime);
 	Registry->GetSystem<CollisionSystem>().Update(EventBus);

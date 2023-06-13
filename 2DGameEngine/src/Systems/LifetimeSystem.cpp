@@ -9,23 +9,26 @@ LifetimeSystem::LifetimeSystem(Registry* registry)
 
 void LifetimeSystem::Update(const double deltaTime) const
 {
-	std::vector<Entity> entities = GetSystemEntities();
+	const std::vector<Entity> entities = GetSystemEntities();
 
-	for (auto it = entities.begin(); it != entities.end();)
+	std::vector<Entity> toBeKilledEntities;
+
+	// First, lets find all entities that we want to kill.
+	for (Entity systemEntity : entities)
 	{
-		Entity systemEntity = *it;
 		auto& lifetimeComponent = systemEntity.GetComponent<LifetimeComponent>();
 
 		lifetimeComponent.CurrentTimerMiliSeconds += static_cast<int>(deltaTime * 1000.0);
 
 		if (lifetimeComponent.CurrentTimerMiliSeconds >= lifetimeComponent.LifetimeMiliSeconds)
 		{
-			RegistryPtr->KillEntity(systemEntity);
-			it = entities.erase(it);
+			toBeKilledEntities.push_back(systemEntity);
 		}
-		else
-		{
-			++it;
-		}
+	}
+
+	// Kill entities in toBeKilledEntities vector.
+	for (const Entity toBeKilledEntity : toBeKilledEntities)
+	{
+		RegistryPtr->KillEntity(toBeKilledEntity);
 	}
 }

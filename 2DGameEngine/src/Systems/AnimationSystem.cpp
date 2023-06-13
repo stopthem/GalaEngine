@@ -18,7 +18,8 @@ void AnimationSystem::Update()
 		auto& animationComponent = entity.GetComponent<AnimationComponent>();
 		auto& spriteComponent = entity.GetComponent<SpriteComponent>();
 
-		animationComponent.CurrentFrame = ((static_cast<int>(SDL_GetTicks()) - animationComponent.StartTime) * animationComponent.FrameSpeedRate / 1000) % animationComponent.NumFrames;
+		animationComponent.CurrentFrame = ((static_cast<int>(SDL_GetTicks()) - animationComponent.StartTime)
+			* animationComponent.FrameSpeedRate / 1000) % animationComponent.NumFrames;
 
 		spriteComponent.SrcRect.x = animationComponent.CurrentFrame * spriteComponent.Width;
 	}

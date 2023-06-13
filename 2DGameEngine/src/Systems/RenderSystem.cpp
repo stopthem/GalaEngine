@@ -39,6 +39,7 @@ void RenderSystem::Update(SDL_Renderer* renderer, const SDL_Rect& cameraRect, co
 			static_cast<int>(static_cast<float>(spriteComponent.Height) * transformComponent.Scale.y),
 		};
 
-		SDL_RenderCopyEx(renderer, assetStore->GetTexture(spriteComponent.ImageAssetId), &srcRect, &dstRect, transformComponent.Angle, nullptr, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(renderer, assetStore->GetTexture(spriteComponent.ImageAssetId), &srcRect, &dstRect
+			, spriteComponent.Render0Angle ? 0 : transformComponent.Angle, nullptr, SDL_FLIP_NONE);
 	}
 }

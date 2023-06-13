@@ -1,21 +1,20 @@
 #pragma once
 
-#include <glm/vec2.hpp>
+#include "ProjectileComponent.h"
 
+/*
+ * ProjectileEmitterComponent
+ *
+ * Component that holds information about projectile params and projectile emitting interval.
+ */
 struct ProjectileEmitterComponent
 {
 public:
-	explicit ProjectileEmitterComponent(glm::vec2 projectileVector = glm::vec2(0), int projectileEmittingInterval = 1000, bool isFriendly = false, double damageAmount = 10, int lifetimeMiliseconds = 5000);
+	explicit ProjectileEmitterComponent(const ProjectileParams& projectileParams = ProjectileParams(), int projectileEmittingInterval = 1000);
 
 public:
-	glm::vec2 ProjectileVector;
+	ProjectileParams EmitterProjectileParams;
 
 	int ProjectileEmittingInterval;
 	int LastEmittedTime;
-
-	int LifetimeMiliSeconds;
-
-	bool IsFriendly;
-
-	double DamageAmount;
 };

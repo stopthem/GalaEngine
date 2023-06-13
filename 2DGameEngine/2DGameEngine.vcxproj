@@ -141,7 +141,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\ShootingComponent.h" />
+    <ClInclude Include="src\Components\HealthComponent.h" />
     <ClInclude Include="src\Components\LifetimeComponent.h" />
+    <ClInclude Include="src\Components\ProjectileComponent.h" />
     <ClInclude Include="src\Components\ProjectileEmitterComponent.h" />
     <ClInclude Include="src\Systems\LifetimeSystem.h" />
     <ClInclude Include="src\Systems\ProjectileEmitterSystem.h" />
@@ -422,6 +425,7 @@
     <ClInclude Include="libs\sol\sol.hpp" />
     <ClInclude Include="src\Components\TransformComponent.h" />
     <ClInclude Include="src\Systems\MovementSystem.h" />
+    <ClInclude Include="src\Systems\ShootingSystem.h" />
     <ClInclude Include="src\Utility\StringUtilities.h" />
   </ItemGroup>
   <ItemGroup>
@@ -559,6 +563,9 @@
     <None Include="libs\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\ShootingComponent.cpp" />
+    <ClCompile Include="src\Components\ProjectileComponent.cpp" />
+    <ClCompile Include="src\Components\HealthComponent.cpp" />
     <ClCompile Include="src\Components\LifetimeComponent.cpp" />
     <ClCompile Include="src\Components\ProjectileEmitterComponent.cpp" />
     <ClCompile Include="src\Systems\LifetimeSystem.cpp" />
@@ -593,6 +600,7 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Components\TransformComponent.cpp" />
     <ClCompile Include="src\Systems\MovementSystem.cpp" />
+    <ClCompile Include="src\Systems\ShootingSystem.cpp" />
     <ClCompile Include="src\Utility\StringUtilities.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
