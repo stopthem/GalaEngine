@@ -8,9 +8,9 @@
 struct HealthComponent
 {
 public:
-	explicit HealthComponent(int health = 100);
+	explicit HealthComponent(double health = 100.0);
 
 public:
-	int Health;
+	double Health;
 };
 

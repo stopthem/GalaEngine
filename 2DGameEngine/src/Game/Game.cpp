@@ -34,8 +34,8 @@
 int Game::WindowWidth;
 int Game::WindowHeight;
 
-int Game::MapWidth;
-int Game::MapHeight;
+double Game::MapWidth;
+double Game::MapHeight;
 
 Game::Game()
 	: Registry(std::make_unique<class Registry>()), AssetStore(std::make_unique<class AssetStore>()), EventBus(std::make_unique<class EventBus>())
@@ -101,6 +101,7 @@ void Game::LoadLevel(const int level) const
 	tank.AddComponent<BoxColliderComponent>(32, 32);
 	tank.AddComponent<ProjectileEmitterComponent>(ProjectileParams(glm::vec2(50, 0), false, 5), 3000);
 	tank.AddComponent<HealthComponent>(100);
+	tank.AddToGroup(GROUP_ENEMY);
 
 	Entity truck = Registry->CreateEntity();
 	truck.AddComponent<RigidbodyComponent>(glm::vec2(0, 0));
@@ -109,6 +110,7 @@ void Game::LoadLevel(const int level) const
 	truck.AddComponent<BoxColliderComponent>(32, 32);
 	truck.AddComponent<ProjectileEmitterComponent>(ProjectileParams(glm::vec2(0, 50), false, 5), 3000);
 	truck.AddComponent<HealthComponent>(100);
+	truck.AddToGroup(GROUP_ENEMY);
 
 	// Player
 	Entity chopper = Registry->CreateEntity();
@@ -116,10 +118,13 @@ void Game::LoadLevel(const int level) const
 	chopper.AddComponent<TransformComponent>(glm::vec2(WindowWidth / 2, 200), glm::vec2(2), 0);
 	chopper.AddComponent<SpriteComponent>("chopper-image", 32, 32, 2, false, true);
 	chopper.AddComponent<AnimationComponent>(2, 10);
-	chopper.AddComponent<KeyboardControlledComponent>(50.0f);
+	chopper.AddComponent<KeyboardControlledComponent>(250.0f);
 	chopper.AddComponent<CameraFollowComponent>();
-	chopper.AddComponent<HealthComponent>(500);
+	chopper.AddComponent<HealthComponent>(10);
 	chopper.AddComponent<ShootingComponent>(ProjectileParams(), 250);
+	chopper.AddComponent<BoxColliderComponent>(32, 32);
+	chopper.AddTag(TAG_PLAYER);
+	chopper.AddToGroup(GROUP_FRIENDLY);
 
 	Entity radar = Registry->CreateEntity();
 	radar.AddComponent<RigidbodyComponent>(glm::vec2(0));
@@ -201,6 +206,8 @@ void Game::CreateTileMap() const
 			entity.AddComponent<TransformComponent>(entityLocation, glm::vec2(tileScale), 0.0);
 
 			entity.AddComponent<SpriteComponent>("jungle-tilemap", tileSize, tileSize, 0, false, false, glm::vec2(textureTilingX, textureTilingY));
+
+			entity.AddToGroup(GROUP_TILEMAP);
 		}
 	}
 

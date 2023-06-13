@@ -57,6 +57,8 @@ void ProjectileEmitterSystem::EmitProjectile(Entity systemEntity, const Projecti
 
 	Entity projectile = RegistryPtr->CreateEntity();
 
+	projectile.AddToGroup(GROUP_PROJECTILE);
+
 	// Get angle of the bullet from atan2 of projectile vector.
 	// Flip y because 0,0 is top left.
 	projectile.AddComponent<TransformComponent>(projectileLocation,

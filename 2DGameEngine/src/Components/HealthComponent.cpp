@@ -1,6 +1,6 @@
 #include "HealthComponent.h"
 
-HealthComponent::HealthComponent(const int health)
+HealthComponent::HealthComponent(const double health)
 	:Health(health)
 {
 }

@@ -17,10 +17,10 @@ void CameraMovementSystem::Update(SDL_Rect& camera) const
 	{
 		const auto transformComponent = systemEntity.GetComponent<TransformComponent>();
 
-		const int wantedCamXPos = transformComponent.Location.x - Game::WindowWidth / 2;
-		const int wantedCamYPos = transformComponent.Location.y - Game::WindowHeight / 2;
+		const int wantedCamXPos = transformComponent.Location.x - static_cast<float>(Game::WindowWidth) / 2;
+		const int wantedCamYPos = transformComponent.Location.y - static_cast<float>(Game::WindowHeight) / 2;
 
-		camera.x = std::clamp(wantedCamXPos, 0, Game::MapWidth - Game::WindowWidth);
-		camera.y = std::clamp(wantedCamYPos, 0, Game::MapHeight - Game::WindowHeight);
+		camera.x = std::clamp(wantedCamXPos, 0, static_cast<int>(Game::MapWidth - Game::WindowWidth));
+		camera.y = std::clamp(wantedCamYPos, 0, static_cast<int>(Game::MapHeight - Game::WindowHeight));
 	}
 }

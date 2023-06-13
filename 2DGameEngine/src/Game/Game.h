@@ -52,8 +52,8 @@ public:
 	static int WindowWidth;
 	static int WindowHeight;
 
-	static int MapWidth;
-	static int MapHeight;
+	static double MapWidth;
+	static double MapHeight;
 
 private:
 	int MilisecsPrevFrame = 0;

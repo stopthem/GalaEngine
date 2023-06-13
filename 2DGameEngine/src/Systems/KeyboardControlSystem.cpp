@@ -66,7 +66,6 @@ void KeyboardControlSystem::OnKeyboardKeyPressed(KeyPressedEvent& keyPressedEven
 		spriteComponent.SrcRect.y = spriteComponent.Height * spriteSheetRow;
 
 		transformComponent.Angle = glm::degrees(static_cast<double>(std::atan2(movingDirection.x, -movingDirection.y)));
-		Logger::Log(std::to_string(transformComponent.Angle));
 	}
 }
 

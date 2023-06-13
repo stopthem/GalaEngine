@@ -7,6 +7,13 @@
 #include <typeindex>
 #include <set>
 
+constexpr char TAG_PLAYER[] = "Player";
+
+constexpr char GROUP_FRIENDLY[] = "FriendlyGroup";
+constexpr char GROUP_ENEMY[] = "EnemyGroup";
+constexpr char GROUP_PROJECTILE[] = "ProjectileGroup";
+constexpr char GROUP_TILEMAP[] = "TileMapGroup";
+
 // We hold this value because we use a bit set for if entity has a component.
 constexpr unsigned int MAX_COMPONENTS = 32;
 
@@ -66,6 +73,21 @@ public:
 
 public:
 	void Kill() const;
+
+#pragma region Tags and Groups
+public:
+	void AddTag(const std::string& tag) const;
+
+	[[nodiscard]] bool HasTag(const std::string& tag) const;
+
+	void RemoveTag() const;
+
+	void AddToGroup(const std::string& group) const;
+
+	[[nodiscard]] bool InGroup(const std::string& group) const;
+
+	void RemoveFromGroup() const;
+#pragma endregion
 
 #pragma region Component
 public:
@@ -213,6 +235,35 @@ public:
 	Entity CreateEntity();
 
 	void KillEntity(Entity entity);
+
+#pragma region Tags and Groups
+private:
+	std::unordered_map<std::string, Entity> EntityPerTag;
+	std::unordered_map<int, std::string> TagPerEntity;
+
+	std::unordered_map<std::string, std::set<Entity>> EntityPerGroup;
+	std::unordered_map<int, std::string> GroupPerEntity;
+
+public:
+	// Im aware like course teacher that most of these functions lack validation.
+	// Look at readme.md to why i don't plan to fix it.
+
+	void AddEntityTag(Entity entity, const std::string& tag);
+
+	[[nodiscard]] bool EntityHasTag(Entity entity, const std::string& tag) const;
+
+	[[nodiscard]] Entity GetEntityByTag(const std::string& tag) const;
+
+	void RemoveEntityTag(Entity entity);
+
+	void AddEntityGroup(Entity entity, const std::string& group);
+
+	[[nodiscard]] bool IsEntityInGroup(Entity entity, const std::string& group) const;
+
+	[[nodiscard]] std::vector <Entity> GetEntitiesByGroup(const std::string& group) const;
+
+	void RemoveEntityGroup(Entity entity);
+#pragma endregion
 
 #pragma region Component
 
