@@ -27,30 +27,30 @@ void KeyboardControlSystem::OnKeyboardKeyPressed(KeyPressedEvent& keyPressedEven
 		auto& spriteComponent = systemEntity.GetComponent<SpriteComponent>();
 		auto& rigidbodyComponent = systemEntity.GetComponent<RigidbodyComponent>();
 
-		glm::vec2 finalVelocity = rigidbodyComponent.Velocity;
+		glm::vec2 movingDirection;
 
 		int spriteSheetRow = 0;
 
 		switch (keyPressedEvent.PressedKeyCode)
 		{
 		case SDLK_UP:
-			finalVelocity = keyboardControlComponent.UpVelocity;
+			movingDirection = { 0,-1 };
 			break;
 
 		case SDLK_RIGHT:
-			finalVelocity = keyboardControlComponent.RightVelocity;
+			movingDirection = { 1,0 };
 
 			spriteSheetRow = 1;
 			break;
 
 		case SDLK_DOWN:
-			finalVelocity = keyboardControlComponent.DownVelocity;
+			movingDirection = { 0,1 };
 
 			spriteSheetRow = 2;
 			break;
 
 		case SDLK_LEFT:
-			finalVelocity = keyboardControlComponent.LeftVelocity;
+			movingDirection = { -1,0 };
 
 			spriteSheetRow = 3;
 			break;
@@ -60,7 +60,7 @@ void KeyboardControlSystem::OnKeyboardKeyPressed(KeyPressedEvent& keyPressedEven
 			return;
 		}
 
-		rigidbodyComponent.Velocity = finalVelocity;
+		rigidbodyComponent.Velocity = { movingDirection.x * keyboardControlComponent.Speed, movingDirection.y * keyboardControlComponent.Speed };
 
 		spriteComponent.SrcRect.y = spriteComponent.Height * spriteSheetRow;
 	}

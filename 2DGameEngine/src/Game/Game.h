@@ -31,7 +31,6 @@ public:
 	void Run();
 	void ProcessInput();
 	void Update();
-	void DebugRenderCollisionBoxes() const;
 
 	void Render() const;
 

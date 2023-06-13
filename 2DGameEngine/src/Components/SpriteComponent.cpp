@@ -6,5 +6,3 @@ SpriteComponent::SpriteComponent(std::string imageAssetId, const int width, cons
 	, ZIndex(zIndex), IsFixed(isFixed)
 {
 }
-
-SpriteComponent::~SpriteComponent() = default;

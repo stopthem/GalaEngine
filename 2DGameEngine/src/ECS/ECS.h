@@ -79,6 +79,9 @@ public:
 	[[nodiscard]] bool HasComponent() const;
 
 	template<typename TComponent>
+	[[nodiscard]] bool TryGetComponent(TComponent& out_component);
+
+	template<typename TComponent>
 	[[nodiscard]] TComponent& GetComponent();
 #pragma endregion
 
@@ -208,6 +211,7 @@ private:
 
 public:
 	Entity CreateEntity();
+
 	void KillEntity(Entity entity);
 
 #pragma region Component
@@ -386,6 +390,19 @@ template <typename TComponent>
 bool Entity::HasComponent() const
 {
 	return Registry->HasComponent<TComponent>(*this);
+}
+
+template <typename TComponent>
+bool Entity::TryGetComponent(TComponent& out_component)
+{
+	if (!Registry->HasComponent<TComponent>(*this))
+	{
+		return false;
+	}
+
+	out_component = GetComponent<TComponent>();
+
+	return true;
 }
 
 template <typename TComponent>

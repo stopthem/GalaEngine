@@ -14,7 +14,6 @@ struct SpriteComponent
 {
 public:
 	explicit  SpriteComponent(std::string imageAssetId = "", int width = 32, int height = 32, int zIndex = 0, bool isFixed = false, glm::vec2 srcPos = glm::vec2(0));
-	~SpriteComponent();
 
 public:
 	std::string ImageAssetId;

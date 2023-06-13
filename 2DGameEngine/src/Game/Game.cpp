@@ -11,6 +11,7 @@
 #include "../Components/BoxColliderComponent.h"
 #include "../Components/KeyboardControlledComponent.h"
 #include "../Components/CameraFollowComponent.h"
+#include "../Components/ProjectileEmitterComponent.h"
 #include "../Logger/Logger.h"
 #include "../ECS/ECS.h"
 #include "../Systems/MovementSystem.h"
@@ -20,6 +21,9 @@
 #include "../Systems/DamageSystem.h"
 #include "../Systems/KeyboardControlSystem.h"
 #include "../Systems/CameraMovementSystem.h"
+#include "../Systems/RenderColliderSystem.h"
+#include "../Systems/ProjectileEmitterSystem.h"
+#include "../Systems/LifetimeSystem.h"
 #include "../AssetStore/AssetStore.h"
 #include "../EventBus/EventBus.h"
 #include "../Events/KeyPressedEvent.h"
@@ -88,17 +92,20 @@ void Game::LoadLevel(const int level) const
 	CreateTileMap();
 
 	Entity tank = Registry->CreateEntity();
-	tank.AddComponent<RigidbodyComponent>(glm::vec2(-30, 0));
+	tank.AddComponent<RigidbodyComponent>(glm::vec2(0, 0));
 	tank.AddComponent<TransformComponent>(glm::vec2(300, 0), glm::vec2(2), 0);
 	tank.AddComponent<SpriteComponent>("tank-image", 32, 32, 1);
 	tank.AddComponent<BoxColliderComponent>(32, 32);
+	tank.AddComponent<ProjectileEmitterComponent>(glm::vec2(25, 0), 2000);
 
 	Entity truck = Registry->CreateEntity();
-	truck.AddComponent<RigidbodyComponent>(glm::vec2(10, 0));
+	truck.AddComponent<RigidbodyComponent>(glm::vec2(0, 0));
 	truck.AddComponent<TransformComponent>(glm::vec2(1), glm::vec2(2), 0);
 	truck.AddComponent<SpriteComponent>("truck-image", 32, 32, 1);
 	truck.AddComponent<BoxColliderComponent>(32, 32);
+	truck.AddComponent<ProjectileEmitterComponent>(glm::vec2(0, 50), 3000, false, 5);
 
+	// Player
 	Entity chopper = Registry->CreateEntity();
 	chopper.AddComponent<RigidbodyComponent>(glm::vec2(0));
 	chopper.AddComponent<TransformComponent>(glm::vec2(WindowWidth / 2, 200), glm::vec2(2), 0);
@@ -118,11 +125,14 @@ void Game::AddSystems() const
 {
 	Registry->AddSystem<MovementSystem>();
 	Registry->AddSystem<RenderSystem>();
+	Registry->AddSystem<RenderColliderSystem>();
 	Registry->AddSystem<AnimationSystem>();
 	Registry->AddSystem<CollisionSystem>();
 	Registry->AddSystem<DamageSystem>(EventBus.get());
 	Registry->AddSystem<KeyboardControlSystem>(EventBus.get());
 	Registry->AddSystem<CameraMovementSystem>();
+	Registry->AddSystem<LifetimeSystem>(Registry.get());
+	Registry->AddSystem<ProjectileEmitterSystem>();
 }
 
 void Game::AddAssets() const
@@ -130,6 +140,7 @@ void Game::AddAssets() const
 	AssetStore->AddTexture(Renderer, "tank-image", "./assets/images/tank-panther-right.png");
 	AssetStore->AddTexture(Renderer, "truck-image", "./assets/images/truck-ford-right.png");
 	AssetStore->AddTexture(Renderer, "chopper-image", "./assets/images/chopper-spritesheet.png");
+	AssetStore->AddTexture(Renderer, "bullet-image", "./assets/images/bullet.png");
 
 	AssetStore->AddTexture(Renderer, "radar-image", "./assets/images/radar.png");
 
@@ -249,6 +260,8 @@ void Game::Update()
 	MilisecsPrevFrame = currentFrameTicks;
 
 	// Ask all the systems to update.
+	Registry->GetSystem<ProjectileEmitterSystem>().Update(Registry);
+	Registry->GetSystem<LifetimeSystem>().Update(DeltaTime);
 	Registry->GetSystem<MovementSystem>().Update(DeltaTime);
 	Registry->GetSystem<CollisionSystem>().Update(EventBus);
 	Registry->GetSystem<AnimationSystem>().Update();
@@ -256,29 +269,6 @@ void Game::Update()
 
 	// Update the registry to process the entities that are waiting to be created/deleted.
 	Registry->Update();
-}
-
-void Game::DebugRenderCollisionBoxes() const
-{
-	// Set render color to red.
-	SDL_SetRenderDrawColor(Renderer, 255, 0, 0, 255);
-
-	// Iterate through collision system entities.
-	for (Entity systemEntity : Registry->GetSystem<CollisionSystem>().GetSystemEntities())
-	{
-		const auto entityTransformComponent = systemEntity.GetComponent<TransformComponent>();
-		const auto entityBoxColliderComponent = systemEntity.GetComponent<BoxColliderComponent>();
-
-		// Create a sdl rect with our entity's transform and box collider components.
-		// Include offset of the box collision and scale of the transform too.
-		SDL_Rect boxCollisionRect;
-		boxCollisionRect.x = static_cast<int>(entityTransformComponent.Location.x + entityBoxColliderComponent.Offset.x);
-		boxCollisionRect.y = static_cast<int>(entityTransformComponent.Location.y + entityBoxColliderComponent.Offset.y);
-		boxCollisionRect.w = entityBoxColliderComponent.Width * static_cast<int>(entityTransformComponent.Scale.x);
-		boxCollisionRect.h = entityBoxColliderComponent.Height * static_cast<int>(entityTransformComponent.Scale.y);
-
-		SDL_RenderDrawRect(Renderer, &boxCollisionRect);
-	}
 }
 
 void Game::Render() const
@@ -291,7 +281,7 @@ void Game::Render() const
 
 	if (IsDebug)
 	{
-		DebugRenderCollisionBoxes();
+		Registry->GetSystem<RenderColliderSystem>().Update(Renderer, CameraRect);
 	}
 
 	SDL_RenderPresent(Renderer);

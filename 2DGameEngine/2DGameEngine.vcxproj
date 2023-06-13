@@ -141,6 +141,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\LifetimeComponent.h" />
+    <ClInclude Include="src\Components\ProjectileEmitterComponent.h" />
+    <ClInclude Include="src\Systems\LifetimeSystem.h" />
+    <ClInclude Include="src\Systems\ProjectileEmitterSystem.h" />
+    <ClInclude Include="src\Systems\RenderColliderSystem.h" />
     <ClInclude Include="src\Components\CameraFollowComponent.h" />
     <ClInclude Include="src\Components\KeyboardControlledComponent.h" />
     <ClInclude Include="src\Events\KeyPressedEvent.h" />
@@ -554,6 +559,11 @@
     <None Include="libs\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\LifetimeComponent.cpp" />
+    <ClCompile Include="src\Components\ProjectileEmitterComponent.cpp" />
+    <ClCompile Include="src\Systems\LifetimeSystem.cpp" />
+    <ClCompile Include="src\Systems\ProjectileEmitterSystem.cpp" />
+    <ClCompile Include="src\Systems\RenderColliderSystem.cpp" />
     <ClCompile Include="src\Components\CameraFollowComponent.cpp" />
     <ClCompile Include="src\Components\KeyboardControlledComponent.cpp" />
     <ClCompile Include="src\Events\KeyPressedEvent.cpp" />
