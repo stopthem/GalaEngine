@@ -15,6 +15,7 @@
 #include "../Components/HealthComponent.h"
 #include "../Components/ShootingComponent.h"
 #include "../Components/TextComponent.h"
+#include "../Components/HealthBarComponent.h"
 #include "../Logger/Logger.h"
 #include "../ECS/ECS.h"
 #include "../Systems/MovementSystem.h"
@@ -29,6 +30,7 @@
 #include "../Systems/LifetimeSystem.h"
 #include "../Systems/ShootingSystem.h"
 #include "../Systems/RenderTextSystem.h"
+#include "../Systems/RenderHealthBarsSystem.h"
 #include "../AssetStore/AssetStore.h"
 #include "../EventBus/EventBus.h"
 #include "../Events/KeyPressedEvent.h"
@@ -104,11 +106,12 @@ void Game::LoadLevel(const int level) const
 
 	Entity tank = Registry->CreateEntity();
 	tank.AddComponent<RigidbodyComponent>(glm::vec2(0, 0));
-	tank.AddComponent<TransformComponent>(glm::vec2(300, 0), glm::vec2(2), 0);
+	tank.AddComponent<TransformComponent>(glm::vec2(300, 100), glm::vec2(2), 0);
 	tank.AddComponent<SpriteComponent>("tank-image", 32, 32, 1, false, true);
 	tank.AddComponent<BoxColliderComponent>(32, 32);
 	tank.AddComponent<ProjectileEmitterComponent>(ProjectileParams(glm::vec2(50, 0), false, 5), 3000);
-	tank.AddComponent<HealthComponent>(10);
+	tank.AddComponent<HealthComponent>(50);
+	tank.AddComponent<HealthBarComponent>();
 	tank.AddToGroup(GROUP_ENEMY);
 
 	Entity truck = Registry->CreateEntity();
@@ -117,7 +120,7 @@ void Game::LoadLevel(const int level) const
 	truck.AddComponent<SpriteComponent>("truck-image", 32, 32, 1, false, true);
 	truck.AddComponent<BoxColliderComponent>(32, 32);
 	truck.AddComponent<ProjectileEmitterComponent>(ProjectileParams(glm::vec2(0, 50), false, 5), 3000);
-	truck.AddComponent<HealthComponent>(100);
+	truck.AddComponent<HealthComponent>(25);
 	truck.AddToGroup(GROUP_ENEMY);
 
 	// Player
@@ -129,6 +132,7 @@ void Game::LoadLevel(const int level) const
 	chopper.AddComponent<KeyboardControlledComponent>(150.0f);
 	chopper.AddComponent<CameraFollowComponent>();
 	chopper.AddComponent<HealthComponent>(10);
+	chopper.AddComponent<HealthBarComponent>();
 	chopper.AddComponent<ShootingComponent>(ProjectileParams(glm::vec2(0), true), 250);
 	chopper.AddComponent<BoxColliderComponent>(32, 32);
 	chopper.AddTag(TAG_PLAYER);
@@ -141,8 +145,8 @@ void Game::LoadLevel(const int level) const
 	radar.AddComponent<AnimationComponent>(8, 7);
 
 	Entity label = Registry->CreateEntity();
-	SDL_Color labelColor = { 255,255,255 };
-	label.AddComponent<TextComponent>(glm::vec2(WindowWidth / 2, 150), "Hello World!", "charriot-font", labelColor);
+	constexpr SDL_Color labelColor = { 255,255,255 };
+	label.AddComponent<TextComponent>(TextComponentParams(glm::vec2(WindowWidth / 2, 150), "Hello World!", "charriot-font", labelColor));
 }
 
 void Game::AddSystems() const
@@ -158,7 +162,8 @@ void Game::AddSystems() const
 	Registry->AddSystem<LifetimeSystem>(Registry.get());
 	Registry->AddSystem<ProjectileEmitterSystem>(Registry.get());
 	Registry->AddSystem<ShootingSystem>(Registry.get(), EventBus.get());
-	Registry->AddSystem<RenderTextSystem>();
+	Registry->AddSystem<RenderTextSystem>(Renderer, AssetStore.get(), CameraRect);
+	Registry->AddSystem<RenderHealthBarsSystem>();
 }
 
 void Game::AddAssets() const
@@ -308,7 +313,8 @@ void Game::Render() const
 
 	// Ask all render systems that needs a update.
 	Registry->GetSystem<RenderSystem>().Update(Renderer, CameraRect, AssetStore);
-	Registry->GetSystem<RenderTextSystem>().Update(Renderer, CameraRect, AssetStore);
+	Registry->GetSystem<RenderHealthBarsSystem>().Update(Registry, Renderer, CameraRect);
+	Registry->GetSystem<RenderTextSystem>().Update();
 
 	if (IsDebug)
 	{

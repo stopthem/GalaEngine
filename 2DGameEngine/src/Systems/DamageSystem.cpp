@@ -16,11 +16,14 @@ void DamageSystem::OnCollision(CollisionEvent& collisionEvent)
 {
 	auto CheckProjectileHitEnemyOrPlayer = [&](Entity sourceEntity, Entity targetEntity)
 	{
+		// If source entity is not projectile return.
+		// We check both entities that collisionEvent provides us so target entity can be projectile too.
 		if (!sourceEntity.InGroup(GROUP_PROJECTILE))
 		{
 			return false;
 		}
 
+		// If target has no health component, we have nothing to damage.
 		if (!targetEntity.HasComponent<HealthComponent>())
 		{
 			return false;
@@ -31,6 +34,7 @@ void DamageSystem::OnCollision(CollisionEvent& collisionEvent)
 		const bool targetIsFriendly = targetEntity.InGroup(GROUP_FRIENDLY);
 
 		const decltype(auto) projectileComponent = sourceEntity.GetComponent<ProjectileComponent>();
+		
 		if (targetIsFriendly && projectileComponent.IsFriendly)
 		{
 			return false;
@@ -52,6 +56,8 @@ void DamageSystem::OnCollision(CollisionEvent& collisionEvent)
 
 		return true;
 	};
+
+	// Check both entities that collisionEvent sent us.
 
 	if (!CheckProjectileHitEnemyOrPlayer(collisionEvent.SourceEntity, collisionEvent.TargetEntity))
 	{

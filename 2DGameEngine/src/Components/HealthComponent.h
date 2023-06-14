@@ -11,6 +11,10 @@ public:
 	explicit HealthComponent(double health = 100.0);
 
 public:
+	double StartingHealth;
 	double Health;
+
+public:
+	[[nodiscard]] double GetHealthNormalized() const { return Health / StartingHealth; }
 };
 

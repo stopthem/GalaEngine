@@ -1,41 +1,49 @@
 #include "RenderTextSystem.h"
 #include <SDL_surface.h>
 #include <SDL_ttf.h>
-
 #include "../AssetStore/AssetStore.h"
 #include "../Components/TextComponent.h"
 
-RenderTextSystem::RenderTextSystem()
+RenderTextSystem::RenderTextSystem(SDL_Renderer* renderer, AssetStore* assetStore, const SDL_Rect& cameraRect)
+	:RendererPtr(renderer), AssetStorePtr(assetStore), CameraRect(cameraRect)
 {
 	RequireComponent<TextComponent>();
 }
 
-void RenderTextSystem::Update(SDL_Renderer* renderer, const SDL_Rect& cameraRect, const std::unique_ptr<AssetStore>& assetStore) const
+void RenderTextSystem::Update() const
 {
 	for (Entity systemEntity : GetSystemEntities())
 	{
 		const auto textComponent = systemEntity.GetComponent<TextComponent>();
 
-		SDL_Surface* surface = TTF_RenderText_Blended(assetStore->GetFont(textComponent.FontAssetId), textComponent.Text.c_str(), textComponent.Color);
-
-		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-
-		// We don't need surface anymore.
-		SDL_FreeSurface(surface);
-
-		int textWidth = 0;
-		int textHeight = 0;
-
-		// Calculate width and height of the text with query.
-		SDL_QueryTexture(texture, nullptr, nullptr, &textWidth, &textHeight);
-
-		SDL_Rect dstRect = {
-			static_cast<int>(textComponent.Location.x - (textComponent.IsFixed ? 0 : static_cast<float>(cameraRect.x))),
-			static_cast<int>(textComponent.Location.y - (textComponent.IsFixed ? 0 : static_cast<float>(cameraRect.y))),
-			textWidth,
-			textHeight
-		};
-
-		SDL_RenderCopy(renderer, texture, nullptr, &dstRect);
+		RenderText(textComponent.TextParams);
 	}
+}
+
+void RenderTextSystem::RenderText(const TextComponentParams& textComponentParams) const
+{
+	SDL_Surface* surface = TTF_RenderText_Blended(AssetStorePtr->GetFont(textComponentParams.FontAssetId), textComponentParams.Text.c_str(), textComponentParams.Color);
+
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(RendererPtr, surface);
+
+	// We don't need surface anymore.
+	SDL_FreeSurface(surface);
+
+	int textWidth = 0;
+	int textHeight = 0;
+
+	// Calculate width and height of the text with query.
+	SDL_QueryTexture(texture, nullptr, nullptr, &textWidth, &textHeight);
+
+	const SDL_Rect dstRect = {
+		static_cast<int>(textComponentParams.Location.x - (textComponentParams.IsFixed ? 0 : static_cast<float>(CameraRect.x))),
+		static_cast<int>(textComponentParams.Location.y - (textComponentParams.IsFixed ? 0 : static_cast<float>(CameraRect.y))),
+		textWidth,
+		textHeight
+	};
+
+	SDL_RenderCopy(RendererPtr, texture, nullptr, &dstRect);
+
+	// We have no use for texture anymore.
+	SDL_DestroyTexture(texture);
 }

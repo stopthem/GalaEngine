@@ -102,6 +102,7 @@ public:
 	template<typename TComponent>
 	[[nodiscard]] bool HasComponent() const;
 
+	// Returns if component exists and if found, sticks it in out_component.
 	template<typename TComponent>
 	[[nodiscard]] bool TryGetComponent(TComponent& out_component);
 
@@ -359,6 +360,7 @@ public:
 
 	template<typename TComponent>
 	[[nodiscard]] TComponent& GetComponent(Entity entity);
+
 #pragma endregion
 
 #pragma region System
