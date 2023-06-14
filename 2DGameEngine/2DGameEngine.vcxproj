@@ -146,6 +146,7 @@
     <ClInclude Include="src\Components\LifetimeComponent.h" />
     <ClInclude Include="src\Components\ProjectileComponent.h" />
     <ClInclude Include="src\Components\ProjectileEmitterComponent.h" />
+    <ClInclude Include="src\Components\TextComponent.h" />
     <ClInclude Include="src\Systems\LifetimeSystem.h" />
     <ClInclude Include="src\Systems\ProjectileEmitterSystem.h" />
     <ClInclude Include="src\Systems\RenderColliderSystem.h" />
@@ -425,6 +426,7 @@
     <ClInclude Include="libs\sol\sol.hpp" />
     <ClInclude Include="src\Components\TransformComponent.h" />
     <ClInclude Include="src\Systems\MovementSystem.h" />
+    <ClInclude Include="src\Systems\RenderTextSystem.h" />
     <ClInclude Include="src\Systems\ShootingSystem.h" />
     <ClInclude Include="src\Utility\StringUtilities.h" />
   </ItemGroup>
@@ -568,6 +570,7 @@
     <ClCompile Include="src\Components\HealthComponent.cpp" />
     <ClCompile Include="src\Components\LifetimeComponent.cpp" />
     <ClCompile Include="src\Components\ProjectileEmitterComponent.cpp" />
+    <ClCompile Include="src\Components\TextComponent.cpp" />
     <ClCompile Include="src\Systems\LifetimeSystem.cpp" />
     <ClCompile Include="src\Systems\ProjectileEmitterSystem.cpp" />
     <ClCompile Include="src\Systems\RenderColliderSystem.cpp" />
@@ -600,6 +603,7 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Components\TransformComponent.cpp" />
     <ClCompile Include="src\Systems\MovementSystem.cpp" />
+    <ClCompile Include="src\Systems\RenderTextSystem.cpp" />
     <ClCompile Include="src\Systems\ShootingSystem.cpp" />
     <ClCompile Include="src\Utility\StringUtilities.cpp" />
   </ItemGroup>

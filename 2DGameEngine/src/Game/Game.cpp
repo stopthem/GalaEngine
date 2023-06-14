@@ -14,6 +14,7 @@
 #include "../Components/ProjectileEmitterComponent.h"
 #include "../Components/HealthComponent.h"
 #include "../Components/ShootingComponent.h"
+#include "../Components/TextComponent.h"
 #include "../Logger/Logger.h"
 #include "../ECS/ECS.h"
 #include "../Systems/MovementSystem.h"
@@ -27,6 +28,7 @@
 #include "../Systems/ProjectileEmitterSystem.h"
 #include "../Systems/LifetimeSystem.h"
 #include "../Systems/ShootingSystem.h"
+#include "../Systems/RenderTextSystem.h"
 #include "../AssetStore/AssetStore.h"
 #include "../EventBus/EventBus.h"
 #include "../Events/KeyPressedEvent.h"
@@ -50,6 +52,12 @@ void Game::Initialize()
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
 		Logger::Err("Error initializing SDL.");
+		return;
+	}
+
+	if (TTF_Init() != 0)
+	{
+		Logger::Err("Error initializing SDL TTF");
 		return;
 	}
 
@@ -131,6 +139,10 @@ void Game::LoadLevel(const int level) const
 	radar.AddComponent<TransformComponent>(glm::vec2(WindowWidth - 164, 32), glm::vec2(2), 0.0);
 	radar.AddComponent<SpriteComponent>("radar-image", 64, 64, 2, true);
 	radar.AddComponent<AnimationComponent>(8, 7);
+
+	Entity label = Registry->CreateEntity();
+	SDL_Color labelColor = { 255,255,255 };
+	label.AddComponent<TextComponent>(glm::vec2(WindowWidth / 2, 150), "Hello World!", "charriot-font", labelColor);
 }
 
 void Game::AddSystems() const
@@ -146,6 +158,7 @@ void Game::AddSystems() const
 	Registry->AddSystem<LifetimeSystem>(Registry.get());
 	Registry->AddSystem<ProjectileEmitterSystem>(Registry.get());
 	Registry->AddSystem<ShootingSystem>(Registry.get(), EventBus.get());
+	Registry->AddSystem<RenderTextSystem>();
 }
 
 void Game::AddAssets() const
@@ -158,6 +171,8 @@ void Game::AddAssets() const
 	AssetStore->AddTexture(Renderer, "radar-image", "./assets/images/radar.png");
 
 	AssetStore->AddTexture(Renderer, "jungle-tilemap", "./assets/tilemaps/jungle.png");
+
+	AssetStore->AddFont("charriot-font", "./assets/fonts/charriot.ttf", 16);
 }
 
 void Game::CreateTileMap() const
@@ -293,6 +308,7 @@ void Game::Render() const
 
 	// Ask all render systems that needs a update.
 	Registry->GetSystem<RenderSystem>().Update(Renderer, CameraRect, AssetStore);
+	Registry->GetSystem<RenderTextSystem>().Update(Renderer, CameraRect, AssetStore);
 
 	if (IsDebug)
 	{
