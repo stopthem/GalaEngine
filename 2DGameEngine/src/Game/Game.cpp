@@ -100,7 +100,7 @@ void Game::LoadLevel(const int level) const
 	tank.AddComponent<SpriteComponent>("tank-image", 32, 32, 1, false, true);
 	tank.AddComponent<BoxColliderComponent>(32, 32);
 	tank.AddComponent<ProjectileEmitterComponent>(ProjectileParams(glm::vec2(50, 0), false, 5), 3000);
-	tank.AddComponent<HealthComponent>(100);
+	tank.AddComponent<HealthComponent>(10);
 	tank.AddToGroup(GROUP_ENEMY);
 
 	Entity truck = Registry->CreateEntity();
@@ -118,10 +118,10 @@ void Game::LoadLevel(const int level) const
 	chopper.AddComponent<TransformComponent>(glm::vec2(WindowWidth / 2, 200), glm::vec2(2), 0);
 	chopper.AddComponent<SpriteComponent>("chopper-image", 32, 32, 2, false, true);
 	chopper.AddComponent<AnimationComponent>(2, 10);
-	chopper.AddComponent<KeyboardControlledComponent>(250.0f);
+	chopper.AddComponent<KeyboardControlledComponent>(150.0f);
 	chopper.AddComponent<CameraFollowComponent>();
 	chopper.AddComponent<HealthComponent>(10);
-	chopper.AddComponent<ShootingComponent>(ProjectileParams(), 250);
+	chopper.AddComponent<ShootingComponent>(ProjectileParams(glm::vec2(0), true), 250);
 	chopper.AddComponent<BoxColliderComponent>(32, 32);
 	chopper.AddTag(TAG_PLAYER);
 	chopper.AddToGroup(GROUP_FRIENDLY);

@@ -187,6 +187,7 @@ void Registry::RemoveEntityFromSystems(const Entity entity)
 void Registry::Update()
 {
 	// Process entities to be added.
+
 	for (const Entity entity : EntitiesToBeAdded)
 	{
 		AddEntityToSystems(entity);
@@ -195,6 +196,7 @@ void Registry::Update()
 	EntitiesToBeAdded.clear();
 
 	// Process entities to be killed.
+
 	for (Entity entityToBeKilled : EntitiesToBeKilled)
 	{
 		RemoveEntityFromSystems(entityToBeKilled);
@@ -206,6 +208,11 @@ void Registry::Update()
 		FreeIds.push_back(entityToBeKilled.GetId());
 
 		EntityComponentSignatures[entityToBeKilled.GetId()].reset();
+
+		for (const std::shared_ptr<IPool>& componentPool : ComponentPools)
+		{
+			componentPool->RemoveEntityFromPool(entityToBeKilled.GetId());
+		}
 	}
 
 	EntitiesToBeKilled.clear();

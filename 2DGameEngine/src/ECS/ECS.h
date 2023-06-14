@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include <typeindex>
 #include <set>
+#include <string>
+#include "../Logger/Logger.h"
 
 constexpr char TAG_PLAYER[] = "Player";
 
@@ -174,6 +176,9 @@ void System::RequireComponent() {
 class IPool {
 public:
 	virtual ~IPool() = default;
+
+public:
+	virtual void RemoveEntityFromPool(uint32_t entityId) = 0;
 };
 
 /*
@@ -184,28 +189,93 @@ public:
 template<typename TPool>
 class Pool final :public IPool {
 public:
-	explicit Pool(int size = 100) { Data.reserve(size); }
+	Pool() = default;
 	~Pool() override = default;
+
+public:
+	void RemoveEntityFromPool(const uint32_t entityId) override
+	{
+		// Did we not find the index of the given entityId ?
+		if (std::find(EntityIdToIndex.begin(), EntityIdToIndex.end(), entityId) == EntityIdToIndex.end())
+		{
+			return;
+		}
+
+		Remove(entityId);
+	}
 
 private:
 	std::vector<TPool> Data;
 
+	std::vector<uint32_t> EntityIdToIndex;
+
+	std::vector<uint32_t> IndexToEntity;
+
 public:
-	bool IsEmpty() { return Data.empty(); }
+	[[nodiscard]] bool IsEmpty() const { return Data.size() == 0; }
 
-	int GetSize() { return Data.size(); }
+	[[nodiscard]] int GetSize() const { return Data.size(); }
 
-	void Resize(int size) { Data.resize(size); }
+	void Clear()
+	{
+		Data.clear();
 
-	void Clear() { Data.clear(); }
+		EntityIdToIndex.clear();
 
-	void Add(TPool object) { Data.push_back(object); }
+		IndexToEntity.clear();
+	}
 
-	void Set(int index, TPool object) { Data[index] = object; }
+	void Set(const uint32_t entityId, TPool object)
+	{
+		const uint32_t index = Data.size();
 
-	TPool& Get(int index) { return static_cast<TPool&>(Data[index]); }
+		// We resize because we don't pop or erase this vector.
+		if (EntityIdToIndex.size() < entityId + 1)
+		{
+			EntityIdToIndex.resize((entityId + 1) * 2);
+		}
 
-	TPool& operator[](unsigned int index) { return Data[index]; }
+		EntityIdToIndex[entityId] = index;
+
+		// This vector and Data vector's size is same.
+		// With that, we can push back safely.
+		IndexToEntity.push_back(entityId);
+
+		Data.push_back(object);
+	}
+
+	void Remove(const uint32_t entityId)
+	{
+		// Did we not found the given entityId in our EntityIdToIndex vector ?
+		if (std::find(EntityIdToIndex.begin(), EntityIdToIndex.end(), entityId) == EntityIdToIndex.end())
+		{
+			return;
+		}
+
+		const uint32_t deletedIndex = EntityIdToIndex[entityId];
+
+		const uint32_t indexOfLast = Data.size() - 1;
+
+		const uint32_t entityIdOfLastElement = IndexToEntity[indexOfLast];
+
+		// Change deleted index component to last component so we can pop from back.
+		Data[deletedIndex] = Data[indexOfLast];
+
+		// Change last index of EntityIdToIndex to deleted index because we will do opposite on IndexToEntity.
+		EntityIdToIndex[entityIdOfLastElement] = deletedIndex;
+
+		IndexToEntity[deletedIndex] = entityIdOfLastElement;
+
+		// This vector and Data vector's size is same.
+		// With that, we can pop back safely.
+		IndexToEntity.pop_back();
+
+		Data.pop_back();
+	}
+
+	TPool& Get(const uint32_t index) { return Data[EntityIdToIndex[index]]; }
+
+	TPool& operator[](const uint32_t index) { return Get(index); }
 };
 
 /*
@@ -346,12 +416,6 @@ TComponent& Registry::AddComponent(const Entity entity, TComponentArgs ...compon
 	// Fetch the corresponding type of pool from component pools.
 	std::shared_ptr<Pool<TComponent>> componentPool = std::static_pointer_cast<Pool<TComponent>>(ComponentPools[componentId]);
 
-	// If entity id is greater than current componentPool size, resize it.
-	if (entityId >= componentPool->GetSize())
-	{
-		componentPool->Resize(NumEntities);
-	}
-
 	// Create the new component with the given multiple componentArgs.
 	TComponent newComponent(std::forward<TComponentArgs>(componentArgs)...);
 
@@ -371,6 +435,9 @@ void Registry::RemoveComponent(const Entity entity)
 	const int entityId = entity.GetId();
 
 	EntityComponentSignatures[entityId].set(componentId);
+
+	std::shared_ptr<Pool<TComponent>> componentPool = std::static_pointer_cast<Pool<TComponent>>(ComponentPools[componentId]);
+	componentPool->Remove(entityId);
 }
 
 template<typename TComponent>
