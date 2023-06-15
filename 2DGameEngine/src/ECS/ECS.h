@@ -15,6 +15,7 @@ constexpr char GROUP_FRIENDLY[] = "FriendlyGroup";
 constexpr char GROUP_ENEMY[] = "EnemyGroup";
 constexpr char GROUP_PROJECTILE[] = "ProjectileGroup";
 constexpr char GROUP_TILEMAP[] = "TileMapGroup";
+constexpr char GROUP_OBSTACLE[] = "ObstacleGroup";
 
 // We hold this value because we use a bit set for if entity has a component.
 constexpr unsigned int MAX_COMPONENTS = 32;

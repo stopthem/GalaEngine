@@ -72,6 +72,9 @@ void Game::Initialize()
 	WindowWidth = displayMode.w;
 	WindowHeight = displayMode.h;
 
+	CameraRect.w = WindowWidth;
+	CameraRect.h = WindowHeight;
+
 	Window = SDL_CreateWindow(nullptr, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WindowWidth, WindowHeight, SDL_WINDOW_BORDERLESS);
 
 	if (!Window)
@@ -80,7 +83,7 @@ void Game::Initialize()
 		return;
 	}
 
-	Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
+	Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_PRESENTVSYNC);
 
 	if (!Renderer)
 	{
@@ -113,8 +116,8 @@ void Game::LoadLevel(const int level) const
 	CreateTileMap();
 
 	Entity tank = Registry->CreateEntity();
-	tank.AddComponent<RigidbodyComponent>(glm::vec2(0, 0));
-	tank.AddComponent<TransformComponent>(glm::vec2(300, 100), glm::vec2(2), 0);
+	tank.AddComponent<RigidbodyComponent>(glm::vec2(25, 0));
+	tank.AddComponent<TransformComponent>(glm::vec2(500, 800), glm::vec2(2), 0);
 	tank.AddComponent<SpriteComponent>("tank-image", 32, 32, 1, false, true);
 	tank.AddComponent<BoxColliderComponent>(32, 32);
 	tank.AddComponent<ProjectileEmitterComponent>(ProjectileParams(glm::vec2(50, 0), false, 5), 3000);
@@ -124,7 +127,7 @@ void Game::LoadLevel(const int level) const
 
 	Entity truck = Registry->CreateEntity();
 	truck.AddComponent<RigidbodyComponent>(glm::vec2(0, 0));
-	truck.AddComponent<TransformComponent>(glm::vec2(1), glm::vec2(2), 0);
+	truck.AddComponent<TransformComponent>(glm::vec2(1000, 1225), glm::vec2(2), 0);
 	truck.AddComponent<SpriteComponent>("truck-image", 32, 32, 1, false, true);
 	truck.AddComponent<BoxColliderComponent>(32, 32);
 	truck.AddComponent<ProjectileEmitterComponent>(ProjectileParams(glm::vec2(0, 50), false, 5), 3000);
@@ -151,11 +154,23 @@ void Game::LoadLevel(const int level) const
 	radar.AddComponent<TransformComponent>(glm::vec2(WindowWidth - 164, 32), glm::vec2(2), 0.0);
 	radar.AddComponent<SpriteComponent>("radar-image", 64, 64, 2, true);
 	radar.AddComponent<AnimationComponent>(8, 7);
+
+	Entity tree = Registry->CreateEntity();
+	tree.AddComponent<BoxColliderComponent>(16, 32);
+	tree.AddComponent<TransformComponent>(glm::vec2(600, 815));
+	tree.AddComponent<SpriteComponent>("tree-image", 16, 32, 1, false);
+	tree.AddToGroup(GROUP_OBSTACLE);
+
+	Entity treeB = Registry->CreateEntity();
+	treeB.AddComponent<BoxColliderComponent>(16, 32);
+	treeB.AddComponent<TransformComponent>(glm::vec2(400, 815));
+	treeB.AddComponent<SpriteComponent>("tree-image", 16, 32, 1, false);
+	treeB.AddToGroup(GROUP_OBSTACLE);
 }
 
 void Game::AddSystems() const
 {
-	Registry->AddSystem<MovementSystem>();
+	Registry->AddSystem<MovementSystem>(EventBus.get());
 	Registry->AddSystem<RenderSystem>();
 	Registry->AddSystem<RenderColliderSystem>();
 	Registry->AddSystem<AnimationSystem>();
@@ -177,6 +192,7 @@ void Game::AddAssets() const
 	AssetStore->AddTexture(Renderer, "truck-image", "./assets/images/truck-ford-right.png");
 	AssetStore->AddTexture(Renderer, "chopper-image", "./assets/images/chopper-spritesheet.png");
 	AssetStore->AddTexture(Renderer, "bullet-image", "./assets/images/bullet.png");
+	AssetStore->AddTexture(Renderer, "tree-image", "./assets/images/tree.png");
 
 	AssetStore->AddTexture(Renderer, "radar-image", "./assets/images/radar.png");
 

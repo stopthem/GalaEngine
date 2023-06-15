@@ -34,7 +34,7 @@ void DamageSystem::OnCollision(CollisionEvent& collisionEvent)
 		const bool targetIsFriendly = targetEntity.InGroup(GROUP_FRIENDLY);
 
 		const decltype(auto) projectileComponent = sourceEntity.GetComponent<ProjectileComponent>();
-		
+
 		if (targetIsFriendly && projectileComponent.IsFriendly)
 		{
 			return false;
@@ -58,11 +58,8 @@ void DamageSystem::OnCollision(CollisionEvent& collisionEvent)
 	};
 
 	// Check both entities that collisionEvent sent us.
-
-	if (!CheckProjectileHitEnemyOrPlayer(collisionEvent.SourceEntity, collisionEvent.TargetEntity))
-	{
-		CheckProjectileHitEnemyOrPlayer(collisionEvent.TargetEntity, collisionEvent.SourceEntity);
-	}
+	CheckProjectileHitEnemyOrPlayer(collisionEvent.SourceEntity, collisionEvent.TargetEntity);
+	CheckProjectileHitEnemyOrPlayer(collisionEvent.TargetEntity, collisionEvent.SourceEntity);
 }
 
 void DamageSystem::OnSystemRemoved()
