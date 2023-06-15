@@ -211,6 +211,10 @@ void Registry::Update()
 
 		for (const std::shared_ptr<IPool>& componentPool : ComponentPools)
 		{
+			if (!componentPool)
+			{
+				continue;
+			}
 			componentPool->RemoveEntityFromPool(entityToBeKilled.GetId());
 		}
 	}

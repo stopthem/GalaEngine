@@ -141,6 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="libs\imgui\imgui_impl_sdl2.h" />
+    <ClInclude Include="src\Systems\RenderGUISystem.h" />
     <ClInclude Include="src\Systems\RenderHealthBarsSystem.h" />
     <ClInclude Include="src\Components\HealthBarComponent.h" />
     <ClInclude Include="src\Components\ShootingComponent.h" />
@@ -567,6 +569,9 @@
     <None Include="libs\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="libs\imgui\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="libs\imgui\imgui_tables.cpp" />
+    <ClCompile Include="src\Systems\RenderGUISystem.cpp" />
     <ClCompile Include="src\Systems\RenderHealthBarsSystem.cpp" />
     <ClCompile Include="src\Components\HealthBarComponent.cpp" />
     <ClCompile Include="src\Components\ShootingComponent.cpp" />

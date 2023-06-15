@@ -1,8 +1,10 @@
 #include "Game.h"
-
 #include <fstream>
 #include <SDL.h>
 #include <sstream>
+#include <imgui/imgui.h>
+#include <imgui/imgui_sdl.h>
+#include <imgui/imgui_impl_sdl2.h>
 #include "../Utility/StringUtilities.h"
 #include "../Components/TransformComponent.h"
 #include "../Components/RigidbodyComponent.h"
@@ -31,6 +33,7 @@
 #include "../Systems/ShootingSystem.h"
 #include "../Systems/RenderTextSystem.h"
 #include "../Systems/RenderHealthBarsSystem.h"
+#include "../Systems/RenderGUISystem.h"
 #include "../AssetStore/AssetStore.h"
 #include "../EventBus/EventBus.h"
 #include "../Events/KeyPressedEvent.h"
@@ -77,13 +80,18 @@ void Game::Initialize()
 		return;
 	}
 
-	Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_PRESENTVSYNC);
+	Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
 
 	if (!Renderer)
 	{
 		Logger::Err("Error creating SDL renderer.");
 		return;
 	}
+
+	ImGui::CreateContext();
+
+	ImGuiSDL::Initialize(Renderer, WindowWidth, WindowHeight);
+	ImGui_ImplSDL2_InitForSDLRenderer(Window, Renderer);
 
 	//SDL_SetWindowFullscreen(Window, SDL_WINDOW_FULLSCREEN);
 
@@ -143,10 +151,6 @@ void Game::LoadLevel(const int level) const
 	radar.AddComponent<TransformComponent>(glm::vec2(WindowWidth - 164, 32), glm::vec2(2), 0.0);
 	radar.AddComponent<SpriteComponent>("radar-image", 64, 64, 2, true);
 	radar.AddComponent<AnimationComponent>(8, 7);
-
-	Entity label = Registry->CreateEntity();
-	constexpr SDL_Color labelColor = { 255,255,255 };
-	label.AddComponent<TextComponent>(TextComponentParams(glm::vec2(WindowWidth / 2, 150), "Hello World!", "charriot-font", labelColor));
 }
 
 void Game::AddSystems() const
@@ -164,6 +168,7 @@ void Game::AddSystems() const
 	Registry->AddSystem<ShootingSystem>(Registry.get(), EventBus.get());
 	Registry->AddSystem<RenderTextSystem>(Renderer, AssetStore.get(), CameraRect);
 	Registry->AddSystem<RenderHealthBarsSystem>();
+	Registry->AddSystem<RenderGUISystem>();
 }
 
 void Game::AddAssets() const
@@ -254,6 +259,19 @@ void Game::ProcessInput()
 
 	while (SDL_PollEvent(&sdlEvent))
 	{
+		if (IsDebug)
+		{
+			ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
+
+			ImGuiIO& io = ImGui::GetIO();
+			int mouseX, mouseY;
+			const Uint32 buttons = SDL_GetMouseState(&mouseX, &mouseY);
+
+			io.MousePos = ImVec2(mouseX, mouseY);
+			io.MouseDown[0] = buttons & SDL_BUTTON(SDL_BUTTON_LEFT);
+			io.MouseDown[1] = buttons & SDL_BUTTON(SDL_BUTTON_RIGHT);
+		}
+
 		switch (sdlEvent.type)
 		{
 		case SDL_QUIT:
@@ -319,6 +337,7 @@ void Game::Render() const
 	if (IsDebug)
 	{
 		Registry->GetSystem<RenderColliderSystem>().Update(Renderer, CameraRect);
+		Registry->GetSystem<RenderGUISystem>().Update(Registry);
 	}
 
 	SDL_RenderPresent(Renderer);
@@ -326,6 +345,10 @@ void Game::Render() const
 
 void Game::Destroy() const
 {
+	ImGuiSDL::Deinitialize();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
+
 	SDL_DestroyRenderer(Renderer);
 	SDL_DestroyWindow(Window);
 	SDL_Quit();
