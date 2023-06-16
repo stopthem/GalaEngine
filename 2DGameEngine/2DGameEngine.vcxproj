@@ -141,6 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Systems\ScriptSystem.h" />
+    <ClInclude Include="src\Components\ScriptComponent.h" />
     <ClInclude Include="src\Game\LevelLoader.h" />
     <ClInclude Include="libs\imgui\imgui_impl_sdl2.h" />
     <ClInclude Include="src\Systems\RenderGUISystem.h" />
@@ -572,6 +574,8 @@
     <None Include="assets\scripts\myscript.lua" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Systems\ScriptSystem.cpp" />
+    <ClCompile Include="src\Components\ScriptComponent.cpp" />
     <ClCompile Include="src\Game\LevelLoader.cpp" />
     <ClCompile Include="libs\imgui\imgui_impl_sdl2.cpp" />
     <ClCompile Include="libs\imgui\imgui_tables.cpp" />

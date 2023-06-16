@@ -1,3 +1,15 @@
+
+local current_system_hour = os.date("*t").hour
+
+local map_texture_asset_id
+
+-- Use a day map if system hour is more than 9 am and 6 pm.
+if current_system_hour >= 9 and current_system_hour < 18 then
+    map_texture_asset_id = "tilemap-texture-day"
+else
+    map_texture_asset_id = "tilemap-texture-night"
+end
+
 -- Define a table with the start values of the first level
 Level = {
     ----------------------------------------------------
@@ -5,7 +17,8 @@ Level = {
     ----------------------------------------------------
     assets = {
         [0] =
-        { type = "texture", id = "tilemap-texture",             file = "./assets/tilemaps/jungle.png" },
+        { type = "texture", id = "tilemap-texture-day",             file = "./assets/tilemaps/jungle.png" },
+        { type = "texture", id = "tilemap-texture-night",       file = "./assets/tilemaps/jungle-night.png" },
         { type = "texture", id = "chopper-texture",             file = "./assets/images/chopper-green-spritesheet.png" },
         { type = "texture", id = "su27-texture",                file = "./assets/images/su27-spritesheet.png" },
         { type = "texture", id = "f22-texture",                 file = "./assets/images/f22-spritesheet.png" },
@@ -85,7 +98,7 @@ Level = {
     ----------------------------------------------------
     tilemap = {
         map_file = "./assets/tilemaps/jungle.map",
-        texture_asset_id = "tilemap-texture",
+        texture_asset_id = map_texture_asset_id,
         num_rows = 20,
         num_cols = 25,
         tile_size = 32,
@@ -2723,7 +2736,6 @@ Level = {
                 }
             }
         },
-        --[[
         {
             -- SU-27 fighter jet
             group = "EnemyGroup",
@@ -2760,6 +2772,7 @@ Level = {
                     hit_percentage_damage = 10,
                     friendly = false
                 },
+                --[[
                 on_update_script = {
                     [0] =
                     function(entity, delta_time, ellapsed_time)
@@ -2786,6 +2799,7 @@ Level = {
                         end
                     end
                 }
+                -- ]]
             }
         },
         {
@@ -2837,7 +2851,6 @@ Level = {
                 }
             }
         }
-        --]]
     }
 }
 

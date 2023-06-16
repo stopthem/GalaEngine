@@ -20,6 +20,7 @@
 #include "../Components/RigidbodyComponent.h"
 #include "../Components/TransformComponent.h"
 #include "../Components/AnimationComponent.h"
+#include "../Components/ScriptComponent.h"
 #include "../Utility/StringUtilities.h"
 
 LevelLoader::LevelLoader(Registry* registry, AssetStore* assetStore, SDL_Renderer* renderer, sol::state_view luaState)
@@ -158,15 +159,13 @@ void LevelLoader::CreateEntities()
 		Entity entity = RegistryPtr->CreateEntity();
 
 		// Check tag and add if exists.
-		sol::optional<std::string> tag = entityTable["tag"];
-		if (tag != sol::nullopt)
+		if (entityTable["tag"].valid())
 		{
 			entity.AddTag(entityTable["tag"]);
 		}
 
 		// Check group and add if exists.
-		sol::optional<std::string> group = entityTable["group"];
-		if (group != sol::nullopt)
+		if (entityTable["group"].valid())
 		{
 			entity.AddToGroup(entityTable["group"]);
 		}
@@ -323,6 +322,12 @@ void LevelLoader::CreateEntities()
 				const bool isFixed = componentValuesTable["fixed"].get_or(true);
 
 				entity.AddComponent<TextComponent>(TextComponentParams(location, text, fontAssetId, color, isFixed));
+			}
+
+			if (componentName == "on_update_script")
+			{
+				const sol::function function = componentValuesTable[0];
+				entity.AddComponent<ScriptComponent>(function);
 			}
 		}
 	}

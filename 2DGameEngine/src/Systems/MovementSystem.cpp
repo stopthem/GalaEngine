@@ -29,13 +29,13 @@ void MovementSystem::Update(const double deltaTime, const std::unique_ptr<Regist
 		auto IsNotInMap = [&targetLocation](const glm::vec2 bound, bool inwards = true)
 		{
 			const glm::vec2 actualBound = { bound.x * (inwards ? 1 : -1) , bound.y * (inwards ? 1 : -1) };
-			return (targetLocation.x + bound.x > Game::MapWidth ||
-				targetLocation.x - bound.x < 0 ||
-				targetLocation.y + bound.y > Game::MapHeight ||
-				targetLocation.y - bound.y < 0);
+			return (targetLocation.x + actualBound.x > Game::MapWidth ||
+				targetLocation.x - actualBound.x < 0 ||
+				targetLocation.y + actualBound.y > Game::MapHeight ||
+				targetLocation.y - actualBound.y < 0);
 		};
 
-		// Is entity player and target location is not within map bounds ?
+		// Is entity player ? and target location is not within map bounds ?
 		if (IsNotInMap(glm::vec2(20, 20)) && entity.HasTag(TAG_PLAYER))
 		{
 			continue;

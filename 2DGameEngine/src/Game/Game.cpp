@@ -21,6 +21,7 @@
 #include "../Systems/RenderTextSystem.h"
 #include "../Systems/RenderHealthBarsSystem.h"
 #include "../Systems/RenderGUISystem.h"
+#include "../Systems/ScriptSystem.h"
 #include "../AssetStore/AssetStore.h"
 #include "../EventBus/EventBus.h"
 #include "../Events/KeyPressedEvent.h"
@@ -95,9 +96,9 @@ void Game::Initialize()
 
 void Game::Setup()
 {
-	Lua.open_libraries(sol::lib::base, sol::lib::math);
+	Lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::os);
 
-	LevelLoader levelLoader(Registry.get(), AssetStore.get(), Renderer, Lua);
+	LevelLoader levelLoader(Registry.get(), AssetStore.get(), Renderer, sol::state_view(Lua));
 	levelLoader.LoadLevel(1);
 
 	AddSystems();
@@ -119,6 +120,7 @@ void Game::AddSystems() const
 	Registry->AddSystem<RenderTextSystem>(Renderer, AssetStore.get(), CameraRect);
 	Registry->AddSystem<RenderHealthBarsSystem>();
 	Registry->AddSystem<RenderGUISystem>();
+	Registry->AddSystem<ScriptSystem>(sol::state_view(Lua));
 }
 
 void Game::Run()
@@ -193,6 +195,7 @@ void Game::Update()
 	MilisecsPrevFrame = currentFrameTicks;
 
 	// Ask all the systems to update.
+	Registry->GetSystem<ScriptSystem>().Update(DeltaTime);
 	Registry->GetSystem<ProjectileEmitterSystem>().Update();
 	Registry->GetSystem<LifetimeSystem>().Update(DeltaTime);
 	Registry->GetSystem<MovementSystem>().Update(DeltaTime, Registry);
