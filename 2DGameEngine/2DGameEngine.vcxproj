@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game\LevelLoader.h" />
     <ClInclude Include="libs\imgui\imgui_impl_sdl2.h" />
     <ClInclude Include="src\Systems\RenderGUISystem.h" />
     <ClInclude Include="src\Systems\RenderHealthBarsSystem.h" />
@@ -435,6 +436,7 @@
     <ClInclude Include="src\Utility\StringUtilities.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\scripts\Level1.lua" />
     <None Include="libs\glm\detail\func_common.inl" />
     <None Include="libs\glm\detail\func_common_simd.inl" />
     <None Include="libs\glm\detail\func_exponential.inl" />
@@ -567,8 +569,10 @@
     <None Include="libs\glm\gtx\vector_angle.inl" />
     <None Include="libs\glm\gtx\vector_query.inl" />
     <None Include="libs\glm\gtx\wrap.inl" />
+    <None Include="assets\scripts\myscript.lua" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\LevelLoader.cpp" />
     <ClCompile Include="libs\imgui\imgui_impl_sdl2.cpp" />
     <ClCompile Include="libs\imgui\imgui_tables.cpp" />
     <ClCompile Include="src\Systems\RenderGUISystem.cpp" />
@@ -615,6 +619,9 @@
     <ClCompile Include="src\Systems\RenderTextSystem.cpp" />
     <ClCompile Include="src\Systems\ShootingSystem.cpp" />
     <ClCompile Include="src\Utility\StringUtilities.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="libs\lua\liblua53.a" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

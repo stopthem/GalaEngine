@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <SDL_rect.h>
+#include <sol/sol.hpp>
 
 class EventBus;
 class Registry;
@@ -22,16 +23,11 @@ public:
 public:
 	void Initialize();
 	void Setup();
-
-	void LoadLevel(int level) const;
-	void AddAssets() const;
 	void AddSystems() const;
-	void CreateTileMap() const;
 
 	void Run();
 	void ProcessInput();
 	void Update();
-
 	void Render() const;
 
 	void Destroy() const;
@@ -42,6 +38,8 @@ private:
 	std::unique_ptr<Registry> Registry = nullptr;
 	std::unique_ptr<AssetStore> AssetStore = nullptr;
 	std::unique_ptr<EventBus> EventBus = nullptr;
+
+	sol::state Lua;
 
 private:
 	SDL_Window* Window = nullptr;

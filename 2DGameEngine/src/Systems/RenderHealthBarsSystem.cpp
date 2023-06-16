@@ -37,10 +37,10 @@ void RenderHealthBarsSystem::Update(const std::unique_ptr<Registry>& registry, S
 		// Create text component params for the text we will render top of the actual bar.
 		TextComponentParams textComponentParams = TextComponentParams();
 		textComponentParams.Text = std::to_string(static_cast<int>(healthNormalized * 100.0f)) + "%";
-		textComponentParams.Location = { transformCameraX, transformCameraY - 20 };
+		textComponentParams.Location = { transformCameraX, transformCameraY - 10 };
 		textComponentParams.Color = healthBarColor;
 		textComponentParams.IsFixed = false;
-		textComponentParams.FontAssetId = "charriot-font";
+		textComponentParams.FontAssetId = "pico8-font-5";
 
 		// Render the percent text.
 		registry->GetSystem<RenderTextSystem>().RenderText(textComponentParams);
@@ -52,9 +52,9 @@ void RenderHealthBarsSystem::Update(const std::unique_ptr<Registry>& registry, S
 		// This is the actual bar.
 		SDL_Rect healthBarRect = {
 			transformCameraX,
-			(transformCameraY - 5),
-			static_cast<int>(50 * healthNormalized),
-			5
+			(transformCameraY - 2),
+			static_cast<int>(25 * healthNormalized),
+			2
 		};
 
 		SDL_RenderFillRect(renderer, &healthBarRect);

@@ -1,23 +1,10 @@
 #include "Game.h"
-#include <fstream>
 #include <SDL.h>
-#include <sstream>
 #include <imgui/imgui.h>
 #include <imgui/imgui_sdl.h>
 #include <imgui/imgui_impl_sdl2.h>
-#include "../Utility/StringUtilities.h"
-#include "../Components/TransformComponent.h"
-#include "../Components/RigidbodyComponent.h"
 #include "../Components/SpriteComponent.h"
-#include "../Components/AnimationComponent.h"
-#include "../Components/BoxColliderComponent.h"
-#include "../Components/KeyboardControlledComponent.h"
-#include "../Components/CameraFollowComponent.h"
-#include "../Components/ProjectileEmitterComponent.h"
-#include "../Components/HealthComponent.h"
-#include "../Components/ShootingComponent.h"
 #include "../Components/TextComponent.h"
-#include "../Components/HealthBarComponent.h"
 #include "../Logger/Logger.h"
 #include "../ECS/ECS.h"
 #include "../Systems/MovementSystem.h"
@@ -37,6 +24,7 @@
 #include "../AssetStore/AssetStore.h"
 #include "../EventBus/EventBus.h"
 #include "../Events/KeyPressedEvent.h"
+#include "LevelLoader.h"
 
 int Game::WindowWidth;
 int Game::WindowHeight;
@@ -69,11 +57,14 @@ void Game::Initialize()
 	SDL_DisplayMode displayMode;
 	SDL_GetCurrentDisplayMode(0, &displayMode);
 
-	WindowWidth = displayMode.w;
-	WindowHeight = displayMode.h;
-
-	CameraRect.w = WindowWidth;
-	CameraRect.h = WindowHeight;
+	// I do this because course teacher gives values based on his 1600x1080 screen and im not going to correct them to my screen which is 2k :d
+	// I don't make it full screen to make this app not be annoying.
+	// if i fullscreen and you alt tab or lose focus, sdl doesn't regain focus and had to be force shutdown.
+	// Also, i can't look at my ide :(
+	WindowWidth = CameraRect.w = 1600;
+	WindowHeight = CameraRect.h = 1080;
+	//WindowWidth = CameraRect.w = displayMode.w;
+	//WindowHeight = CameraRect.h = displayMode.h;
 
 	Window = SDL_CreateWindow(nullptr, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WindowWidth, WindowHeight, SDL_WINDOW_BORDERLESS);
 
@@ -104,68 +95,12 @@ void Game::Initialize()
 
 void Game::Setup()
 {
-	LoadLevel(0);
-}
+	Lua.open_libraries(sol::lib::base, sol::lib::math);
 
-void Game::LoadLevel(const int level) const
-{
+	LevelLoader levelLoader(Registry.get(), AssetStore.get(), Renderer, Lua);
+	levelLoader.LoadLevel(1);
+
 	AddSystems();
-
-	AddAssets();
-
-	CreateTileMap();
-
-	Entity tank = Registry->CreateEntity();
-	tank.AddComponent<RigidbodyComponent>(glm::vec2(25, 0));
-	tank.AddComponent<TransformComponent>(glm::vec2(500, 800), glm::vec2(2), 0);
-	tank.AddComponent<SpriteComponent>("tank-image", 32, 32, 1, false, true);
-	tank.AddComponent<BoxColliderComponent>(32, 32);
-	tank.AddComponent<ProjectileEmitterComponent>(ProjectileParams(glm::vec2(50, 0), false, 5), 3000);
-	tank.AddComponent<HealthComponent>(50);
-	tank.AddComponent<HealthBarComponent>();
-	tank.AddToGroup(GROUP_ENEMY);
-
-	Entity truck = Registry->CreateEntity();
-	truck.AddComponent<RigidbodyComponent>(glm::vec2(0, 0));
-	truck.AddComponent<TransformComponent>(glm::vec2(1000, 1225), glm::vec2(2), 0);
-	truck.AddComponent<SpriteComponent>("truck-image", 32, 32, 1, false, true);
-	truck.AddComponent<BoxColliderComponent>(32, 32);
-	truck.AddComponent<ProjectileEmitterComponent>(ProjectileParams(glm::vec2(0, 50), false, 5), 3000);
-	truck.AddComponent<HealthComponent>(25);
-	truck.AddToGroup(GROUP_ENEMY);
-
-	// Player
-	Entity chopper = Registry->CreateEntity();
-	chopper.AddComponent<RigidbodyComponent>(glm::vec2(0));
-	chopper.AddComponent<TransformComponent>(glm::vec2(WindowWidth / 2, 200), glm::vec2(2), 0);
-	chopper.AddComponent<SpriteComponent>("chopper-image", 32, 32, 2, false, true);
-	chopper.AddComponent<AnimationComponent>(2, 10);
-	chopper.AddComponent<KeyboardControlledComponent>(150.0f);
-	chopper.AddComponent<CameraFollowComponent>();
-	chopper.AddComponent<HealthComponent>(10);
-	chopper.AddComponent<HealthBarComponent>();
-	chopper.AddComponent<ShootingComponent>(ProjectileParams(glm::vec2(0), true), 250);
-	chopper.AddComponent<BoxColliderComponent>(32, 32);
-	chopper.AddTag(TAG_PLAYER);
-	chopper.AddToGroup(GROUP_FRIENDLY);
-
-	Entity radar = Registry->CreateEntity();
-	radar.AddComponent<RigidbodyComponent>(glm::vec2(0));
-	radar.AddComponent<TransformComponent>(glm::vec2(WindowWidth - 164, 32), glm::vec2(2), 0.0);
-	radar.AddComponent<SpriteComponent>("radar-image", 64, 64, 2, true);
-	radar.AddComponent<AnimationComponent>(8, 7);
-
-	Entity tree = Registry->CreateEntity();
-	tree.AddComponent<BoxColliderComponent>(16, 32);
-	tree.AddComponent<TransformComponent>(glm::vec2(600, 815));
-	tree.AddComponent<SpriteComponent>("tree-image", 16, 32, 1, false);
-	tree.AddToGroup(GROUP_OBSTACLE);
-
-	Entity treeB = Registry->CreateEntity();
-	treeB.AddComponent<BoxColliderComponent>(16, 32);
-	treeB.AddComponent<TransformComponent>(glm::vec2(400, 815));
-	treeB.AddComponent<SpriteComponent>("tree-image", 16, 32, 1, false);
-	treeB.AddToGroup(GROUP_OBSTACLE);
 }
 
 void Game::AddSystems() const
@@ -185,77 +120,6 @@ void Game::AddSystems() const
 	Registry->AddSystem<RenderHealthBarsSystem>();
 	Registry->AddSystem<RenderGUISystem>();
 }
-
-void Game::AddAssets() const
-{
-	AssetStore->AddTexture(Renderer, "tank-image", "./assets/images/tank-panther-right.png");
-	AssetStore->AddTexture(Renderer, "truck-image", "./assets/images/truck-ford-right.png");
-	AssetStore->AddTexture(Renderer, "chopper-image", "./assets/images/chopper-spritesheet.png");
-	AssetStore->AddTexture(Renderer, "bullet-image", "./assets/images/bullet.png");
-	AssetStore->AddTexture(Renderer, "tree-image", "./assets/images/tree.png");
-
-	AssetStore->AddTexture(Renderer, "radar-image", "./assets/images/radar.png");
-
-	AssetStore->AddTexture(Renderer, "jungle-tilemap", "./assets/tilemaps/jungle.png");
-
-	AssetStore->AddFont("charriot-font", "./assets/fonts/charriot.ttf", 16);
-}
-
-void Game::CreateTileMap() const
-{
-	// First, lets read the .map file and get tile numbers for the tilemaps.
-	std::vector<int> tileNumbers;
-
-	// This automatically opens the file for us to read.
-	std::ifstream readFile("./assets/tilemaps/jungle.map");
-
-	std::string lineString;
-	while (std::getline(readFile, lineString))
-	{
-		// Split line elements by ",".
-		// This function is very useful and it gives us raw numbers without spaces.
-		std::vector<std::string> splitLineNumberStrings = StringUtilities::Split(lineString, ",");
-
-		// When we split a string, it gives us a vector of strings with numbers. Iterate through them to add to list.
-		for (const std::string& lineNumberString : splitLineNumberStrings)
-		{
-			// Convert string to int and add to vector.
-			tileNumbers.push_back(std::stoi(lineNumberString));
-		}
-	}
-
-	constexpr double tileScale = 3.25;
-	constexpr int tileSize = 32;
-	// Then iterate through .map file columns and rows
-	for (int y = 0; y < 20; ++y)
-	{
-		for (int x = 0; x < 25; ++x)
-		{
-			// Find 1d pos of a 2d value in the vector.
-			const int tileNumber = tileNumbers[(y * 25) + x];
-
-			// Find x tiling of the image which is 10x3.
-			const int textureTilingX = (tileNumber % 10) * tileSize;
-			// Find y tiling of the image which is 10x3.
-			const int textureTilingY = (tileNumber / 10) * tileSize;
-
-			Entity entity = Registry->CreateEntity();
-
-			// We have to leave space between for tileSize(32) * tileScale because image is 32x32.
-			const glm::vec2 entityLocation(x * (tileSize * tileScale), y * (tileSize * tileScale));
-
-			entity.AddComponent<TransformComponent>(entityLocation, glm::vec2(tileScale), 0.0);
-
-			entity.AddComponent<SpriteComponent>("jungle-tilemap", tileSize, tileSize, 0, false, false, glm::vec2(textureTilingX, textureTilingY));
-
-			entity.AddToGroup(GROUP_TILEMAP);
-		}
-	}
-
-	MapWidth = (25 * tileSize) * tileScale;
-	MapHeight = (20 * tileSize) * tileScale;
-}
-
 
 void Game::Run()
 {
@@ -331,7 +195,7 @@ void Game::Update()
 	// Ask all the systems to update.
 	Registry->GetSystem<ProjectileEmitterSystem>().Update();
 	Registry->GetSystem<LifetimeSystem>().Update(DeltaTime);
-	Registry->GetSystem<MovementSystem>().Update(DeltaTime);
+	Registry->GetSystem<MovementSystem>().Update(DeltaTime, Registry);
 	Registry->GetSystem<CollisionSystem>().Update(EventBus);
 	Registry->GetSystem<AnimationSystem>().Update();
 	Registry->GetSystem<CameraMovementSystem>().Update(CameraRect);

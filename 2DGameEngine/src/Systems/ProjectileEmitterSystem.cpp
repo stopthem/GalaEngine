@@ -72,6 +72,6 @@ void ProjectileEmitterSystem::EmitProjectile(Entity systemEntity, const Projecti
 
 	projectile.AddComponent<LifetimeComponent>(projectileParams.LifetimeMiliSeconds);
 
-	projectile.AddComponent<SpriteComponent>("bullet-image", 4, 4, 4, false, true);
+	projectile.AddComponent<SpriteComponent>("bullet-texture", 4, 4, 4, false, true);
 }
 

@@ -1,6 +1,7 @@
 #include "MovementSystem.h"
 #include "../Components/TransformComponent.h"
 #include "../Components/RigidbodyComponent.h"
+#include "../Components/SpriteComponent.h"
 #include "../EventBus/EventBus.h"
 #include "../Game/Game.h"
 
@@ -15,7 +16,7 @@ MovementSystem::MovementSystem(EventBus* eventBus)
 
 MovementSystem::~MovementSystem() = default;
 
-void MovementSystem::Update(const double deltaTime) const
+void MovementSystem::Update(const double deltaTime, const std::unique_ptr<Registry>& registry) const
 {
 	for (Entity& entity : GetSystemEntities())
 	{
@@ -24,16 +25,36 @@ void MovementSystem::Update(const double deltaTime) const
 
 		const glm::vec2 targetLocation = transformComponent.Location + rigidbodyComponent.Velocity * static_cast<float>(deltaTime);
 
-		constexpr int playerXBoundInc = 20;
-		constexpr int playerYBoundInc = 20;
+		// Returns if targetLocation with given bounds is inside or outside.
+		auto IsNotInMap = [&targetLocation](const glm::vec2 bound, bool inwards = true)
+		{
+			const glm::vec2 actualBound = { bound.x * (inwards ? 1 : -1) , bound.y * (inwards ? 1 : -1) };
+			return (targetLocation.x + bound.x > Game::MapWidth ||
+				targetLocation.x - bound.x < 0 ||
+				targetLocation.y + bound.y > Game::MapHeight ||
+				targetLocation.y - bound.y < 0);
+		};
+
 		// Is entity player and target location is not within map bounds ?
-		if ((targetLocation.x + playerXBoundInc > Game::MapWidth ||
-			targetLocation.x - playerXBoundInc < 0 ||
-			targetLocation.y + playerYBoundInc > Game::MapHeight ||
-			targetLocation.y - playerYBoundInc < 0) && entity.HasTag(TAG_PLAYER))
+		if (IsNotInMap(glm::vec2(20, 20)) && entity.HasTag(TAG_PLAYER))
 		{
 			continue;
 		}
+
+		glm::vec2 entityBoundCheck = glm::vec2(0);
+		// If we have a sprite, check if the entity is completely outside map bounds to kill.
+		if (entity.HasComponent<SpriteComponent>())
+		{
+			const auto spriteComponent = entity.GetComponent<SpriteComponent>();
+
+			entityBoundCheck = { spriteComponent.Width,spriteComponent.Height };
+		}
+		if (IsNotInMap(entityBoundCheck, false))
+		{
+			registry->KillEntity(entity);
+			continue;
+		}
+
 		transformComponent.Location = targetLocation;
 	}
 }

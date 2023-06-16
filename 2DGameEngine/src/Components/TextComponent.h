@@ -8,7 +8,7 @@ struct TextComponentParams
 {
 public:
 	explicit TextComponentParams(const glm::vec2& location = glm::vec2(0),
-		std::string text = "", std::string fontAssetId = "charriot-font", const SDL_Color& color = SDL_Color(), bool isFixed = true);
+		std::string text = "", std::string fontAssetId = "pico8-font-10", const SDL_Color& color = SDL_Color(), bool isFixed = true);
 
 public:
 	glm::vec2 Location;
