@@ -1,0 +1,107 @@
+[
+  [
+    "Entity",
+    [
+      "UuidComponent",
+      {
+        "Uuid": {
+          "uuid": 11880852029362766429
+        }
+      }
+    ]
+  ],
+  [
+    "Entity",
+    [
+      "UuidComponent",
+      {
+        "Uuid": {
+          "uuid": 1456924286344045660
+        }
+      }
+    ]
+  ],
+  [
+    "Entity",
+    [
+      "UuidComponent",
+      {
+        "Uuid": {
+          "uuid": 9791209517160127032
+        }
+      }
+    ],
+    [
+      "BoxColliderComponent",
+      {
+        "Height": 32,
+        "Offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "Width": 32
+      }
+    ],
+    [
+      "HealthBarComponent",
+      {
+        "EmptyIntForSerialization": 0
+      }
+    ],
+    [
+      "HealthComponent",
+      {
+        "StartingHealth": 50.0
+      }
+    ],
+    [
+      "ProjectileEmitterComponent",
+      {
+        "EmitterProjectileParams": {
+          "DamageAmount": 5.0,
+          "IsFriendly": false,
+          "LifetimeMiliSeconds": 5000,
+          "ProjectileVector": {
+            "x": 50.0,
+            "y": 0.0
+          }
+        },
+        "ProjectileEmittingInterval": 3000
+      }
+    ],
+    [
+      "RigidbodyComponent",
+      {
+        "Velocity": {
+          "x": 0.0,
+          "y": 0.0
+        }
+      }
+    ],
+    [
+      "SpriteComponent",
+      {
+        "Height": 32,
+        "ImageFilePath": "./assets/images/f22.png",
+        "IsFixed": false,
+        "Render0Angle": true,
+        "Width": 32,
+        "ZIndex": 1
+      }
+    ],
+    [
+      "TransformComponent",
+      {
+        "Angle": 0.0,
+        "Location": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "Scale": {
+          "x": 2.0,
+          "y": 2.0
+        }
+      }
+    ]
+  ]
+]

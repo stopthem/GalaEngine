@@ -3,7 +3,7 @@
 #include "../ECS/ECS.h"
 
 class EventBus;
-class KeyPressedEvent;
+class KeyUpEvent;
 /*
  * KeyboardControlSystem
  *
@@ -18,7 +18,7 @@ private:
 	EventBus* EventBusPtr;
 
 private:
-	void OnKeyboardKeyPressed(KeyPressedEvent& keyPressedEvent);
+	void OnKeyboardKeyPressed(KeyUpEvent& keyPressedEvent);
 
 public:
 	// Unsubscribe from key pressed event.

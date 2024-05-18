@@ -1,4 +1,5 @@
 #pragma once
+#include <nlohmann/json.hpp>
 
 /*
  * HealthComponent
@@ -8,13 +9,15 @@
 struct HealthComponent
 {
 public:
-	explicit HealthComponent(double health = 100.0);
+    explicit HealthComponent(double health = 100.0);
 
 public:
-	double StartingHealth;
-	double Health;
+    double StartingHealth;
+    double Health;
 
 public:
-	[[nodiscard]] double GetHealthNormalized() const { return Health / StartingHealth; }
+    [[nodiscard]] double GetHealthNormalized() const { return Health / StartingHealth; }
+
+public:
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(HealthComponent, StartingHealth);
 };
-

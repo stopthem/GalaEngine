@@ -2,60 +2,107 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+
 #include "../Logger/Logger.h"
+#include "glm/gtx/matrix_interpolation.hpp"
 
 AssetStore::~AssetStore()
 {
-	ClearAssets();
+    ClearAssets();
+}
+
+void AssetStore::LoadAssetsUnderAssetsFolder()
+{
+    // Iterate through every file under ./assets
+    for (const auto& entry : std::filesystem::recursive_directory_iterator("./assets"))
+    {
+        // if entry is a valid file
+        if (!entry.is_regular_file() || entry.is_symlink())
+        {
+            continue;
+        }
+
+        // Store path of the entry
+        const std::string entryPath = entry.path().generic_string();
+
+        // If entry path ends with ".tff" it's a font
+        if (entryPath.ends_with(".ttf"))
+        {
+            AddFont(entryPath);
+            continue;
+        }
+
+        // If entry path ends with ".png" it's a texture
+        if (entryPath.ends_with(".png"))
+        {
+            AddTexture(entryPath);
+        }
+    }
+}
+
+void AssetStore::Initialize(SDL_Renderer* renderer)
+{
+    Renderer = renderer;
+
+    // We want to load every asset we can before level start
+    LoadAssetsUnderAssetsFolder();
 }
 
 void AssetStore::ClearAssets()
 {
-	for (const auto& [assetId, texture] : Textures)
-	{
-		SDL_DestroyTexture(texture);
-	}
+    for (const auto& [assetId, texture] : Textures)
+    {
+        SDL_DestroyTexture(texture);
+    }
 
-	Textures.clear();
+    Textures.clear();
 
-	for (const auto& [assetId, font] : Fonts)
-	{
-		TTF_CloseFont(font);
-	}
+    for (const auto& [assetId, font] : Fonts)
+    {
+        TTF_CloseFont(font);
+    }
 
-	Fonts.clear();
+    Fonts.clear();
 }
 
-void AssetStore::AddTexture(SDL_Renderer* renderer, const std::string& assetId, const std::string& filePath)
+void AssetStore::AddTexture(const std::string& filePath)
 {
-	SDL_Surface* surface = IMG_Load(filePath.c_str());
+    SDL_Surface* surface = IMG_Load(filePath.c_str());
 
-	if (!surface)
-	{
-		return;
-	}
+    if (!surface)
+    {
+        return;
+    }
 
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(Renderer, surface);
 
-	if (!texture)
-	{
-		return;
-	}
+    if (!texture)
+    {
+        return;
+    }
 
-	Textures.emplace(assetId, texture);
+    Textures.emplace(filePath, texture);
 }
 
-SDL_Texture* AssetStore::GetTexture(const std::string& assetId)
+SDL_Texture* AssetStore::GetTexture(const std::string& filePath)
 {
-	return Textures[assetId];
+    assert(Textures.contains(filePath));
+
+    return Textures[filePath];
 }
 
-void AssetStore::AddFont(const std::string& assetId, const std::string& filePath, const int size)
+void AssetStore::AddFont(const std::string& filePath)
 {
-	Fonts.emplace(assetId, TTF_OpenFont(filePath.c_str(), size));
+    Fonts.emplace(filePath, TTF_OpenFont(filePath.c_str(), 0));
 }
 
-TTF_Font* AssetStore::GetFont(const std::string& assetId) const
+TTF_Font* AssetStore::GetFont(const std::string& filePath, const int fontSize) const
 {
-	return Fonts.at(assetId);
+    assert(Fonts.contains(filePath));
+
+    // Find the correct TTF_Font
+    TTF_Font* font = Fonts.at(filePath);
+    // Resize font to the wanted size
+    TTF_SetFontSize(font, fontSize);
+    return font;
 }

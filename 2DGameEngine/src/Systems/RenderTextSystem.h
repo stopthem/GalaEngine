@@ -18,7 +18,7 @@ public:
 
 public:
 	// Loop through all system entities and render their texts.
-	void Update() const;
+	void Update();
 
 	// Render a text based on text component params.
 	void RenderText(const TextComponentParams& textComponentParams) const;

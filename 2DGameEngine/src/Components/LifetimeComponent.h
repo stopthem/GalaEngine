@@ -1,4 +1,5 @@
 #pragma once
+#include <nlohmann/json.hpp>
 
 /*
  * LifetimeComponent
@@ -8,11 +9,13 @@
 struct LifetimeComponent
 {
 public:
-	explicit LifetimeComponent(int lifetimeMiliSeconds = 5000);
+    explicit LifetimeComponent(int lifetimeMiliSeconds = 5000);
 
 public:
-	int LifetimeMiliSeconds;
+    int LifetimeMiliSeconds;
 
-	int CurrentTimerMiliSeconds = 0;
+    int CurrentTimerMiliSeconds = 0;
+
+public:
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(LifetimeComponent, LifetimeMiliSeconds)
 };
-

@@ -28,7 +28,7 @@ void RenderGUISystem::Update(const std::unique_ptr<Registry>& registry) const
 		Entity enemy = registry->CreateEntity();
 		enemy.AddComponent<RigidbodyComponent>(glm::vec2(0, 0));
 		enemy.AddComponent<TransformComponent>(glm::vec2(inputV[0], inputV[1]), glm::vec2(2), 0);
-		enemy.AddComponent<SpriteComponent>("tank-image", 32, 32, 1, false, true);
+		enemy.AddComponent<SpriteComponent>("./assets/images/f22.png", 32, 32, 1, false, true);
 		enemy.AddComponent<BoxColliderComponent>(32, 32);
 		enemy.AddComponent<ProjectileEmitterComponent>(ProjectileParams(glm::vec2(50, 0), false, 5), 3000);
 		enemy.AddComponent<HealthComponent>(50);

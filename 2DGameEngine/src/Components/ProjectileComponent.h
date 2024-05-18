@@ -9,16 +9,19 @@
 struct ProjectileParams
 {
 public:
-	explicit ProjectileParams(glm::vec2 projectileVector = glm::vec2(0), bool isFriendly = false, double damageAmount = 10, int lifetimeMiliseconds = 5000);
+    explicit ProjectileParams(glm::vec2 projectileVector = glm::vec2(0), bool isFriendly = false, double damageAmount = 10, int lifetimeMiliseconds = 5000);
 
 public:
-	glm::vec2 ProjectileVector;
+    glm::vec2 ProjectileVector;
 
-	int LifetimeMiliSeconds;
+    int LifetimeMiliSeconds;
 
-	bool IsFriendly;
+    bool IsFriendly;
 
-	double DamageAmount;
+    double DamageAmount;
+
+public:
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(ProjectileParams, ProjectileVector, LifetimeMiliSeconds, IsFriendly, DamageAmount)
 };
 
 /*
@@ -30,10 +33,12 @@ public:
 struct ProjectileComponent
 {
 public:
-	explicit ProjectileComponent(const ProjectileParams& projectileParams = ProjectileParams());
+    explicit ProjectileComponent(const ProjectileParams& projectileParams = ProjectileParams());
 
 public:
-	bool IsFriendly;
-	double DamageAmount;
-};
+    bool IsFriendly;
+    double DamageAmount;
 
+public:
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(ProjectileComponent, IsFriendly, DamageAmount)
+};

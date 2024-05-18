@@ -16,6 +16,6 @@ public:
 
 public:
 
-	void Update(SDL_Renderer* renderer, const SDL_Rect& cameraRect) const;
+	void Update(SDL_Renderer* renderer, const SDL_Rect& cameraRect);
 };
 

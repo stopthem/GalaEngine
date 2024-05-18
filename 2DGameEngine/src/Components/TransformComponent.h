@@ -11,13 +11,17 @@
 struct TransformComponent
 {
 public:
-	explicit TransformComponent(const glm::vec2& location = glm::vec2(1), const glm::vec2& scale = glm::vec2(1), const double rotation = 0.0);
+    explicit TransformComponent(const glm::vec2& location = glm::vec2(1), const glm::vec2& scale = glm::vec2(1), const double rotation = 0.0);
+
+    TransformComponent(const TransformComponent& transformComponent) = default;
 
 public:
-	glm::vec2 Location = glm::vec2(0);
+    glm::vec2 Location = glm::vec2(0);
 
-	glm::vec2 Scale = glm::vec2(0);
+    glm::vec2 Scale = glm::vec2(0);
 
-	double Angle = 0.0;
+    double Angle = 0.0;
+
+public:
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(TransformComponent, Location, Scale, Angle)
 };
-

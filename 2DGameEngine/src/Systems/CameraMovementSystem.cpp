@@ -7,20 +7,20 @@
 
 CameraMovementSystem::CameraMovementSystem()
 {
-	RequireComponent<TransformComponent>();
-	RequireComponent<CameraFollowComponent>();
+    RequireComponent<TransformComponent>();
+    RequireComponent<CameraFollowComponent>();
 }
 
-void CameraMovementSystem::Update(SDL_Rect& camera) const
+void CameraMovementSystem::Update(SDL_Rect& camera)
 {
-	for (Entity systemEntity : GetSystemEntities())
-	{
-		const auto transformComponent = systemEntity.GetComponent<TransformComponent>();
+    ForEachSystemEntity([&camera](Entity systemEntity)
+    {
+        const auto transformComponent = systemEntity.GetComponent<TransformComponent>();
 
-		const int wantedCamXPos = transformComponent.Location.x - static_cast<float>(Game::WindowWidth) / 2;
-		const int wantedCamYPos = transformComponent.Location.y - static_cast<float>(Game::WindowHeight) / 2;
+        const int wantedCamXPos = transformComponent.Location.x - static_cast<float>(Game::WindowWidth) / 2;
+        const int wantedCamYPos = transformComponent.Location.y - static_cast<float>(Game::WindowHeight) / 2;
 
-		camera.x = std::clamp(wantedCamXPos, 0, static_cast<int>(std::abs(Game::MapWidth - Game::WindowWidth)));
-		camera.y = std::clamp(wantedCamYPos, 0, static_cast<int>(std::abs(Game::MapHeight - Game::WindowHeight)));
-	}
+        camera.x = std::clamp(wantedCamXPos, 0, static_cast<int>(std::abs(Game::MapWidth - Game::WindowWidth)));
+        camera.y = std::clamp(wantedCamYPos, 0, static_cast<int>(std::abs(Game::MapHeight - Game::WindowHeight)));
+    });
 }

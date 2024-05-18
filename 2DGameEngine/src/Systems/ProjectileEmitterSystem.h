@@ -15,7 +15,7 @@ public:
 
 public:
 	// Loop through all system entities and emit their projectiles if their timer is up.
-	void Update() const;
+	void Update();
 
 	// This basically spawns a bullet towards entity's angle.
 	// Its too strict i know.

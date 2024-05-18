@@ -1,8 +1,14 @@
 #pragma once
 #include <memory>
 #include <SDL_rect.h>
+#include <nlohmann/json.hpp>
 #include <sol/sol.hpp>
 
+#include "glm/vec2.hpp"
+
+
+class LevelLoader;
+class LevelSerializer;
 class EventBus;
 class Registry;
 struct SDL_Window;
@@ -17,48 +23,49 @@ constexpr int MILISECS_PER_FRAME = 1000 / FPS;
 class Game
 {
 public:
-	Game();
-	~Game();
+    Game();
+    ~Game();
 
 public:
-	void Initialize();
-	void Setup();
-	void AddSystems() const;
+    void Initialize();
+    void Setup();
+    void AddSystems() const;
 
-	void Run();
-	void ProcessInput();
-	void Update();
-	void Render() const;
+    void Run();
+    void ProcessInput();
+    void Update();
+    void Render() const;
 
-	void Destroy() const;
-
-private:
-	bool IsRunning = false;
-
-	std::unique_ptr<Registry> Registry = nullptr;
-	std::unique_ptr<AssetStore> AssetStore = nullptr;
-	std::unique_ptr<EventBus> EventBus = nullptr;
-
-	sol::state Lua;
+    void Destroy() const;
 
 private:
-	SDL_Window* Window = nullptr;
-	SDL_Renderer* Renderer = nullptr;
-	SDL_Rect CameraRect;
+    bool IsRunning = false;
+
+    std::unique_ptr<Registry> Registry = nullptr;
+    std::unique_ptr<AssetStore> AssetStore = nullptr;
+    std::unique_ptr<EventBus> EventBus = nullptr;
+    std::unique_ptr<LevelSerializer> LevelSerializer = nullptr;
+    std::unique_ptr<LevelLoader> LevelLoader = nullptr;
+
+    sol::state Lua;
+
+private:
+    SDL_Window* Window = nullptr;
+    SDL_Renderer* Renderer = nullptr;
+    SDL_Rect CameraRect;
 
 public:
-	static int WindowWidth;
-	static int WindowHeight;
+    static int WindowWidth;
+    static int WindowHeight;
 
-	static double MapWidth;
-	static double MapHeight;
-
-private:
-	int MilisecsPrevFrame = 0;
-
-	double DeltaTime = 0;
+    static double MapWidth;
+    static double MapHeight;
 
 private:
-	bool IsDebug = false;
+    int MilisecsPrevFrame = 0;
+
+    double DeltaTime = 0;
+
+private:
+    bool IsDebug = false;
 };
-

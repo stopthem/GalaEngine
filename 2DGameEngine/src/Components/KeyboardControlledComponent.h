@@ -10,9 +10,11 @@
 struct KeyboardControlledComponent
 {
 public:
-	explicit KeyboardControlledComponent(float speed = 1.0f);
+    explicit KeyboardControlledComponent(float speed = 1.0f);
 
 public:
-	float Speed;
-};
+    float Speed;
 
+public:
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(KeyboardControlledComponent, Speed)
+};

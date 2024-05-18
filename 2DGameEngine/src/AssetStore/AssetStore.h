@@ -13,26 +13,32 @@ struct SDL_Texture;
 class AssetStore
 {
 public:
-	AssetStore() = default;
-	~AssetStore();
+    AssetStore() = default;
+    ~AssetStore();
 
 private:
-	std::map<std::string, SDL_Texture*> Textures;
-	std::map<std::string, TTF_Font*> Fonts;
-	// TODO: create a map for audios
+    std::map<std::string, SDL_Texture*> Textures;
+    std::map<std::string, TTF_Font*> Fonts;
+    // TODO: create a map for audios
+
+private:
+    SDL_Renderer* Renderer = nullptr;
 
 public:
-	void ClearAssets();
+    void Initialize(SDL_Renderer* renderer);
+
+    void ClearAssets();
+
+private:
+    void LoadAssetsUnderAssetsFolder();
 
 public:
-	void AddTexture(SDL_Renderer* renderer, const std::string& assetId, const std::string& filePath);
+    void AddTexture(const std::string& filePath);
 
-	[[nodiscard]] SDL_Texture* GetTexture(const std::string& assetId);
+    [[nodiscard]] SDL_Texture* GetTexture(const std::string& filePath);
 
 public:
+    void AddFont(const std::string& filePath);
 
-	void AddFont(const std::string& assetId, const std::string& filePath, int size);
-
-	[[nodiscard]] TTF_Font* GetFont(const std::string& assetId) const;
+    [[nodiscard]] TTF_Font* GetFont(const std::string& filePath, int fontSize) const;
 };
-

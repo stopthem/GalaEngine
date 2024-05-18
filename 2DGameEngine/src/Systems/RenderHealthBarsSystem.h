@@ -17,6 +17,6 @@ public:
 	RenderHealthBarsSystem();
 
 public:
-	void Update(const std::unique_ptr<Registry>& registry, SDL_Renderer* renderer, const SDL_Rect& cameraRect) const;
+	void Update(const std::unique_ptr<Registry>& registry, SDL_Renderer* renderer, const SDL_Rect& cameraRect);
 };
 

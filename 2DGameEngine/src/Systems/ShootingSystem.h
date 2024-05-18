@@ -2,22 +2,22 @@
 
 #include "../ECS/ECS.h"
 
-class KeyPressedEvent;
+class KeyUpEvent;
 class ProjectileEmitterSystem;
 class EventBus;
+
 class ShootingSystem : public System
 {
 public:
-	explicit ShootingSystem(Registry* registry, EventBus* eventBus);
+    explicit ShootingSystem(Registry* registry, EventBus* eventBus);
 
 public:
-	void OnKeyPressed(KeyPressedEvent& keyPressedEvent);
+    void OnKeyUp(KeyUpEvent& keyUpEvent);
 
 private:
-	Registry* RegistryPtr;
-	EventBus* EventBusPtr;
+    Registry* RegistryPtr;
+    EventBus* EventBusPtr;
 
 private:
-	void OnSystemRemoved() override;
+    void OnSystemRemoved() override;
 };
-

@@ -11,9 +11,8 @@ struct SDL_Rect;
 class CameraMovementSystem : public System
 {
 public:
-	CameraMovementSystem();
+    CameraMovementSystem();
 
 public:
-	void Update(SDL_Rect& camera) const;
+    void Update(SDL_Rect& camera);
 };
-

@@ -33,7 +33,7 @@ void DamageSystem::OnCollision(CollisionEvent& collisionEvent)
 
 		const bool targetIsFriendly = targetEntity.InGroup(GROUP_FRIENDLY);
 
-		const decltype(auto) projectileComponent = sourceEntity.GetComponent<ProjectileComponent>();
+		const auto& projectileComponent = sourceEntity.GetComponent<ProjectileComponent>();
 
 		if (targetIsFriendly && projectileComponent.IsFriendly)
 		{

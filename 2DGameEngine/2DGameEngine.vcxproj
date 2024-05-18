@@ -71,12 +71,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\bechs\source\repos\2DGameEngine\2DGameEngine\libs;C:\SDL2\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\SDL2\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\bechs\source\repos\2DGameEngine\2DGameEngine\libs\lua;C:\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <IntDir>$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\bechs\source\repos\2DGameEngine\2DGameEngine\libs;C:\SDL2\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\SDL2\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\bechs\source\repos\2DGameEngine\2DGameEngine\libs\lua;C:\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <IntDir>$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -85,7 +87,8 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\bechs\source\repos\2DGameEngine\2DGameEngine\libs;C:\SDL2\include;$(IncludePath)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -116,7 +119,8 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\bechs\source\repos\2DGameEngine\2DGameEngine\libs;C:\SDL2\include;$(IncludePath)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,6 +145,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\UUIDComponent.h" />
+    <ClInclude Include="src\Core\UUID.h" />
+    <ClInclude Include="src\EngineTypes\SDLColorWrapper.h" />
+    <ClInclude Include="src\Scene\LevelSerializer.h" />
     <ClInclude Include="src\Systems\ScriptSystem.h" />
     <ClInclude Include="src\Components\ScriptComponent.h" />
     <ClInclude Include="src\Game\LevelLoader.h" />
@@ -159,7 +167,7 @@
     <ClInclude Include="src\Systems\RenderColliderSystem.h" />
     <ClInclude Include="src\Components\CameraFollowComponent.h" />
     <ClInclude Include="src\Components\KeyboardControlledComponent.h" />
-    <ClInclude Include="src\Events\KeyPressedEvent.h" />
+    <ClInclude Include="src\Events\KeyUpEvent.h" />
     <ClInclude Include="src\Systems\CameraMovementSystem.h" />
     <ClInclude Include="src\Systems\KeyboardControlSystem.h" />
     <ClInclude Include="src\Systems\DamageSystem.h" />
@@ -572,8 +580,13 @@
     <None Include="libs\glm\gtx\vector_query.inl" />
     <None Include="libs\glm\gtx\wrap.inl" />
     <None Include="assets\scripts\myscript.lua" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\UUIDComponent.cpp" />
+    <ClCompile Include="src\Core\UUID.cpp" />
+    <ClCompile Include="src\EngineTypes\SDLColorWrapper.cpp" />
+    <ClCompile Include="src\Scene\LevelSerializer.cpp" />
     <ClCompile Include="src\Systems\ScriptSystem.cpp" />
     <ClCompile Include="src\Components\ScriptComponent.cpp" />
     <ClCompile Include="src\Game\LevelLoader.cpp" />
@@ -593,7 +606,7 @@
     <ClCompile Include="src\Systems\RenderColliderSystem.cpp" />
     <ClCompile Include="src\Components\CameraFollowComponent.cpp" />
     <ClCompile Include="src\Components\KeyboardControlledComponent.cpp" />
-    <ClCompile Include="src\Events\KeyPressedEvent.cpp" />
+    <ClCompile Include="src\Events\KeyUpEvent.cpp" />
     <ClCompile Include="src\Systems\CameraMovementSystem.cpp" />
     <ClCompile Include="src\Systems\DamageSystem.cpp" />
     <ClCompile Include="src\EventBus\Event.cpp" />
@@ -627,7 +640,17 @@
   <ItemGroup>
     <Library Include="libs\lua\liblua53.a" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="assets\Levels\" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets" Condition="Exists('..\packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets'))" />
+  </Target>
 </Project>

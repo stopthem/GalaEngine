@@ -7,14 +7,14 @@ LifetimeSystem::LifetimeSystem(Registry* registry)
 	RequireComponent<LifetimeComponent>();
 }
 
-void LifetimeSystem::Update(const double deltaTime) const
+void LifetimeSystem::Update(const double deltaTime)
 {
 	const std::vector<Entity> entities = GetSystemEntities();
 
 	std::vector<Entity> toBeKilledEntities;
 
 	// First, lets find all entities that we want to kill.
-	for (Entity systemEntity : entities)
+	ForEachSystemEntity([&](Entity systemEntity)
 	{
 		auto& lifetimeComponent = systemEntity.GetComponent<LifetimeComponent>();
 
@@ -24,7 +24,7 @@ void LifetimeSystem::Update(const double deltaTime) const
 		{
 			toBeKilledEntities.push_back(systemEntity);
 		}
-	}
+	});
 
 	// Kill entities in toBeKilledEntities vector.
 	for (const Entity toBeKilledEntity : toBeKilledEntities)

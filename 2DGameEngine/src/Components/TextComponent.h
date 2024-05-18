@@ -2,24 +2,31 @@
 
 #include <SDL_pixels.h>
 #include <string>
+
+#include "../EngineTypes/SDLColorWrapper.h"
 #include "glm/vec2.hpp"
 
 struct TextComponentParams
 {
 public:
-	explicit TextComponentParams(const glm::vec2& location = glm::vec2(0),
-		std::string text = "", std::string fontAssetId = "pico8-font-10", const SDL_Color& color = SDL_Color(), bool isFixed = true);
+    explicit TextComponentParams(const glm::vec2& location = glm::vec2(0),
+                                 std::string text = "", std::string fontAssetId = "pico8-font-10", int fontSize = 12, const SDLColorWrapper& color = SDLColorWrapper(), bool isFixed = true);
 
 public:
-	glm::vec2 Location;
+    glm::vec2 Location;
 
-	std::string Text;
+    std::string Text;
 
-	std::string FontAssetId;
+    std::string FontAssetId;
 
-	SDL_Color Color;
+    int FontSize;
 
-	bool IsFixed;
+    SDLColorWrapper Color;
+
+    bool IsFixed;
+
+public:
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(TextComponentParams, Text, FontAssetId, FontSize, IsFixed, Color)
 };
 
 /*
@@ -30,9 +37,11 @@ public:
 struct TextComponent
 {
 public:
-	explicit TextComponent(TextComponentParams textComponentParams = TextComponentParams());
+    explicit TextComponent(TextComponentParams textComponentParams = TextComponentParams());
 
 public:
-	TextComponentParams TextParams;
-};
+    TextComponentParams TextParams;
 
+public:
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(TextComponent, TextParams)
+};

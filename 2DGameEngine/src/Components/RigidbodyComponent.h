@@ -11,9 +11,11 @@
 struct RigidbodyComponent
 {
 public:
-	explicit RigidbodyComponent(const glm::vec2& initialVelocity = glm::vec2(0));
+    explicit RigidbodyComponent(const glm::vec2& initialVelocity = glm::vec2(0));
 
 public:
-	glm::vec2 Velocity = glm::vec2(0);
-};
+    glm::vec2 Velocity = glm::vec2(0);
 
+public:
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE(RigidbodyComponent, Velocity)
+};

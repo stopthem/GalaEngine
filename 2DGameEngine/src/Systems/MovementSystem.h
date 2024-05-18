@@ -11,7 +11,7 @@ public:
 	~MovementSystem() override;
 
 public:
-	void Update(double deltaTime, const std::unique_ptr<Registry>& registry) const;
+	void Update(double deltaTime, const std::unique_ptr<Registry>& registry);
 
 private:
 	void OnCollision(CollisionEvent& collisionEvent);
