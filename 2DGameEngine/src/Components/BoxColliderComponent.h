@@ -3,23 +3,27 @@
 
 #include "glm/vec2.hpp"
 
-/*
+namespace gala
+{
+    /*
  * BoxColliderComponent
  *
  * Component used to handle collision.
  */
-struct BoxColliderComponent
-{
-public:
-    explicit BoxColliderComponent(int width = 0, int height = 0, glm::vec2 offset = glm::vec2(0));
+    struct BoxColliderComponent
+    {
+    public:
+        explicit BoxColliderComponent(int width = 0, int height = 0, glm::vec2 offset = glm::vec2(0));
 
-public:
-    int Width;
-    int Height;
+        BoxColliderComponent(const BoxColliderComponent& boxColliderComponent) = default;
 
-    glm::vec2 Offset;
+    public:
+        int Width;
+        int Height;
 
-public:
+        glm::vec2 Offset;
 
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(BoxColliderComponent, Width, Height, Offset)
-};
+    public:
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(BoxColliderComponent, Width, Height, Offset)
+    };
+}

@@ -3,17 +3,20 @@
 #include <SDL_keycode.h>
 #include "../EventBus/Event.h"
 
-/*
+namespace gala
+{
+    /*
  * KeyPressedEvent
  *
  * Key pressed event contains this class when its broadcasted.
  */
-class KeyUpEvent : public Event
-{
-public:
-	explicit KeyUpEvent(SDL_Keycode keycode);
+    class KeyUpEvent : public Event
+    {
+    public:
+        explicit KeyUpEvent(SDL_Keycode keycode);
 
-public:
-	SDL_Keycode PressedKeyCode;
-};
+    public:
+        SDL_Keycode PressedKeyCode;
+    };
+}
 

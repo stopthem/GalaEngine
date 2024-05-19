@@ -2,12 +2,15 @@
 
 #include "../ECS/ECS.h"
 
-class AnimationSystem : public System
+namespace gala
 {
-public:
-	AnimationSystem();
+    class AnimationSystem : public System
+    {
+    public:
+        AnimationSystem();
 
-public:
-	void Update();
-};
+    public:
+        void Update();
+    };
+}
 

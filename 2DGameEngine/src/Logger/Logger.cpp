@@ -5,41 +5,44 @@
 #include <chrono>
 
 
-std::vector<LogEntry> Logger::LogEntries;
-
-std::string Logger::CurrentTimeToString()
+namespace gala
 {
-	time_t rawtime;
-	struct tm* timeinfo;
-	char buffer[80];
+    std::vector<LogEntry> Logger::LogEntries;
 
-	time(&rawtime);
-	timeinfo = localtime(&rawtime);
+    std::string Logger::CurrentTimeToString()
+    {
+        time_t rawtime;
+        struct tm* timeinfo;
+        char buffer[80];
 
-	strftime(buffer, sizeof(buffer), "%d-%m-%Y %H:%M:%S", timeinfo);
-	std::string str(buffer);
+        time(&rawtime);
+        timeinfo = localtime(&rawtime);
 
-	return str;
-}
+        strftime(buffer, sizeof(buffer), "%d-%m-%Y %H:%M:%S", timeinfo);
+        std::string str(buffer);
 
-void Logger::Log(const std::string& message)
-{
-	LogEntry logEntry;
-	logEntry.LogType = Log_Info;
-	logEntry.Message = "LOG | [" + CurrentTimeToString() + "] : " + message;
+        return str;
+    }
 
-	std::cout << "\x1B[32m" << logEntry.Message << "\033[0m" << '\n';
+    void Logger::Log(const std::string& message)
+    {
+        LogEntry logEntry;
+        logEntry.LogType = Log_Info;
+        logEntry.Message = "LOG | [" + CurrentTimeToString() + "] : " + message;
 
-	LogEntries.push_back(logEntry);
-}
+        std::cout << "\x1B[32m" << logEntry.Message << "\033[0m" << '\n';
 
-void Logger::Err(const std::string& message)
-{
-	LogEntry logEntry;
-	logEntry.LogType = Log_Error;
-	logEntry.Message = "ERROR | [" + CurrentTimeToString() + "] : " + message;
+        LogEntries.push_back(logEntry);
+    }
 
-	std::cout << "\x1B[91m" << logEntry.Message << "\033[0m" << std::endl;
+    void Logger::Err(const std::string& message)
+    {
+        LogEntry logEntry;
+        logEntry.LogType = Log_Error;
+        logEntry.Message = "ERROR | [" + CurrentTimeToString() + "] : " + message;
 
-	LogEntries.push_back(logEntry);
+        std::cout << "\x1B[91m" << logEntry.Message << "\033[0m" << '\n';
+
+        LogEntries.push_back(logEntry);
+    }
 }

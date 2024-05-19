@@ -1,6 +1,9 @@
 #include "KeyboardControlledComponent.h"
 
-KeyboardControlledComponent::KeyboardControlledComponent(const float speed)
-	:Speed(speed)
+namespace gala
 {
+    KeyboardControlledComponent::KeyboardControlledComponent(const float speed)
+        :Speed(speed)
+    {
+    }
 }

@@ -1,6 +1,9 @@
 #include "RigidbodyComponent.h"
 
-RigidbodyComponent::RigidbodyComponent(const glm::vec2& initialVelocity)
-	:Velocity(initialVelocity)
+namespace gala
 {
+    RigidbodyComponent::RigidbodyComponent(const glm::vec2& initialVelocity)
+        :Velocity(initialVelocity)
+    {
+    }
 }

@@ -6,42 +6,47 @@
 #include "../EngineTypes/SDLColorWrapper.h"
 #include "glm/vec2.hpp"
 
-struct TextComponentParams
+namespace gala
 {
-public:
-    explicit TextComponentParams(const glm::vec2& location = glm::vec2(0),
-                                 std::string text = "", std::string fontAssetId = "pico8-font-10", int fontSize = 12, const SDLColorWrapper& color = SDLColorWrapper(), bool isFixed = true);
+    struct TextComponentParams
+    {
+    public:
+        explicit TextComponentParams(const glm::vec2& location = glm::vec2(0),
+                                     std::string text = "", std::string fontFilePath = "./assets/fonts/pico8.ttf", int fontSize = 12, const SDLColorWrapper& color = SDLColorWrapper(), bool isFixed = true);
 
-public:
-    glm::vec2 Location;
+    public:
+        glm::vec2 Location;
 
-    std::string Text;
+        std::string Text;
 
-    std::string FontAssetId;
+        std::string FontFilePath;
 
-    int FontSize;
+        int FontSize;
 
-    SDLColorWrapper Color;
+        SDLColorWrapper Color;
 
-    bool IsFixed;
+        bool IsFixed;
 
-public:
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(TextComponentParams, Text, FontAssetId, FontSize, IsFixed, Color)
-};
+    public:
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(TextComponentParams, Text, FontFilePath, FontSize, IsFixed, Color)
+    };
 
-/*
+    /*
  * TextComponent
  *
  * Component that holds necessary information for rendering a text.
  */
-struct TextComponent
-{
-public:
-    explicit TextComponent(TextComponentParams textComponentParams = TextComponentParams());
+    struct TextComponent
+    {
+    public:
+        explicit TextComponent(TextComponentParams textComponentParams = TextComponentParams());
 
-public:
-    TextComponentParams TextParams;
+        TextComponent(const TextComponent& textComponent) = default;
 
-public:
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(TextComponent, TextParams)
-};
+    public:
+        TextComponentParams TextParams;
+
+    public:
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(TextComponent, TextParams)
+    };
+}

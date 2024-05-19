@@ -6,40 +6,43 @@
 #include "../Components/ShootingComponent.h"
 #include "../Components/ProjectileEmitterComponent.h"
 
-ShootingSystem::ShootingSystem(Registry* registry, EventBus* eventBus)
-    : RegistryPtr(registry), EventBusPtr(eventBus)
+namespace gala
 {
-    RequireComponent<TransformComponent>();
-    RequireComponent<ShootingComponent>();
-
-    EventBusPtr->SubscribeToEvent<KeyUpEvent>(this, &ShootingSystem::OnKeyUp);
-}
-
-void ShootingSystem::OnKeyUp(KeyUpEvent& keyUpEvent)
-{
-    if (keyUpEvent.PressedKeyCode != SDLK_SPACE)
+    ShootingSystem::ShootingSystem(Registry* registry, EventBus* eventBus)
+        : RegistryPtr(registry), EventBusPtr(eventBus)
     {
-        return;
+        RequireComponent<TransformComponent>();
+        RequireComponent<ShootingComponent>();
+
+        EventBusPtr->SubscribeToEvent<KeyUpEvent>(this, &ShootingSystem::OnKeyUp);
     }
 
-    ForEachSystemEntity([&](Entity systemEntity)
+    void ShootingSystem::OnKeyUp(KeyUpEvent& keyUpEvent)
     {
-        auto& shootingComponent = systemEntity.GetComponent<ShootingComponent>();
-        const auto transformComponent = systemEntity.GetComponent<TransformComponent>();
+        if (keyUpEvent.PressedKeyCode != SDLK_SPACE)
+        {
+            return;
+        }
 
-        const double angleAsRadians = glm::radians(transformComponent.Angle);
-        const glm::vec2 angleToV2Normalized = glm::normalize(glm::vec2(glm::degrees(std::sin(angleAsRadians)), -glm::degrees(std::cos(angleAsRadians))));
+        ForEachSystemEntity([&](Entity systemEntity)
+        {
+            auto& shootingComponent = systemEntity.GetComponent<ShootingComponent>();
+            const auto transformComponent = systemEntity.GetComponent<TransformComponent>();
 
-        shootingComponent.ShootingProjectileParams.ProjectileVector =
-            {angleToV2Normalized.x * shootingComponent.BulletSpeed, angleToV2Normalized.y * shootingComponent.BulletSpeed};
+            const double angleAsRadians = glm::radians(transformComponent.Angle);
+            const glm::vec2 angleToV2Normalized = glm::normalize(glm::vec2(glm::degrees(std::sin(angleAsRadians)), -glm::degrees(std::cos(angleAsRadians))));
 
-        RegistryPtr->GetSystem<ProjectileEmitterSystem>().EmitProjectile(systemEntity, shootingComponent.ShootingProjectileParams);
-    });
-}
+            shootingComponent.ShootingProjectileParams.ProjectileVector =
+                {angleToV2Normalized.x * shootingComponent.BulletSpeed, angleToV2Normalized.y * shootingComponent.BulletSpeed};
 
-void ShootingSystem::OnSystemRemoved()
-{
-    System::OnSystemRemoved();
+            RegistryPtr->GetSystem<ProjectileEmitterSystem>().EmitProjectile(systemEntity, shootingComponent.ShootingProjectileParams);
+        });
+    }
 
-    EventBusPtr->UnSubscribeFromEvent<KeyUpEvent>(this, &ShootingSystem::OnKeyUp);
+    void ShootingSystem::OnSystemRemoved()
+    {
+        System::OnSystemRemoved();
+
+        EventBusPtr->UnSubscribeFromEvent<KeyUpEvent>(this, &ShootingSystem::OnKeyUp);
+    }
 }

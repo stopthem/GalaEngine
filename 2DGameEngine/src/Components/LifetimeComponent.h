@@ -1,21 +1,26 @@
 #pragma once
 #include <nlohmann/json.hpp>
 
-/*
+namespace gala
+{
+    /*
  * LifetimeComponent
  *
  * Component that holds information about lifetime and current timer in miliseconds.
  */
-struct LifetimeComponent
-{
-public:
-    explicit LifetimeComponent(int lifetimeMiliSeconds = 5000);
+    struct LifetimeComponent
+    {
+    public:
+        explicit LifetimeComponent(int lifetimeMiliSeconds = 5000);
 
-public:
-    int LifetimeMiliSeconds;
+        LifetimeComponent(const LifetimeComponent& lifetimeComponent) = default;
 
-    int CurrentTimerMiliSeconds = 0;
+    public:
+        int LifetimeMiliSeconds;
 
-public:
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(LifetimeComponent, LifetimeMiliSeconds)
-};
+        int CurrentTimerMiliSeconds = 0;
+
+    public:
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(LifetimeComponent, LifetimeMiliSeconds)
+    };
+}

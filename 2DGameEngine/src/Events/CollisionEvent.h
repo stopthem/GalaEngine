@@ -3,13 +3,16 @@
 #include "../ECS/ECS.h"
 #include "../EventBus/Event.h"
 
-class CollisionEvent : public Event
+namespace gala
 {
-public:
-	CollisionEvent(Entity sourceEntity, Entity targetEntity);
+    class CollisionEvent : public Event
+    {
+    public:
+        CollisionEvent(Entity sourceEntity, Entity targetEntity);
 
-public:
-	Entity SourceEntity;
-	Entity TargetEntity;
-};
+    public:
+        Entity SourceEntity;
+        Entity TargetEntity;
+    };
+}
 

@@ -2,19 +2,22 @@
 
 #include "../ECS/ECS.h"
 
-class EventBus;
-struct BoxColliderComponent;
-class CollisionSystem : public System
+
+namespace gala
 {
-public:
-	CollisionSystem();
+    class EventBus;
+    struct BoxColliderComponent;
 
-public:
-	void Update(const std::unique_ptr<EventBus>& eventBus) const;
+    class CollisionSystem : public System
+    {
+    public:
+        CollisionSystem();
 
-private:
-	// Checks box collision between 2 entities.
-	[[nodiscard]] bool CheckAABBCollision(Entity sourceEntity, Entity targetEntity) const;
+    public:
+        void Update(const std::unique_ptr<EventBus>& eventBus) const;
 
-};
-
+    private:
+        // Checks box collision between 2 entities.
+        [[nodiscard]] bool CheckAABBCollision(Entity sourceEntity, Entity targetEntity) const;
+    };
+}

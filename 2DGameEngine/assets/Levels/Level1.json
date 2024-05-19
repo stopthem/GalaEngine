@@ -2,37 +2,15 @@
   [
     "Entity",
     [
-      "UuidComponent",
+      "struct gala::UuidComponent",
       {
         "Uuid": {
-          "uuid": 11880852029362766429
-        }
-      }
-    ]
-  ],
-  [
-    "Entity",
-    [
-      "UuidComponent",
-      {
-        "Uuid": {
-          "uuid": 1456924286344045660
-        }
-      }
-    ]
-  ],
-  [
-    "Entity",
-    [
-      "UuidComponent",
-      {
-        "Uuid": {
-          "uuid": 9791209517160127032
+          "uuid": 114083039445287604
         }
       }
     ],
     [
-      "BoxColliderComponent",
+      "struct gala::BoxColliderComponent",
       {
         "Height": 32,
         "Offset": {
@@ -43,19 +21,19 @@
       }
     ],
     [
-      "HealthBarComponent",
+      "struct gala::HealthBarComponent",
       {
         "EmptyIntForSerialization": 0
       }
     ],
     [
-      "HealthComponent",
+      "struct gala::HealthComponent",
       {
         "StartingHealth": 50.0
       }
     ],
     [
-      "ProjectileEmitterComponent",
+      "struct gala::ProjectileEmitterComponent",
       {
         "EmitterProjectileParams": {
           "DamageAmount": 5.0,
@@ -70,7 +48,7 @@
       }
     ],
     [
-      "RigidbodyComponent",
+      "struct gala::RigidbodyComponent",
       {
         "Velocity": {
           "x": 0.0,
@@ -79,7 +57,7 @@
       }
     ],
     [
-      "SpriteComponent",
+      "struct gala::SpriteComponent",
       {
         "Height": 32,
         "ImageFilePath": "./assets/images/f22.png",
@@ -90,7 +68,7 @@
       }
     ],
     [
-      "TransformComponent",
+      "struct gala::TransformComponent",
       {
         "Angle": 0.0,
         "Location": {

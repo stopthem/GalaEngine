@@ -3,20 +3,25 @@
 
 #include "sol/sol.hpp"
 
-struct ScriptComponent
+namespace gala
 {
-public:
-    explicit ScriptComponent(sol::function function = sol::lua_nil);
+    struct ScriptComponent
+    {
+    public:
+        explicit ScriptComponent(sol::function function = sol::lua_nil);
 
-public:
-    sol::function Function;
+        ScriptComponent(const ScriptComponent& scriptComponent) = default;
+
+    public:
+        sol::function Function;
 
 #pragma region Serialization
 
-private:
-    uint8_t EmptyIntForSerialization = 0;
+    private:
+        uint8_t EmptyIntForSerialization = 0;
 
-public:
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(ScriptComponent, EmptyIntForSerialization)
+    public:
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(ScriptComponent, EmptyIntForSerialization)
 #pragma endregion
-};
+    };
+}

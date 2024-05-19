@@ -5,22 +5,25 @@
 #include "../Components/AnimationComponent.h"
 #include "../Components/SpriteComponent.h"
 
-AnimationSystem::AnimationSystem()
+namespace gala
 {
-    RequireComponent<AnimationComponent>();
-    RequireComponent<SpriteComponent>();
-}
-
-void AnimationSystem::Update()
-{
-    ForEachSystemEntity([](Entity systemEntity)
+    AnimationSystem::AnimationSystem()
     {
-        auto& animationComponent = systemEntity.GetComponent<AnimationComponent>();
-        auto& spriteComponent = systemEntity.GetComponent<SpriteComponent>();
+        RequireComponent<AnimationComponent>();
+        RequireComponent<SpriteComponent>();
+    }
 
-        animationComponent.CurrentFrame = ((static_cast<int>(SDL_GetTicks()) - animationComponent.StartTime)
-            * animationComponent.FrameSpeedRate / 1000) % animationComponent.NumFrames;
+    void AnimationSystem::Update()
+    {
+        ForEachSystemEntity([](Entity systemEntity)
+        {
+            auto& animationComponent = systemEntity.GetComponent<AnimationComponent>();
+            auto& spriteComponent = systemEntity.GetComponent<SpriteComponent>();
 
-        spriteComponent.SrcRect.x = animationComponent.CurrentFrame * spriteComponent.Width;
-    });
+            animationComponent.CurrentFrame = ((static_cast<int>(SDL_GetTicks()) - animationComponent.StartTime)
+                * animationComponent.FrameSpeedRate / 1000) % animationComponent.NumFrames;
+
+            spriteComponent.SrcRect.x = animationComponent.CurrentFrame * spriteComponent.Width;
+        });
+    }
 }

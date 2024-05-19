@@ -42,7 +42,7 @@
 
 int main(int argc, char* argv[])
 {
-	Game game;
+	gala::Game game;
 
 	game.Initialize();
 	game.Run();

@@ -4,18 +4,22 @@
 
 struct SDL_Renderer;
 struct SDL_Rect;
-/*
+
+namespace gala
+{
+    /*
  * RenderColliderSystem
  *
  * Renders all system entity's box collider bounds as a red rectangle when Game.IsDebug is true(toggled with "D" on keyboard).
  */
-class RenderColliderSystem : public System
-{
-public:
-	RenderColliderSystem();
+    class RenderColliderSystem : public System
+    {
+    public:
+        RenderColliderSystem();
 
-public:
+    public:
 
-	void Update(SDL_Renderer* renderer, const SDL_Rect& cameraRect);
-};
+        void Update(SDL_Renderer* renderer, const SDL_Rect& cameraRect);
+    };
+}
 

@@ -2,22 +2,30 @@
 
 #include "../ECS/ECS.h"
 
-class KeyUpEvent;
-class ProjectileEmitterSystem;
-class EventBus;
-
-class ShootingSystem : public System
+namespace gala
 {
-public:
-    explicit ShootingSystem(Registry* registry, EventBus* eventBus);
+    class KeyUpEvent;
+    class ProjectileEmitterSystem;
+    class EventBus;
 
-public:
-    void OnKeyUp(KeyUpEvent& keyUpEvent);
+    /*
+     * ShootingSystem
+     *
+     * System that shoots a projectile on key up
+     */
+    class ShootingSystem : public System
+    {
+    public:
+        explicit ShootingSystem(Registry* registry, EventBus* eventBus);
 
-private:
-    Registry* RegistryPtr;
-    EventBus* EventBusPtr;
+    public:
+        void OnKeyUp(KeyUpEvent& keyUpEvent);
 
-private:
-    void OnSystemRemoved() override;
-};
+    private:
+        Registry* RegistryPtr;
+        EventBus* EventBusPtr;
+
+    private:
+        void OnSystemRemoved() override;
+    };
+}

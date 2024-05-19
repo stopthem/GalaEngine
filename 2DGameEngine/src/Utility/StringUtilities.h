@@ -2,9 +2,12 @@
 #include <string>
 #include <vector>
 
-class StringUtilities
+namespace gala
 {
-public:
-	static std::vector<std::string> Split(const std::string& str, const std::string& delim);
-};
+    class StringUtilities
+    {
+    public:
+        static std::vector<std::string> Split(const std::string& str, const std::string& delim);
+    };
+}
 

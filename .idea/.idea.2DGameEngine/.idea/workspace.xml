@@ -8,135 +8,68 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5440374d-1a83-4ab7-90a0-843cf166b414" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/2DGameEngine/assets/Levels/Level1.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2DGameEngine/packages.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/UUIDComponent.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/UUIDComponent.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2DGameEngine/src/Core/UUID.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2DGameEngine/src/Core/UUID.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2DGameEngine/src/EngineTypes/SDLColorWrapper.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2DGameEngine/src/EngineTypes/SDLColorWrapper.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2DGameEngine/src/Scene/LevelSerializer.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2DGameEngine/src/Scene/LevelSerializer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.2DGameEngine/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/2DGameEngine.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/2DGameEngine.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/2DGameEngine.vcxproj.filters" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/2DGameEngine.vcxproj.filters" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._army-cannon-down.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._army-cannon-killed.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._army-cannon-left.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._army-cannon-right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._army-cannon-up.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._army-gun-down.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._army-gun-left.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._army-gun-right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._army-gun-up.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._army-walk-down.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._army-walk-killed.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._army-walk-left.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._army-walk-right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._army-walk-up.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._bf109-spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._boat.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._bomber-spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._bomber.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._bullet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._carrier.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._chopper-green-spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._chopper-spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._chopper-white-spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._chopper.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._f22-spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._f22.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._fw190-spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._fw190.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._landing-base.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._obstacles-1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._obstacles-2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._obstacles-3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._obstacles-4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._obstacles-5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._obstacles-6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._obstacles-7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._radar-spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._radar.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._runway.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._sam-tank-left-spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._sam-tank-left.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._sam-tank-right-spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._sam-truck-right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._su27-spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._su27.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._takeoff-base.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tank-panther-down.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tank-panther-killed.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tank-panther-left.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tank-panther-right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tank-panther-spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tank-panther-up.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tank-tiger-down.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tank-tiger-killed.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tank-tiger-left.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tank-tiger-right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tank-tiger-spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tank-tiger-up.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tree-1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tree-10.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tree-11.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tree-14.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tree-15.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tree-17.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tree-18.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tree-20.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tree-3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tree-5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tree-6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tree-7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tree-8.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tree-9.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._tree.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._truck-ford-down.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._truck-ford-killed.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._truck-ford-left.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._truck-ford-right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._truck-ford-spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._truck-ford-up.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._upf7-spritesheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/images/._upf7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/scripts/Level1.lua" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/assets/scripts/Level1.lua" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.2DGameEngine/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.2DGameEngine/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/Levels/Level1.json" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/assets/Levels/Level1.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/imgui.ini" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/imgui.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/libs/glm/ext/vector_float2.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/libs/glm/ext/vector_float2.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/AssetStore/AssetStore.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/AssetStore/AssetStore.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/AssetStore/AssetStore.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/AssetStore/AssetStore.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/AnimationComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/AnimationComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/AnimationComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/AnimationComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/BoxColliderComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/BoxColliderComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/BoxColliderComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/BoxColliderComponent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/CameraFollowComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/CameraFollowComponent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/HealthBarComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/HealthBarComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/HealthComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/HealthComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/HealthComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/HealthComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/KeyboardControlledComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/KeyboardControlledComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/KeyboardControlledComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/KeyboardControlledComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/LifetimeComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/LifetimeComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/LifetimeComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/LifetimeComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/ProjectileComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/ProjectileComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/ProjectileComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/ProjectileComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/ProjectileEmitterComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/ProjectileEmitterComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/ProjectileEmitterComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/ProjectileEmitterComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/RigidbodyComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/RigidbodyComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/RigidbodyComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/RigidbodyComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/ScriptComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/ScriptComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/ScriptComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/ScriptComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/ShootingComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/ShootingComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/ShootingComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/ShootingComponent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/SpriteComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/SpriteComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/SpriteComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/SpriteComponent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/TextComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/TextComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/TextComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/TextComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/TransformComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/TransformComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/TransformComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/TransformComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Components/UUIDComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Components/UUIDComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Core/UUID.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Core/UUID.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Core/UUID.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Core/UUID.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/ECS/ECS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/ECS/ECS.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/ECS/ECS.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/ECS/ECS.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Events/KeyPressedEvent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Events/KeyUpEvent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Events/KeyPressedEvent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Events/KeyUpEvent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/EngineTypes/SDLColorWrapper.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/EngineTypes/SDLColorWrapper.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/EventBus/Event.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/EventBus/Event.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/EventBus/EventBus.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/EventBus/EventBus.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Events/CollisionEvent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Events/CollisionEvent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Events/CollisionEvent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Events/CollisionEvent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Events/KeyUpEvent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Events/KeyUpEvent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Events/KeyUpEvent.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Events/KeyUpEvent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Game/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Game/Game.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Game/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Game/Game.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Game/LevelLoader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Game/LevelLoader.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Game/LevelLoader.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Game/LevelLoader.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Logger/Logger.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Logger/Logger.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Logger/Logger.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Logger/Logger.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Scene/LevelSerializer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Scene/LevelSerializer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Scene/LevelSerializer.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Scene/LevelSerializer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/AnimationSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/AnimationSystem.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/AnimationSystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/AnimationSystem.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/CameraMovementSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/CameraMovementSystem.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/CameraMovementSystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/CameraMovementSystem.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/CollisionSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/CollisionSystem.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/CollisionSystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/CollisionSystem.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/DamageSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/DamageSystem.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/DamageSystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/DamageSystem.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/KeyboardControlSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/KeyboardControlSystem.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/KeyboardControlSystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/KeyboardControlSystem.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/LifetimeSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/LifetimeSystem.cpp" afterDir="false" />
@@ -148,6 +81,7 @@
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderColliderSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderColliderSystem.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderColliderSystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderColliderSystem.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderGUISystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderGUISystem.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderGUISystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderGUISystem.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderHealthBarsSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderHealthBarsSystem.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderHealthBarsSystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderHealthBarsSystem.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderSystem.cpp" afterDir="false" />
@@ -155,8 +89,11 @@
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderTextSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderTextSystem.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderTextSystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/RenderTextSystem.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/ScriptSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/ScriptSystem.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/ScriptSystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/ScriptSystem.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/ShootingSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/ShootingSystem.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Systems/ShootingSystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Systems/ShootingSystem.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Utility/StringUtilities.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Utility/StringUtilities.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine/src/Utility/StringUtilities.h" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine/src/Utility/StringUtilities.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,45 +110,20 @@
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files (x86)/Windows Kits/10/Include/10.0.22000.0/ucrt/stdio.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.39.33519/include/cstdint" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.39.33519/include/list" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.39.33519/include/string" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.39.33519/include/type_traits" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.39.33519/include/xhash" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.39.33519/include/xstring" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.39.33519/include/xtree" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.39.33519/include/xutility" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../SDL2/include/SDL_pixels.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../../SDL2/include/SDL_render.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/2DGameEngine/src/Components/ScriptComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/2DGameEngine/src/Components/TextComponent.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/bechs/source/repos/2DGameEngine/2DGameEngine/src/Game/Game.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/2DGameEngine/src/Game/Game.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/2DGameEngine/src/Game/LevelLoader.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/2DGameEngine/src/Systems/AnimationSystem.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -335,7 +247,34 @@
       <workItem from="1716051040534" duration="15284000" />
       <workItem from="1716066597774" duration="422000" />
       <workItem from="1716067083419" duration="4363000" />
+      <workItem from="1716071660080" duration="123000" />
+      <workItem from="1716104034299" duration="2263000" />
+      <workItem from="1716106335465" duration="1011000" />
+      <workItem from="1716107369063" duration="1728000" />
+      <workItem from="1716109893580" duration="15000" />
+      <workItem from="1716109917520" duration="252000" />
+      <workItem from="1716110181376" duration="336000" />
+      <workItem from="1716110764978" duration="3004000" />
+      <workItem from="1716113825533" duration="150000" />
+      <workItem from="1716114067884" duration="1316000" />
     </task>
+    <task id="LOCAL-00001" summary="level loading-serializing overhaul in progress">
+      <option name="closed" value="true" />
+      <created>1716071718887</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1716071718887</updated>
+    </task>
+    <task id="LOCAL-00002" summary="level loading-serializing overhaul in progress">
+      <option name="closed" value="true" />
+      <created>1716071763137</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1716071763137</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
@@ -343,5 +282,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="level loading-serializing overhaul in progress" />
+    <option name="LAST_COMMIT_MESSAGE" value="level loading-serializing overhaul in progress" />
   </component>
 </project>

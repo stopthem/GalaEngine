@@ -3,19 +3,23 @@
 
 #include "../Core/UUID.h"
 
-/*
+namespace gala
+{
+    /*
  * UUIDComponent
  *
  * Component that hols a unique id
  */
-struct UuidComponent
-{
-public:
-    UuidComponent() = default;
+    struct UuidComponent
+    {
+    public:
+        UuidComponent() = default;
 
-public:
-    Uuid Uuid;
+        UuidComponent(const UuidComponent& uuidComponent) = default;
+    public:
+        Uuid Uuid;
 
-public:
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE(UuidComponent, Uuid)
-};
+    public:
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(UuidComponent, Uuid)
+    };
+}

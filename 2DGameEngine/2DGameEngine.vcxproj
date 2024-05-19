@@ -71,13 +71,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\SDL2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\bechs\source\repos\2DGameEngine\2DGameEngine\libs\lua;C:\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\libs\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\libs\lua;$(ProjectDir)\libs\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
     <IntDir>$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\SDL2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\bechs\source\repos\2DGameEngine\2DGameEngine\libs\lua;C:\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\libs\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\libs\lua;$(ProjectDir)\libs\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
     <IntDir>$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -86,7 +86,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\bechs\source\repos\2DGameEngine\2DGameEngine\libs;C:\SDL2\include;$(IncludePath)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\libs;$(ProjectDir)\libs\SDL2\include;$(IncludePath)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\bechs\source\repos\2DGameEngine\2DGameEngine\libs;C:\SDL2\include;$(IncludePath)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\libs;$(ProjectDir)\libs\SDL2\include;$(IncludePath)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>

@@ -1,6 +1,9 @@
 #include "KeyUpEvent.h"
 
-KeyUpEvent::KeyUpEvent(const SDL_Keycode keycode)
-	:PressedKeyCode(keycode)
+namespace gala
 {
+    KeyUpEvent::KeyUpEvent(const SDL_Keycode keycode)
+        :PressedKeyCode(keycode)
+    {
+    }
 }
