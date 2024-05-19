@@ -8,14 +8,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5440374d-1a83-4ab7-90a0-843cf166b414" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.GalaEngine/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.GalaEngine/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.GalaEngine/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.2DGameEngine/.idea/indexLayout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.2DGameEngine/.idea/projectSettingsUpdater.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.2DGameEngine/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.2DGameEngine/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.2DGameEngine/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2DGameEngine.sln" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2DGameEngine.sln" beforeDir="false" afterPath="$PROJECT_DIR$/2DGameEngine.sln" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/2DGameEngine.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/GalaEngine.vcxproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/2DGameEngine.vcxproj.filters" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/2DGameEngine.vcxproj.filters" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2DGameEngine/assets/Levels/Level1.json" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/assets/Levels/Level1.json" afterDir="false" />
@@ -856,7 +849,7 @@
       <workItem from="1716110764978" duration="3004000" />
       <workItem from="1716113825533" duration="150000" />
       <workItem from="1716114067884" duration="1316000" />
-      <workItem from="1716117750402" duration="193000" />
+      <workItem from="1716117750402" duration="50000" />
     </task>
     <task id="LOCAL-00001" summary="level loading-serializing overhaul in progress">
       <option name="closed" value="true" />
