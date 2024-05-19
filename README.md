@@ -1,4 +1,4 @@
-# 2DGameEngine
+# GalaEngine
 
 Its finished other than a final project which is a map editor.
 
