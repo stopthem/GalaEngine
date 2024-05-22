@@ -2,7 +2,7 @@
 
 Currently in development.
 
-It uses SDL2 for access to graphics, images, fonts and dear imgui rendering. \
+It uses SDL2 for access to graphics, images, fonts, input. \
 It uses C++ for the engine and Lua for scripting.
 It uses DearIMGUI for its GUI.
 
