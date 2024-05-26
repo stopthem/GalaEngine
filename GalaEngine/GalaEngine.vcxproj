@@ -145,14 +145,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="libs\imgui\imconfig.h" />
+    <ClInclude Include="libs\imgui\imgui.h" />
+    <ClInclude Include="libs\imgui\imgui_impl_sdl2.h" />
+    <ClInclude Include="libs\imgui\imgui_internal.h" />
+    <ClInclude Include="libs\imgui\imgui_sdl.h" />
+    <ClInclude Include="libs\imgui\imstb_rectpack.h" />
+    <ClInclude Include="libs\imgui\imstb_textedit.h" />
+    <ClInclude Include="libs\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\Components\NameComponent.h" />
     <ClInclude Include="src\Components\UUIDComponent.h" />
+    <ClInclude Include="src\Core\Editor\GalaEditor.h" />
     <ClInclude Include="src\Core\UUID.h" />
     <ClInclude Include="src\EngineTypes\SDLColorWrapper.h" />
-    <ClInclude Include="src\Scene\LevelSerializer.h" />
+    <ClInclude Include="src\Level\LevelLoader.h" />
+    <ClInclude Include="src\Level\LevelSerializer.h" />
+    <ClInclude Include="src\Systems\NameSystem.h" />
+    <ClInclude Include="src\Systems\RenderLevelHierarchyGUISystem.h" />
     <ClInclude Include="src\Systems\ScriptSystem.h" />
     <ClInclude Include="src\Components\ScriptComponent.h" />
-    <ClInclude Include="src\Game\LevelLoader.h" />
-    <ClInclude Include="libs\imgui\imgui_impl_sdl2.h" />
     <ClInclude Include="src\Systems\RenderGUISystem.h" />
     <ClInclude Include="src\Systems\RenderHealthBarsSystem.h" />
     <ClInclude Include="src\Components\HealthBarComponent.h" />
@@ -426,13 +437,6 @@
     <ClInclude Include="libs\glm\vec3.hpp" />
     <ClInclude Include="libs\glm\vec4.hpp" />
     <ClInclude Include="libs\glm\vector_relational.hpp" />
-    <ClInclude Include="libs\imgui\imconfig.h" />
-    <ClInclude Include="libs\imgui\imgui.h" />
-    <ClInclude Include="libs\imgui\imgui_internal.h" />
-    <ClInclude Include="libs\imgui\imgui_sdl.h" />
-    <ClInclude Include="libs\imgui\imstb_rectpack.h" />
-    <ClInclude Include="libs\imgui\imstb_textedit.h" />
-    <ClInclude Include="libs\imgui\imstb_truetype.h" />
     <ClInclude Include="libs\lua\lauxlib.h" />
     <ClInclude Include="libs\lua\lua.h" />
     <ClInclude Include="libs\lua\lua.hpp" />
@@ -583,15 +587,101 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="libs\imgui\imgui.cpp" />
+    <ClCompile Include="libs\imgui\imgui_demo.cpp" />
+    <ClCompile Include="libs\imgui\imgui_draw.cpp" />
+    <ClCompile Include="libs\imgui\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="libs\imgui\imgui_sdl.cpp" />
+    <ClCompile Include="libs\imgui\imgui_tables.cpp" />
+    <ClCompile Include="libs\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\Components\NameComponent.cpp" />
     <ClCompile Include="src\Components\UUIDComponent.cpp" />
+    <ClCompile Include="src\Core\Editor\GalaEditor.cpp" />
     <ClCompile Include="src\Core\UUID.cpp" />
     <ClCompile Include="src\EngineTypes\SDLColorWrapper.cpp" />
-    <ClCompile Include="src\Scene\LevelSerializer.cpp" />
+    <ClCompile Include="src\Level\LevelLoader.cpp">
+      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <Optimization>Disabled</Optimization>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AssemblerListingLocation>Debug\GalaEngine\</AssemblerListingLocation>
+      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
+      <BrowseInformation>false</BrowseInformation>
+      <BrowseInformationFile>Debug\GalaEngine\</BrowseInformationFile>
+      <CompileAs>Default</CompileAs>
+      <ConformanceMode>true</ConformanceMode>
+      <DiagnosticsFormat>Column</DiagnosticsFormat>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <ErrorReporting>Prompt</ErrorReporting>
+      <ExpandAttributedSource>false</ExpandAttributedSource>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableASAN>false</EnableASAN>
+      <EnableFuzzer>false</EnableFuzzer>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <GenerateModuleDependencies>false</GenerateModuleDependencies>
+      <GenerateSourceDependencies>false</GenerateSourceDependencies>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>Default</LanguageStandard_C>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ModuleDependenciesFile>Debug\GalaEngine\</ModuleDependenciesFile>
+      <ModuleOutputFile>Debug\GalaEngine\</ModuleOutputFile>
+      <OmitDefaultLibName>false</OmitDefaultLibName>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <ObjectFileName>Debug\GalaEngine\</ObjectFileName>
+      <CallingConvention>Cdecl</CallingConvention>
+      <ProgramDataBaseFileName>Debug\GalaEngine\vc143.pdb</ProgramDataBaseFileName>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>Debug\GalaEngine\GalaEngine.pch</PrecompiledHeaderOutputFile>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessKeepComments>false</PreprocessKeepComments>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <ShowIncludes>false</ShowIncludes>
+      <SourceDependenciesFile>Debug\GalaEngine\</SourceDependenciesFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <SpectreMitigation>false</SpectreMitigation>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <TrackerLogDirectory>Debug\GalaEngine\GalaEngine.tlog\</TrackerLogDirectory>
+      <TranslateIncludes>false</TranslateIncludes>
+      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <UseFullPaths>true</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <XMLDocumentationFileName>Debug\GalaEngine\</XMLDocumentationFileName>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <IntelJCCErratum>false</IntelJCCErratum>
+      <BuildStlModules>false</BuildStlModules>
+      <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
+      <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
+      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
+      <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
+      <EnablePREfast>false</EnablePREfast>
+      <OmitFramePointers>false</OmitFramePointers>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\bechs\source\repos\GalaEngine\packages\nlohmann.json.3.11.2\build\native\include;C:\Users\bechs\source\repos\GalaEngine\GalaEngine\\libs;C:\Users\bechs\source\repos\GalaEngine\GalaEngine\\libs\SDL2\include;C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include;;C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include;;C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\VS\include;;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt;;;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\um;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\shared;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\winrt;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\cppwinrt;C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\Include\um;</AdditionalIncludeDirectories>
+      <AdditionalOptions>/FS </AdditionalOptions>
+      <LinkCompiled>true</LinkCompiled>
+    </ClCompile>
+    <ClCompile Include="src\Level\LevelSerializer.cpp" />
+    <ClCompile Include="src\Systems\NameSystem.cpp" />
+    <ClCompile Include="src\Systems\RenderLevelHierarchyGUISystem.cpp" />
     <ClCompile Include="src\Systems\ScriptSystem.cpp" />
     <ClCompile Include="src\Components\ScriptComponent.cpp" />
-    <ClCompile Include="src\Game\LevelLoader.cpp" />
-    <ClCompile Include="libs\imgui\imgui_impl_sdl2.cpp" />
-    <ClCompile Include="libs\imgui\imgui_tables.cpp" />
     <ClCompile Include="src\Systems\RenderGUISystem.cpp" />
     <ClCompile Include="src\Systems\RenderHealthBarsSystem.cpp" />
     <ClCompile Include="src\Components\HealthBarComponent.cpp" />
@@ -625,11 +715,6 @@
     <ClCompile Include="src\Logger\Logger.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
     <ClCompile Include="libs\glm\detail\glm.cpp" />
-    <ClCompile Include="libs\imgui\imgui.cpp" />
-    <ClCompile Include="libs\imgui\imgui_demo.cpp" />
-    <ClCompile Include="libs\imgui\imgui_draw.cpp" />
-    <ClCompile Include="libs\imgui\imgui_sdl.cpp" />
-    <ClCompile Include="libs\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Components\TransformComponent.cpp" />
     <ClCompile Include="src\Systems\MovementSystem.cpp" />
@@ -642,6 +727,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\Levels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="libs\imgui\LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

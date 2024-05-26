@@ -12,10 +12,15 @@ namespace gala
     class RenderGUISystem : public System
     {
     public:
-        RenderGUISystem() = default;
+        RenderGUISystem();
+
+    private:
+        void SetupImGuiStyle() const;
+
+        bool pushedFont = false;
 
     public:
-        void Update(const std::unique_ptr<Registry>& registry) const;
+        void Update(const std::unique_ptr<Registry>& registry);
     };
 }
 

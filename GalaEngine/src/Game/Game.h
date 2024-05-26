@@ -4,13 +4,12 @@
 #include <nlohmann/json.hpp>
 #include <sol/sol.hpp>
 
-#include "glm/vec2.hpp"
-
 struct SDL_Window;
 struct SDL_Renderer;
 
 namespace gala
 {
+    class GalaEditor;
     class LevelLoader;
     class LevelSerializer;
     class EventBus;
@@ -20,8 +19,8 @@ namespace gala
     constexpr int FPS = 60;
     constexpr int MILISECS_PER_FRAME = 1000 / FPS;
     /*
-* Game
-*/
+    * Game
+    */
     class Game
     {
     public:
@@ -48,6 +47,7 @@ namespace gala
         std::unique_ptr<EventBus> EventBus = nullptr;
         std::unique_ptr<LevelSerializer> LevelSerializer = nullptr;
         std::unique_ptr<LevelLoader> LevelLoader = nullptr;
+        std::unique_ptr<GalaEditor> GalaEditor = nullptr;
 
         sol::state Lua;
 

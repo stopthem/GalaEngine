@@ -9,6 +9,7 @@
 #include "../Components/HealthComponent.h"
 #include "../Components/KeyboardControlledComponent.h"
 #include "../Components/LifetimeComponent.h"
+#include "../Components/NameComponent.h"
 #include "../Components/ProjectileComponent.h"
 #include "../Components/ProjectileEmitterComponent.h"
 #include "../Components/RigidbodyComponent.h"
@@ -36,6 +37,10 @@ namespace gala
         nlohmann::json uuidComponentJson = {typeid(UuidComponent).name(), entity.GetComponent<UuidComponent>()};
         // We serialize-deserialize uuid first because other components can reference this entity
         entityJson.push_back(uuidComponentJson);
+
+        // Every entity has name component
+        nlohmann::json nameComponentJson = {typeid(NameComponent).name(), entity.GetComponent<NameComponent>()};
+        entityJson.push_back(nameComponentJson);
 
         // Check every component and if entity has that component, serialize and add it to the json
 
@@ -142,6 +147,13 @@ namespace gala
                 const UuidComponent deserializedUuidComponent = jsonElement.back();
                 UuidComponent& uuidComponentOfEntity = entity.GetComponent<UuidComponent>();
                 uuidComponentOfEntity = {deserializedUuidComponent};
+            }
+
+            if (jsonElement.front() == typeid(NameComponent).name())
+            {
+                const NameComponent deserializedNameComponent = jsonElement.back();
+                NameComponent& nameComponentOfEntity = entity.GetComponent<NameComponent>();
+                nameComponentOfEntity = {deserializedNameComponent};
             }
 
             if (jsonElement.front() == typeid(AnimationComponent).name())

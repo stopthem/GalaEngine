@@ -1,6 +1,8 @@
 #include "ECS.h"
 
 #include <algorithm>
+
+#include "../Components/NameComponent.h"
 #include "../Components/UUIDComponent.h"
 #include "../Logger/Logger.h"
 
@@ -99,10 +101,11 @@ namespace gala
         // Add it to the all entities set
         AllEntities.emplace(entity);
 
-        // Add a "UuidComponent" to entity because we want all entities to have uuid
+        // Add a "UuidComponent" to entity because all entities have uuid
         AddComponent<UuidComponent>(entity);
 
-        // EntitiesToBeAdded.insert(entity);
+        // Add a "NameComponent" to entity because all entities have name
+        AddComponent<NameComponent>(entity, std::format("Entity with id: {}", entityId));
 
         return entity;
     }

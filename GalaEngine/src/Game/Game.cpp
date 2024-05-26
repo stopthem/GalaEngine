@@ -25,8 +25,11 @@
 #include "../AssetStore/AssetStore.h"
 #include "../EventBus/EventBus.h"
 #include "../Events/KeyUpEvent.h"
-#include "LevelLoader.h"
-#include "../Scene/LevelSerializer.h"
+#include "../Level/LevelSerializer.h"
+#include "../Core/Editor/GalaEditor.h"
+#include "../Systems/NameSystem.h"
+#include "../Systems/RenderLevelHierarchyGUISystem.h"
+#include "../Level/LevelLoader.h"
 
 namespace gala
 {
@@ -85,10 +88,16 @@ namespace gala
 
         ImGui::CreateContext();
 
+        // Add our custom font to imgui
+        const ImGuiIO& io = ImGui::GetIO();
+        io.Fonts->AddFontFromFileTTF("./assets/fonts/MonacoB2.otf", 16);
+
+        // Initialize imgui
         ImGuiSDL::Initialize(Renderer, WindowWidth, WindowHeight);
         ImGui_ImplSDL2_InitForSDLRenderer(Window, Renderer);
 
-        //SDL_SetWindowFullscreen(Window, SDL_WINDOW_FULLSCREEN);
+        // Enable docking on imgui
+        ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
         AssetStore->Initialize(Renderer);
 
@@ -97,13 +106,15 @@ namespace gala
 
     void Game::Setup()
     {
+        GalaEditor = std::make_unique<class GalaEditor>();
+
         Lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::os);
 
         LevelSerializer = std::make_unique<class LevelSerializer>(Registry.get());
 
         AddSystems();
 
-        LevelLoader = std::make_unique<class LevelLoader>(Registry.get(), AssetStore.get(), Renderer, LevelSerializer.get(), sol::state_view(Lua));
+        LevelLoader = std::make_unique<class LevelLoader>(LevelSerializer.get());
         LevelLoader->LoadLevel(1);
     }
 
@@ -121,6 +132,8 @@ namespace gala
         Registry->AddSystem<ProjectileEmitterSystem>(Registry.get());
         Registry->AddSystem<ShootingSystem>(Registry.get(), EventBus.get());
         Registry->AddSystem<RenderTextSystem>(Renderer, AssetStore.get(), CameraRect);
+        Registry->AddSystem<NameSystem>();
+        Registry->AddSystem<RenderLevelHierarchyGUISystem>(GalaEditor.get(), EventBus.get());
         Registry->AddSystem<RenderHealthBarsSystem>();
         Registry->AddSystem<RenderGUISystem>();
         Registry->AddSystem<ScriptSystem>(sol::state_view(Lua));
@@ -144,19 +157,22 @@ namespace gala
 
         const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);
 
+        ImGuiIO& imGuiIo = ImGui::GetIO();
+
         while (SDL_PollEvent(&sdlEvent))
         {
-            if (IsDebug)
+            // We give input to imgui if it wants it
+            if (imGuiIo.WantCaptureMouse || imGuiIo.WantCaptureKeyboard)
             {
-                ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
-
-                ImGuiIO& io = ImGui::GetIO();
                 int mouseX, mouseY;
                 const Uint32 buttons = SDL_GetMouseState(&mouseX, &mouseY);
 
-                io.MousePos = ImVec2(mouseX, mouseY);
-                io.MouseDown[0] = buttons & SDL_BUTTON(SDL_BUTTON_LEFT);
-                io.MouseDown[1] = buttons & SDL_BUTTON(SDL_BUTTON_RIGHT);
+                imGuiIo.MousePos = ImVec2(static_cast<float>(mouseX), static_cast<float>(mouseY));
+                imGuiIo.MouseDown[0] = buttons & SDL_BUTTON(SDL_BUTTON_LEFT);
+                imGuiIo.MouseDown[1] = buttons & SDL_BUTTON(SDL_BUTTON_RIGHT);
+
+                ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
+                return;
             }
 
             switch (sdlEvent.type)
@@ -227,16 +243,24 @@ namespace gala
         SDL_SetRenderDrawColor(Renderer, 21, 21, 21, 255);
         SDL_RenderClear(Renderer);
 
+        ImGui_ImplSDL2_NewFrame();
+        ImGui::NewFrame();
+        ImGui::ShowDemoWindow();
+
         // Ask all render systems that needs an update.
         Registry->GetSystem<RenderSystem>().Update(Renderer, CameraRect, AssetStore);
         Registry->GetSystem<RenderHealthBarsSystem>().Update(Registry, Renderer, CameraRect);
         Registry->GetSystem<RenderTextSystem>().Update();
+        Registry->GetSystem<RenderLevelHierarchyGUISystem>().Update(Registry);
 
         if (IsDebug)
         {
             Registry->GetSystem<RenderColliderSystem>().Update(Renderer, CameraRect);
             Registry->GetSystem<RenderGUISystem>().Update(Registry);
         }
+
+        ImGui::Render();
+        ImGuiSDL::Render(ImGui::GetDrawData());
 
         SDL_RenderPresent(Renderer);
     }
