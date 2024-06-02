@@ -82,7 +82,7 @@ void ImGuiConsole::Draw()
 
     // Begin Console Window.
     ImGui::PushStyleVar(ImGuiStyleVar_Alpha, m_WindowAlpha);
-    if (!ImGui::Begin(m_ConsoleName.data(), nullptr, ImGuiWindowFlags_MenuBar))
+    if (!ImGui::Begin(m_ConsoleName.data(), nullptr, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse))
     {
         ImGui::PopStyleVar();
         ImGui::End();
@@ -284,7 +284,7 @@ void ImGuiConsole::InputBar()
 
     // Input widget. (Width an always fixed width)
     ImGui::PushItemWidth(-ImGui::GetStyle().ItemSpacing.x * 7);
-    if (ImGui::InputText("Input", &m_Buffer, inputTextFlags, InputCallback, this))
+    if (ImGui::InputText("##Input", &m_Buffer, inputTextFlags, InputCallback, this))
     {
         // Validate.
         if (!m_Buffer.empty())

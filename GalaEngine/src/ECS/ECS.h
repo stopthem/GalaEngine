@@ -341,7 +341,7 @@ namespace gala
         std::set<Entity> AllEntities;
 
     public:
-        [[nodiscard]] Entity CreateEntity();
+        Entity CreateEntity();
 
         void KillEntity(Entity entity);
 
@@ -487,7 +487,7 @@ namespace gala
         const int componentId = Component<TComponent>::GetId();
         const int entityId = entity.GetId();
 
-        EntityComponentSignatures[entityId].set(componentId);
+        EntityComponentSignatures[entityId].reset(componentId);
 
         std::shared_ptr<Pool<TComponent>> componentPool = std::static_pointer_cast<Pool<TComponent>>(ComponentPools[componentId]);
         componentPool->Remove(entityId);

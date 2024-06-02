@@ -19,7 +19,7 @@ public:
      * \param c_name Name of the console
      * \param inputBufferSize Maximum input buffer size
      */
-    explicit ImGuiConsole(std::string c_name = "imgui-console", size_t inputBufferSize = 256);
+    explicit ImGuiConsole(std::string c_name = "GalaConsole", size_t inputBufferSize = 256);
 
     /*!
      * \brief Render the Dear ImGui Console

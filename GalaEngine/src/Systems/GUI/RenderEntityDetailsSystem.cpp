@@ -57,98 +57,58 @@ void gala::RenderEntityDetailsSystem::Update()
     {
         ImGui::BeginChild("Components");
 
-        constexpr int treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen;
-
         if (ImGui::CollapsingHeader("Components", ImGuiTreeNodeFlags_DefaultOpen))
         {
-            if (selectedEntity.HasComponent<TransformComponent>())
+            BeginComponentArea<TransformComponent>("Transform Component", [selectedEntity]
             {
                 TransformComponent& transformComponent = selectedEntity.GetComponent<TransformComponent>();
 
-                if (ImGui::TreeNodeEx("Transform Component", treeNodeFlags))
+                if (float locations[2] = {transformComponent.Location.x, transformComponent.Location.y};
+                    ImGui::InputFloat2("Location", locations))
                 {
-                    if (float locations[2] = {transformComponent.Location.x, transformComponent.Location.y};
-                        ImGui::InputFloat2("Location", locations))
-                    {
-                        transformComponent.Location = {locations[0], locations[1]};
-                    }
-
-                    ImGui::TreePop();
+                    transformComponent.Location = {locations[0], locations[1]};
                 }
-            }
+            }, false);
 
-            if (selectedEntity.HasComponent<AnimationComponent>())
+            BeginComponentArea<AnimationComponent>("Animation Component", [selectedEntity]
             {
-                ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
-
                 AnimationComponent& animationComponent = selectedEntity.GetComponent<AnimationComponent>();
 
-                if (ImGui::TreeNodeEx("Animation Component", treeNodeFlags))
-                {
-                    ImGui::InputInt("Frame Speed Rate", &animationComponent.FrameSpeedRate);
+                ImGui::InputInt("Frame Speed Rate", &animationComponent.FrameSpeedRate);
+            });
 
-                    ImGui::TreePop();
-                }
-            }
-
-            if (selectedEntity.HasComponent<BoxColliderComponent>())
+            BeginComponentArea<BoxColliderComponent>("Box Collider Component", [selectedEntity]
             {
-                ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
-
                 BoxColliderComponent& boxColliderComponent = selectedEntity.GetComponent<BoxColliderComponent>();
-                if (ImGui::TreeNodeEx("Box Collider Component", treeNodeFlags))
+
+                ImGui::InputInt("Width", &boxColliderComponent.Width);
+                ImGui::InputInt("Height", &boxColliderComponent.Height);
+
+                if (float offset[] = {boxColliderComponent.Offset.x, boxColliderComponent.Offset.y}; ImGui::InputFloat2("Offset", offset))
                 {
-                    ImGui::InputInt("Width", &boxColliderComponent.Width);
-                    ImGui::InputInt("Height", &boxColliderComponent.Height);
-
-                    if (float offset[] = {boxColliderComponent.Offset.x, boxColliderComponent.Offset.y}; ImGui::InputFloat2("Offset", offset))
-                    {
-                        boxColliderComponent.Offset = {offset[0], offset[1]};
-                    }
-
-                    ImGui::TreePop();
+                    boxColliderComponent.Offset = {offset[0], offset[1]};
                 }
-            }
+            });
 
-            if (selectedEntity.HasComponent<CameraFollowComponent>())
+            BeginComponentArea<CameraFollowComponent>("Camera Follow Component", [selectedEntity]
             {
-                ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
-
                 CameraFollowComponent& cameraFollowComponent = selectedEntity.GetComponent<CameraFollowComponent>();
+            });
 
-                if (ImGui::TreeNodeEx("Camera Follow Component", treeNodeFlags | ImGuiTreeNodeFlags_Leaf))
-                {
-                    ImGui::TreePop();
-                }
-            }
-
-            if (selectedEntity.HasComponent<HealthBarComponent>())
+            BeginComponentArea<HealthBarComponent>("Health Bar Component", [selectedEntity]
             {
-                ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
-
                 HealthBarComponent& healthBarComponent = selectedEntity.GetComponent<HealthBarComponent>();
+            });
 
-                if (ImGui::TreeNodeEx("Health Bar Component", treeNodeFlags | ImGuiTreeNodeFlags_Leaf))
-                {
-                    ImGui::TreePop();
-                }
-            }
-            if (selectedEntity.HasComponent<HealthComponent>())
+            BeginComponentArea<HealthComponent>("Health Component", [selectedEntity]
             {
-                ImGui::SeparatorEx(ImGuiSeparatorFlags_Horizontal);
-
                 HealthComponent& healthComponent = selectedEntity.GetComponent<HealthComponent>();
-                if (ImGui::TreeNodeEx("Health Component", treeNodeFlags))
-                {
-                    ImGui::InputDouble("Starting Health", &healthComponent.StartingHealth);
+                ImGui::InputDouble("Starting Health", &healthComponent.StartingHealth);
 
-                    ImGui::BeginDisabled();
-                    ImGui::InputDouble("Health", &healthComponent.Health);
-                    ImGui::EndDisabled();
-
-                    ImGui::TreePop();
-                }
-            }
+                ImGui::BeginDisabled();
+                ImGui::InputDouble("Health", &healthComponent.Health);
+                ImGui::EndDisabled();
+            });
 
             // if (KeyboardControlledComponent keyboardControlledComponent; selectedEntity.TryGetComponent<KeyboardControlledComponent>(keyboardControlledComponent))
             // {

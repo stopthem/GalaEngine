@@ -79,7 +79,7 @@ namespace gala
         SDL_GetWindowSize(Window, &windowWidth, &windowHeight);
         WindowWidth = CameraRect.w = windowWidth;
         WindowHeight = CameraRect.h = windowHeight;
-        
+
         if (!Window)
         {
             Logger::Err("Error creating SDL window.");
@@ -98,15 +98,15 @@ namespace gala
 
         const ImGuiIO& io = ImGui::GetIO();
 
+        // FontAwesome fonts need to have their sizes reduced by 2.0f/3.0f in order to align correctly
+        constexpr float baseFontSize = 20; // Default font size
+        constexpr float iconFontSize = baseFontSize * 2.0f / 3.0f;
+
         // Add our custom font to imgui
-        io.Fonts->AddFontFromFileTTF("./assets/fonts/MonacoB2.otf", 20);
+        io.Fonts->AddFontFromFileTTF("./assets/fonts/MonacoB2.otf", baseFontSize);
 
         // ImGuiNotify
         {
-            constexpr float baseFontSize = 16.0f; // Default font size
-            constexpr float iconFontSize = baseFontSize * 2.0f / 3.0f;
-            // FontAwesome fonts need to have their sizes reduced by 2.0f/3.0f in order to align correctly
-
             // Check if FONT_ICON_FILE_NAME_FAS is a valid path
             const std::ifstream fontAwesomeFile(FONT_ICON_FILE_NAME_FAS);
 

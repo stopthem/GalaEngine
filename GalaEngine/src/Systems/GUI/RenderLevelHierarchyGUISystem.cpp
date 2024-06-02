@@ -1,5 +1,7 @@
 #include "RenderLevelHierarchyGUISystem.h"
 
+#include <imgui/IconsFontAwesome6.h>
+
 #include "../../Components/NameComponent.h"
 #include "../../Game/Game.h"
 #include "imgui/imgui.h"
@@ -14,6 +16,17 @@ namespace gala
     void RenderLevelHierarchyGUISystem::Update(const std::unique_ptr<Registry>& registry) const
     {
         ImGui::Begin("Hierarchy", nullptr, ImGuiWindowFlags_NoCollapse);
+
+        // Create Entity Button
+        if (ImGui::Button("Create Entity"))
+        {
+            const Entity createdEntity = registry->CreateEntity();
+            GalaEditorPtr->SetSelectedEntity(createdEntity);
+        }
+
+        // Separator and space between buttons and entities
+        ImGui::Separator();
+        ImGui::Dummy({0, 10});
 
         // If first use ever, show window at bottom left corner
         ImGui::SetWindowPos({0, static_cast<float>(Game::WindowHeight) - 500}, ImGuiCond_FirstUseEver);
@@ -37,6 +50,14 @@ namespace gala
             if (ImGui::IsItemClicked())
             {
                 GalaEditorPtr->SetSelectedEntity(entity);
+            }
+
+            ImGui::SameLine();
+            ImGui::SetCursorPosX(ImGui::GetWindowSize().x - 50);
+            ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 5);
+            if (ImGui::Button(ICON_FA_XMARK))
+            {
+                entity.Kill();
             }
 
             // A separator between tree nodes
