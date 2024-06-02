@@ -15,6 +15,15 @@ namespace gala
 
         explicit operator uint64_t() const { return uuid; }
 
+#pragma region Operator Overloads
+
+    public:
+        bool operator==(const Uuid& otherUuid) const
+        {
+            return uuid == otherUuid.uuid;
+        }
+#pragma endregion
+
     private:
         uint64_t uuid;
 

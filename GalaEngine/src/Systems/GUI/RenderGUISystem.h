@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../ECS/ECS.h" 
+#include "../../ECS/ECS.h" 
 
 namespace gala
 {
@@ -17,10 +17,8 @@ namespace gala
     private:
         void SetupImGuiStyle() const;
 
-        bool pushedFont = false;
-
     public:
-        void Update(const std::unique_ptr<Registry>& registry);
+        void Update(const std::unique_ptr<Registry>& registry) const;
     };
 }
 

@@ -1,4 +1,6 @@
 #include "Game.h"
+
+#include <fstream>
 #include <SDL.h>
 #include <imgui/imgui.h>
 #include <imgui/imgui_sdl.h>
@@ -20,7 +22,7 @@
 #include "../Systems/ShootingSystem.h"
 #include "../Systems/RenderTextSystem.h"
 #include "../Systems/RenderHealthBarsSystem.h"
-#include "../Systems/RenderGUISystem.h"
+#include "../Systems/GUI/RenderGUISystem.h"
 #include "../Systems/ScriptSystem.h"
 #include "../AssetStore/AssetStore.h"
 #include "../EventBus/EventBus.h"
@@ -28,8 +30,13 @@
 #include "../Level/LevelSerializer.h"
 #include "../Core/Editor/GalaEditor.h"
 #include "../Systems/NameSystem.h"
-#include "../Systems/RenderLevelHierarchyGUISystem.h"
+#include "../Systems/GUI/RenderLevelHierarchyGUISystem.h"
 #include "../Level/LevelLoader.h"
+#include "../Systems/GUI/RenderEntityDetailsSystem.h"
+#include <imgui/ImGuiNotify.hpp>
+#include <imgui/IconsFontAwesome6.h>
+
+#include "../Core/Editor/GalaConsole.h"
 
 namespace gala
 {
@@ -44,8 +51,7 @@ namespace gala
     {
     }
 
-    Game::~Game()
-    = default;
+    Game::~Game() = default;
 
     void Game::Initialize()
     {
@@ -63,15 +69,17 @@ namespace gala
 
         SDL_DisplayMode displayMode;
         SDL_GetCurrentDisplayMode(0, &displayMode);
-        // SDL_SetWindowFullscreen(Window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 
-        WindowWidth = CameraRect.w = 1600;
-        WindowHeight = CameraRect.h = 1080;
-        // WindowWidth = CameraRect.w = displayMode.w;
-        // WindowHeight = CameraRect.h = displayMode.h;
 
-        Window = SDL_CreateWindow("GalaEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WindowWidth, WindowHeight, SDL_WINDOW_RESIZABLE | SDL_WINDOW_BORDERLESS);
+        Window = SDL_CreateWindow("GalaEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, displayMode.w, displayMode.h,
+                                  SDL_WINDOW_RESIZABLE | SDL_WINDOW_MAXIMIZED);
 
+
+        int windowWidth, windowHeight;
+        SDL_GetWindowSize(Window, &windowWidth, &windowHeight);
+        WindowWidth = CameraRect.w = windowWidth;
+        WindowHeight = CameraRect.h = windowHeight;
+        
         if (!Window)
         {
             Logger::Err("Error creating SDL window.");
@@ -88,9 +96,35 @@ namespace gala
 
         ImGui::CreateContext();
 
-        // Add our custom font to imgui
         const ImGuiIO& io = ImGui::GetIO();
-        io.Fonts->AddFontFromFileTTF("./assets/fonts/MonacoB2.otf", 16);
+
+        // Add our custom font to imgui
+        io.Fonts->AddFontFromFileTTF("./assets/fonts/MonacoB2.otf", 20);
+
+        // ImGuiNotify
+        {
+            constexpr float baseFontSize = 16.0f; // Default font size
+            constexpr float iconFontSize = baseFontSize * 2.0f / 3.0f;
+            // FontAwesome fonts need to have their sizes reduced by 2.0f/3.0f in order to align correctly
+
+            // Check if FONT_ICON_FILE_NAME_FAS is a valid path
+            const std::ifstream fontAwesomeFile(FONT_ICON_FILE_NAME_FAS);
+
+            if (!fontAwesomeFile.good())
+            {
+                // If it's not good, then we can't find the font and should abort
+                std::cerr << "Could not find the FontAwesome font file." << '\n';
+                abort();
+            }
+
+            static constexpr ImWchar ICONS_RANGES[] = {ICON_MIN_FA, ICON_MAX_16_FA, 0};
+            ImFontConfig iconsConfig;
+            iconsConfig.MergeMode = true;
+            iconsConfig.PixelSnapH = true;
+            iconsConfig.GlyphMinAdvanceX = iconFontSize;
+            io.Fonts->AddFontFromFileTTF(FONT_ICON_FILE_NAME_FAS, iconFontSize, &iconsConfig, ICONS_RANGES);
+        }
+
 
         // Initialize imgui
         ImGuiSDL::Initialize(Renderer, WindowWidth, WindowHeight);
@@ -133,10 +167,13 @@ namespace gala
         Registry->AddSystem<ShootingSystem>(Registry.get(), EventBus.get());
         Registry->AddSystem<RenderTextSystem>(Renderer, AssetStore.get(), CameraRect);
         Registry->AddSystem<NameSystem>();
-        Registry->AddSystem<RenderLevelHierarchyGUISystem>(GalaEditor.get(), EventBus.get());
         Registry->AddSystem<RenderHealthBarsSystem>();
-        Registry->AddSystem<RenderGUISystem>();
         Registry->AddSystem<ScriptSystem>(sol::state_view(Lua));
+
+        // GUI
+        Registry->AddSystem<RenderGUISystem>();
+        Registry->AddSystem<RenderLevelHierarchyGUISystem>(GalaEditor.get());
+        Registry->AddSystem<RenderEntityDetailsSystem>(GalaEditor.get());
     }
 
     void Game::Run()
@@ -222,10 +259,10 @@ namespace gala
 
         DeltaTime = (currentFrameTicks - MilisecsPrevFrame) / 1000.0;
 
-        // Store current frame as a previous frame for next frame.
+        // Store current frame as a previous frame for next frame
         MilisecsPrevFrame = currentFrameTicks;
 
-        // Ask all the systems to update.
+        // Ask all the systems to update
         Registry->GetSystem<ScriptSystem>().Update(DeltaTime);
         Registry->GetSystem<ProjectileEmitterSystem>().Update();
         Registry->GetSystem<LifetimeSystem>().Update(DeltaTime);
@@ -234,8 +271,11 @@ namespace gala
         Registry->GetSystem<AnimationSystem>().Update();
         Registry->GetSystem<CameraMovementSystem>().Update(CameraRect);
 
-        // Update the registry to process the entities that are waiting to be created/deleted.
+        // Update the registry to process the entities that are waiting to be created/deleted
         Registry->Update();
+
+        // Ask editor to update
+        GalaEditor->Update();
     }
 
     void Game::Render() const
@@ -252,6 +292,8 @@ namespace gala
         Registry->GetSystem<RenderHealthBarsSystem>().Update(Registry, Renderer, CameraRect);
         Registry->GetSystem<RenderTextSystem>().Update();
         Registry->GetSystem<RenderLevelHierarchyGUISystem>().Update(Registry);
+        Registry->GetSystem<RenderEntityDetailsSystem>().Update();
+        GalaConsole::Get().Update();
 
         if (IsDebug)
         {
@@ -259,6 +301,7 @@ namespace gala
             Registry->GetSystem<RenderGUISystem>().Update(Registry);
         }
 
+        ImGui::RenderNotifications();
         ImGui::Render();
         ImGuiSDL::Render(ImGui::GetDrawData());
 

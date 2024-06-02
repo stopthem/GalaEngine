@@ -20,6 +20,11 @@ namespace gala
         Registry->KillEntity(*this);
     }
 
+    bool Entity::IsValid() const
+    {
+        return Registry->IsEntityValid(*this);
+    }
+
     void Entity::AddTag(const std::string& tag) const
     {
         Registry->AddEntityTag(*this, tag);
@@ -164,7 +169,7 @@ namespace gala
             return false;
         }
 
-        auto groupEntities = EntityPerGroup.at(group);
+        const auto groupEntities = EntityPerGroup.at(group);
         return groupEntities.contains(entity);
     }
 

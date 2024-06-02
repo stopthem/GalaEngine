@@ -9,41 +9,58 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5440374d-1a83-4ab7-90a0-843cf166b414" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.GalaEngine/.idea/dictionaries/bechs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GalaEngine/assets/fonts/MonacoB2.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GalaEngine/src/Components/NameComponent.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GalaEngine/src/Components/NameComponent.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GalaEngine/src/Core/Editor/GalaEditor.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GalaEngine/src/Core/Editor/GalaEditor.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GalaEngine/src/Systems/NameSystem.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GalaEngine/src/Systems/NameSystem.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GalaEngine/src/Systems/RenderLevelHierarchyGUISystem.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GalaEngine/src/Systems/RenderLevelHierarchyGUISystem.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GalaEngine/fonts/fa-solid-900.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GalaEngine/libs/SDL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GalaEngine/src/Core/Editor/GalaConsole.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GalaEngine/src/Core/Editor/GalaConsole.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GalaEngine/src/Systems/GUI/RenderEntityDetailsSystem.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GalaEngine/src/Systems/GUI/RenderEntityDetailsSystem.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GalaEngine/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GalaEngine/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GalaEngine/GalaEngine.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/GalaEngine.vcxproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GalaEngine/imgui.ini" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/imgui.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/libs/imgui/LICENSE.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imconfig.h" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/libs/imgui/imconfig.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui.h" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui_demo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui_demo.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui_draw.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui_draw.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui_internal.h" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui_internal.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui_tables.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui_tables.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui_widgets.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui_widgets.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imstb_textedit.h" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/libs/imgui/imstb_textedit.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imstb_truetype.h" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/libs/imgui/imstb_truetype.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/scripts/console.script" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/src/example_main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/glad/LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/glad/include/KHR/khrplatform.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/glad/include/glad/glad.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/glad/src/glad.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/glfw/LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/glfw/include/GLFW/glfw3.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/glfw/include/GLFW/glfw3native.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/glfw/lib-vc2015/glfw3.lib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/glfw/lib-vc2015/glfw3dll.lib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/imgui/LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/imgui/imconfig.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/imgui/imgui.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/imgui/imgui.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/imgui/imgui_demo.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/imgui/imgui_draw.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/imgui/imgui_impl_glfw.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/imgui/imgui_impl_glfw.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/imgui/imgui_impl_opengl3.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/imgui/imgui_impl_opengl3.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/imgui/imgui_internal.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/imgui/imgui_widgets.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/imgui/imstb_rectpack.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/imgui/imstb_textedit.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/imgui/imstb_truetype.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/include/imgui_console/imgui_console.h" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/include/imgui_console/imgui_console.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/src/imgui_console.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/src/imgui_console.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/src/Core/Editor/GalaEditor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Core/Editor/GalaEditor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/src/Core/Editor/GalaEditor.h" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Core/Editor/GalaEditor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/src/Core/UUID.h" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Core/UUID.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GalaEngine/src/ECS/ECS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/ECS/ECS.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/src/ECS/ECS.h" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/ECS/ECS.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GalaEngine/src/Game/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Game/Game.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/src/Game/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Game/Game.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/src/Game/LevelLoader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Level/LevelLoader.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/src/Game/LevelLoader.h" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Level/LevelLoader.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/src/Scene/LevelSerializer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Level/LevelSerializer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/src/Scene/LevelSerializer.h" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Level/LevelSerializer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/src/Systems/RenderGUISystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Systems/RenderGUISystem.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GalaEngine/src/Systems/RenderGUISystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Systems/RenderGUISystem.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/src/Logger/Logger.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Logger/Logger.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/src/Logger/Logger.h" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Logger/Logger.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/src/Systems/RenderGUISystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Systems/GUI/RenderGUISystem.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/src/Systems/RenderGUISystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Systems/GUI/RenderGUISystem.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/src/Systems/RenderLevelHierarchyGUISystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Systems/GUI/RenderLevelHierarchyGUISystem.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/src/Systems/RenderLevelHierarchyGUISystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Systems/GUI/RenderLevelHierarchyGUISystem.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GalaEngine/src/Systems/ScriptSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GalaEngine/src/Systems/ScriptSystem.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +71,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files (x86)/Windows Kits/10/Include/10.0.22000.0/ucrt/stdio.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.39.33519/include/cstdint" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.39.33519/include/list" root0="SKIP_HIGHLIGHTING" />
@@ -64,19 +83,19 @@
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.39.33519/include/xstring" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.39.33519/include/xtree" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.39.33519/include/xutility" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/example/thirdparty/imgui/imgui_impl_glfw.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/src/imgui_console.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GalaEngine/libs/imgui/IconsFontAwesome6.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/include/imgui_console/imgui_console.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GalaEngine/libs/imgui/imgui-console/src/imgui_console.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GalaEngine/src/Components/AnimationComponent.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GalaEngine/src/Components/ScriptComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GalaEngine/src/Components/TextComponent.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GalaEngine/src/ECS/ECS.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GalaEngine/src/ECS/ECS.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GalaEngine/src/Game/Game.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/GalaEngine/src/Game/LevelLoader.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GalaEngine/src/Systems/AnimationSystem.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GalaEngine/src/Systems/CameraMovementSystem.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GalaEngine/src/Systems/GUI/RenderGUISystem.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GalaEngine/src/Systems/MovementSystem.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/GalaEngine/src/Systems/RenderGUISystem.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GalaEngine/src/Systems/RenderSystem.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/packages/nlohmann.json.3.11.2/build/native/include/nlohmann/json.hpp" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -94,23 +113,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "C++ Project.2DGameEngine.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "settings.editor.selected.configurable": "Inspections-IDEA"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;C++ Project.2DGameEngine.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\bechs\\AppData\\Local\\JetBrains\\Shared\\vAny\\DecompilerCache",
-      "C:\\Users\\bechs\\AppData\\Local\\JetBrains\\Shared\\vAny\\SourcesCache",
-      "C:\\Users\\bechs\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\bechs\\AppData\\Local\\JetBrains\\Shared\\vAny\\DecompilerCache&quot;,
+      &quot;C:\\Users\\bechs\\AppData\\Local\\JetBrains\\Shared\\vAny\\SourcesCache&quot;,
+      &quot;C:\\Users\\bechs\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="C++ Project.2DGameEngine">
     <configuration name="2DGameEngine" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -272,6 +291,19 @@
       <workItem from="1716731760587" duration="11000" />
       <workItem from="1716731796231" duration="135000" />
       <workItem from="1716731980687" duration="5438000" />
+      <workItem from="1717261809058" duration="1557000" />
+      <workItem from="1717263460838" duration="8630000" />
+      <workItem from="1717273480076" duration="90000" />
+      <workItem from="1717273624737" duration="156000" />
+      <workItem from="1717273864691" duration="35000" />
+      <workItem from="1717274067644" duration="2727000" />
+      <workItem from="1717276848002" duration="194000" />
+      <workItem from="1717277082163" duration="965000" />
+      <workItem from="1717278236600" duration="484000" />
+      <workItem from="1717328775949" duration="3752000" />
+      <workItem from="1717332714034" duration="2371000" />
+      <workItem from="1717335312468" duration="509000" />
+      <workItem from="1717335840572" duration="1289000" />
     </task>
     <task id="LOCAL-00001" summary="level loading-serializing overhaul in progress">
       <option name="closed" value="true" />

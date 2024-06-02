@@ -73,19 +73,16 @@ namespace gala
 
         Entity() = default;
 
+#pragma region Uuid
+
     public:
         [[nodiscard]] int GetId() const { return Id; }
 
-        [[nodiscard]] Uuid GetUuid()
+        [[nodiscard]] Uuid GetUuid() const
         {
-            UuidComponent uuidComponent;
-            if (!TryGetComponent<UuidComponent>(uuidComponent))
-            {
-                Logger::Log("entity with id " + std::to_string(GetId()) + " does not have a uuid component to return a uuid!");
-            }
-
-            return uuidComponent.Uuid;
+            return GetComponent<UuidComponent>().Uuid;
         }
+#pragma endregion
 
     private:
         int Id = 0;
@@ -95,6 +92,8 @@ namespace gala
 
     public:
         void Kill() const;
+
+        [[nodiscard]] bool IsValid() const;
 
 #pragma region Tags and Groups
 
@@ -127,30 +126,30 @@ namespace gala
         // Returns if component exists and if found, sticks it in out_component.
         // Note : returns READ-ONLY TComponent.
         template <typename TComponent>
-        [[nodiscard]] bool TryGetComponent(TComponent& out_component);
+        [[nodiscard]] bool TryGetComponent(TComponent& outComponent);
 
         template <typename TComponent>
-        [[nodiscard]] TComponent& GetComponent();
+        [[nodiscard]] TComponent& GetComponent() const;
 #pragma endregion
 
 #pragma region Operator Overloads
 
     public:
-        Entity& operator=(const Entity& other) = default;
+        Entity& operator=(const Entity& otherEntity) = default;
 
-        bool operator==(const Entity& other) const
+        bool operator==(const Entity& otherEntity) const
         {
-            return GetId() == other.GetId();
+            return GetUuid() == otherEntity.GetUuid();
         }
 
-        bool operator!=(const Entity& other) const
+        bool operator!=(const Entity& otherEntity) const
         {
-            return GetId() != other.GetId();
+            return GetUuid() != otherEntity.GetUuid();
         }
 
-        bool operator<(const Entity& other) const
+        bool operator<(const Entity& otherEntity) const
         {
-            return GetId() < other.GetId();
+            return GetId() < otherEntity.GetId();
         }
 #pragma endregion
     };
@@ -403,7 +402,7 @@ namespace gala
         [[nodiscard]] bool HasComponent(Entity entity) const;
 
         template <typename TComponent>
-        [[nodiscard]] TComponent& GetComponent(Entity entity);
+        [[nodiscard]] TComponent& GetComponent(Entity entity) const;
 
 #pragma endregion
 
@@ -437,6 +436,11 @@ namespace gala
 
     public:
         void Update();
+
+        [[nodiscard]] bool IsEntityValid(const Entity entity) const
+        {
+            return AllEntities.contains(entity);
+        }
     };
 
 #pragma region Registry Component Template Functions
@@ -498,7 +502,7 @@ namespace gala
     }
 
     template <typename TComponent>
-    TComponent& Registry::GetComponent(const Entity entity)
+    TComponent& Registry::GetComponent(const Entity entity) const
     {
         const int componentId = Component<TComponent>::GetId();
         const int entityId = entity.GetId();
@@ -559,20 +563,20 @@ namespace gala
     }
 
     template <typename TComponent>
-    bool Entity::TryGetComponent(TComponent& out_component)
+    bool Entity::TryGetComponent(TComponent& outComponent)
     {
         if (!Registry->HasComponent<TComponent>(*this))
         {
             return false;
         }
 
-        out_component = GetComponent<TComponent>();
+        outComponent = GetComponent<TComponent>();
 
         return true;
     }
 
     template <typename TComponent>
-    TComponent& Entity::GetComponent()
+    TComponent& Entity::GetComponent() const
     {
         return Registry->GetComponent<TComponent>(*this);
     }

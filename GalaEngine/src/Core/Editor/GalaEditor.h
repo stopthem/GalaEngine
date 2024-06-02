@@ -19,9 +19,19 @@ namespace gala
             return HasSelectedEntity;
         }
 
+        [[nodiscard]] Entity GetSelectedEntity()const
+        {
+            return SelectedEntity;
+        }
+
+        void ClearSelectedEntity();
+
     private:
         bool HasSelectedEntity = false;
 
         Entity SelectedEntity;
+
+    public:
+        void Update();
     };
 }

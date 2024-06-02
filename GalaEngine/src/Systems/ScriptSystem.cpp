@@ -133,7 +133,7 @@ namespace gala
             "has_tag", &Entity::HasTag,
             "in_group", &Entity::InGroup
         );
-
+        
         Lua.set_function("set_location", SetEntityLocation);
         Lua.set_function("get_location", GetEntityLocation);
         Lua.set_function("set_velocity", SetEntityVelocity);

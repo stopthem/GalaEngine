@@ -6,7 +6,7 @@
 #pragma once
 
 #include "csys/system.h"
-#include "imgui.h"
+#include <imgui/imgui.h>
 #include <array>
 
 struct ImGuiSettingsHandler;

@@ -3,27 +3,17 @@
 #include <string>
 #include <vector>
 
+#include "csys/csys.h"
+
 namespace gala
 {
-    /*
-* LogType
-*
-* Enum for log types.
-*/
-    enum LogType
-    {
-        Log_Info,
-        Log_Warning,
-        Log_Error
-    };
-
     /*
 * LogEntry
 *
 * Struct that holds information about the log itself.
 */
     struct LogEntry {
-        LogType LogType = Log_Info;
+        csys::ItemType LogType = csys::ItemType::LOG;
         std::string Message;
     };
 
@@ -43,6 +33,9 @@ namespace gala
 
     public:
         static std::vector<LogEntry> LogEntries;
+
+    private:
+        static void AddToEntries(const LogEntry& logEntry);
     };
 }
 
