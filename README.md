@@ -3,7 +3,7 @@
 Currently in development.
 
 It uses SDL2 for access to graphics, images, fonts, input. \
-It uses C++ for the engine and Lua for scripting.
+Written in C++.
 It uses DearIMGUI for its GUI.
 
 This project was originally a [course](pikuma.com/courses/cpp-2d-game-engine-development) that i finished. \
